@@ -6,4 +6,6 @@ L=1e3
 objref stim
 stim=IClamp[0]
 py.stim=py.h.stim
-stim.get_loc()
+stim.loc(0.0)
+stim.amp=10
+stim.dur=5
