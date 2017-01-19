@@ -11,14 +11,13 @@ py.stim=py.h.stim
 stim.loc(0.0)
 stim.amp=20
 stim.dur=5
-ena=5 // CHANGE
+ena=50 // CHANGE
 
 proc ae () { local x,i,max
   for ({x=0 i=0} ; i<3 ; {x+=0.5 i+=1}) {
     svec.append(new Vector()) 
     vvec.append(new Vector())  
     vvec.o(i).record(&v(x))
-    print i,x
     ncl.append(new NetCon(&v(x),nil)) 
     ncl.o(i).threshold=-20
     ncl.o(i).record(svec.o(i)) 
@@ -29,4 +28,5 @@ run()
 for i=0,1 print 0.5/(svec.o(i+1).max()-svec.o(i).max())
 print 1/(svec.o(2).max()-svec.o(0).max())
 for i=0,2 vvec.o(i).plot(g,dt,i+1,4)
-g.exec_menu("View = plot")
+g.size(0,5,-70,50)
+
