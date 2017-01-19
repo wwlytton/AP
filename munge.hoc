@@ -20,3 +20,5 @@ proc ae () { local x,i,max
   }
 }
 ae()
+run()
+for i=0,1 print 0.5/(vecl.o(i+1).max()-vecl.o(i).max())
