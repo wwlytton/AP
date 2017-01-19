@@ -9,3 +9,14 @@ py.stim=py.h.stim
 stim.loc(0.0)
 stim.amp=10
 stim.dur=5
+
+objref ncl,vecl,nil
+{ncl=new List() vecl=new List()}
+proc ae () { local x,i,max
+  for (x=0;x<=1;x+=0.5) ncl.append(new NetCon(&v(x),nil))
+  for i=0,2 {
+    vecl.append(new Vector())
+    ncl.o(i).record(vecl.o(i))
+  }
+}
+ae()
