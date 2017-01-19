@@ -1,5 +1,5 @@
-objref py,ncl,vecl,nil
-{py=new PythonObject() ncl=new List() vecl=new List()}
+objref py,ncl,vvec,svec,nil,g
+{py=new PythonObject() ncl=new List() vvec=new List() svec=new List() g=new Graph()}
 nrnpython("from neuron import h")
 
 xopen("mosinit.hoc")
@@ -9,16 +9,21 @@ objref stim
 stim=IClamp[0]
 py.stim=py.h.stim
 stim.loc(0.0)
-stim.amp=10
+stim.amp=20
 stim.dur=5
+ena=5 // CHANGE
 
 proc ae () { local x,i,max
-  for (x=0;x<=1;x+=0.5) ncl.append(new NetCon(&v(x),nil))
-  for i=0,2 {
-    vecl.append(new Vector())
-    ncl.o(i).record(vecl.o(i))
+  for ({x=0 i=0} ; i<2 ; {x+=0.5 i+=1}) {
+    svec.append(new Vector()) vvec.append(new Vector())  
+    ncl.append(new NetCon(&v(x),nil)) 
+    ncl.o(i).threshold=-20
+    ncl.o(i).record(svec.o(i)) 
+    vvec.o(i).record(&v(x))
   }
 }
 ae()
 run()
-for i=0,1 print 0.5/(vecl.o(i+1).max()-vecl.o(i).max())
+for i=0,1 print 0.5/(svec.o(i+1).max()-svec.o(i).max())
+print 1/(svec.o(2).max()-svec.o(0).max())
+for i=0,2 vvec.plot(g,
