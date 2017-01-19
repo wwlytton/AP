@@ -1,5 +1,5 @@
-objref py,ncl,vvec,svec,nil,g
-{py=new PythonObject() ncl=new List() vvec=new List() svec=new List() g=new Graph()}
+objref py,ncl,vvec,svec,nil,g[2]
+{py=new PythonObject() ncl=new List() vvec=new List() svec=new List() g[0]=new Graph() g[1]=new Graph()}
 nrnpython("from neuron import h")
 
 xopen("mosinit.hoc")
@@ -23,10 +23,22 @@ proc ae () { local x,i,max
     ncl.o(i).record(svec.o(i)) 
   }
 }
-ae()
-run()
-for i=0,1 print 0.5/(svec.o(i+1).max()-svec.o(i).max())
-print 1/(svec.o(2).max()-svec.o(0).max())
-for i=0,2 vvec.o(i).plot(g,dt,i+1,4)
-g.size(0,5,-70,50)
+proc af () { local i,j
+  j=$1
+  printf("Velocity: %0.2f m/s;  ",1/(svec.o(2).max()-svec.o(0).max()))
+  printf("1st vs 2nd half: ")
+  for i=0,1 printf("%0.2f m/s ",0.5/(svec.o(i+1).max()-svec.o(i).max()))
+  printf("\n")
+  for i=0,2 vvec.o(i).line(g[j],dt,i+1,4)
+  g[j].size(0,5,-70,50)
+}
+
+ae() 
+run() 
+af(0)
+
+ena=5
+run() 
+af(1)
+
 
