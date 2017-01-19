@@ -28,7 +28,7 @@ proc af () { local i,j
   printf("Velocity: %0.2f m/s;  ",1/(svec.o(2).max()-svec.o(0).max()))
   printf("1st vs 2nd half: ")
   for i=0,1 printf("%0.2f m/s ",0.5/(svec.o(i+1).max()-svec.o(i).max()))
-  printf("\n")
+  printf(" (ena = %d)\n",ena)
   for i=0,2 vvec.o(i).line(g[j],dt,i+1,4)
   g[j].size(0,5,-70,50)
 }
