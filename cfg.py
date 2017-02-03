@@ -38,7 +38,6 @@ cfg.IClamp1 = {'pop': 'PT5B', 'sec': 'soma', 'loc': 0.5, 'start': 1, 'dur': 1000
 
 # NetStim inputs 
 cfg.addNetStim = 1
-
 cfg.NetStim1 = {'pop': 'PT5B', 'sec': 'soma', 'loc': 0.5, 'synMech': 'NMDA', 'start': 500, 
 				'interval': 1000, 'noise': 0.0, 'number': 1, 'weight': 0.0, 'delay': 1}
 
