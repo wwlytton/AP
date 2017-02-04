@@ -17,7 +17,7 @@ def runBatch(b, label):
 
 def batchNa():
 	b = createBatch({'dendNa': [0.025, 0.03],
-                         ('IClamp1', 'amp'): [0.1 0.5]})
+                         ('IClamp1', 'amp'): [0.1, 0.5]})
 	runBatch(b, 'batchNa')
 
 # Main code
