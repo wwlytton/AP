@@ -15,7 +15,10 @@ stim.loc(0.0,sec=soma)
 stim.amp=2
 stim.dur=5
 ena=50
-for x in soma: x.ena=ena
+def setena (en=50):
+  global ena
+  ena=en
+  for x in soma: x.ena=ena
 
 def ae ():
   for x,v,i in zip(np.linspace(0,1,len(vvec)),vvec,range(len(vvec))):
@@ -26,18 +29,20 @@ def ae ():
     nc.record(svec,ivec,i+1)
 
 def af (g):
-  h.printf("Velocity: %0.2f m/s;  ",1/(svec[-1] - svec[0]))
+  h.printf("Velocity: %0.2f m/s;  ",soma.L/(svec[-1] - svec[0])*1e-3)
   h.printf("Instant speeds: ")
-  print ["%0.2f m/s "%x for x in np.diff(svec)]
+  print ["%0.2f m/s "%(soma.L/(len(svec)-1)/x*1e-3) for x in np.diff(svec)]
   h.printf(" (ena=%d mV)\n",ena)
-  for v in vvec: v.line(g, h.dt, i+1, 4)
+  for i,v in enumerate(vvec): v.line(g, h.dt, i+1, 4)
   g.size(0,5,-70,50)
+
+def ge (): [g.erase_all() for g in gg]
 
 ae() 
 h.run() 
 
 gg = [h.Graph() for i in range(2)]
 af(gg[0])
-ena=5
+setena(5)
 h.run() 
 af(gg[1])
