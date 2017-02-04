@@ -14,22 +14,23 @@ stim=h.IClamp()
 stim.loc(0.0,sec=soma)
 stim.amp=2
 stim.dur=5
-for x in soma: x.ena=50
+ena=50
+for x in soma: x.ena=ena
 
 def ae ():
-  for x,v in zip(np.linspace(0,1,len(vvec)),vvec):
+  for x,v,i in zip(np.linspace(0,1,len(vvec)),vvec,range(len(vvec))):
     v.record(soma(x)._ref_v) 
     nc=h.NetCon(soma(x)._ref_v, None, sec=soma)
     ncl.append(nc)
     nc.threshold=-20
-    nc.record(svec,ivec)
+    nc.record(svec,ivec,i+1)
 
 def af (g):
-  h.printf("Velocity: %0.2f m/s;  ",1/(svec.o(2).max()-svec.o(0).max()))
-  h.printf("1st vs 2nd half: ")
-  ["%0.2f m/s "%(0.5/(svec.o(i+1).max()-svec.o(i).max()))]
+  h.printf("Velocity: %0.2f m/s;  ",1/(svec[-1] - svec[0]))
+  h.printf("Instant speeds: ")
+  print ["%0.2f m/s "%x for x in np.diff(svec)]
   h.printf(" (ena=%d mV)\n",ena)
-  for i in range(2): vvec.o(i).line(g,dt,i+1,4)
+  for v in vvec: v.line(g, h.dt, i+1, 4)
   g.size(0,5,-70,50)
 
 ae() 
