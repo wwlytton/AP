@@ -17,28 +17,26 @@ stim.dur=5
 for x in soma: x.ena=50
 
 def ae ():
-  for x,v in zip(np.linspace(0,1,len(vvec)),vvec)
+  for x,v in zip(np.linspace(0,1,len(vvec)),vvec):
     v.record(soma(x)._ref_v) 
-    nc=h.NetCon(soma(x)._ref_v,nil)) 
+    nc=h.NetCon(soma(x)._ref_v, None, sec=soma)
     ncl.append(nc)
     nc.threshold=-20
     nc.record(svec,ivec)
 
-gg = [h.Graph() for i in range(2)]
-def af (g) : local i,j
+def af (g):
   h.printf("Velocity: %0.2f m/s;  ",1/(svec.o(2).max()-svec.o(0).max()))
   h.printf("1st vs 2nd half: ")
-  ["%0.2f m/s "%(0.5/(svec.o(i+1).max()-svec.o(i).max()))
+  ["%0.2f m/s "%(0.5/(svec.o(i+1).max()-svec.o(i).max()))]
   h.printf(" (ena=%d mV)\n",ena)
   for i in range(2): vvec.o(i).line(g,dt,i+1,4)
   g.size(0,5,-70,50)
 
 ae() 
-run() 
+h.run() 
+
+gg = [h.Graph() for i in range(2)]
 af(gg[0])
-
 ena=5
-run() 
+h.run() 
 af(gg[1])
-
-
