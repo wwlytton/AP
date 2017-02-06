@@ -1,3 +1,5 @@
+from neuron import h
+
 axonL = 594.292937602 
 axonDiam =  1.40966286462 
 
@@ -31,7 +33,7 @@ class AxonA ():
 
   def set_geom (self):
     self.axon.L = axonL; self.axon.diam = axonDiam;
-    self.soma.L = somaL; self.soma.diam = somaDiam
+    # self.soma.L = somaL; self.soma.diam = somaDiam
 
   def activeoff (self):
     for sec in self.all_sec: sec.gbar_naf=sec.gbar_kdr=sec.gbar_nafjr=0.0
