@@ -28,9 +28,13 @@ def ae ():
     nc.record(svec,ivec,i+1)
 
 def af (g):
-  h.printf("Velocity: %0.2f m/s;  ",axon.axon.L/(svec[-1] - svec[0])*1e-3)
-  h.printf("Instant speeds: ")
-  print ["%0.2f m/s "%(axon.axon.L/(len(svec)-1)/x*1e-3) for x in np.diff(svec)]
+  if (len(svec)>1): 
+    h.printf("Velocity: %0.2f m/s;  ",axon.axon.L/(svec[-1] - svec[0])*1e-3)
+    h.printf("Instant speeds: ")
+    print ["%0.2f m/s "%(axon.axon.L/(len(svec)-1)/x*1e-3) for x in np.diff(svec)]
+  else:
+    h.printf("only %d spikes: \n",len(svec))
+    svec.printf()
   h.printf(" (ena=%d mV)\n",ena)
   for i,v in enumerate(vvec): v.line(g, h.dt, i+1, 4)
   g.size(0,5,-70,50)

@@ -5,7 +5,6 @@ reload(axonA) # can edit and reload
 '''
 
 from neuron import h
-
 axonL = 1000
 axonDiam =  10
 
@@ -20,7 +19,7 @@ class AxonA ():
     self.x,self.y,self.z=x,y,z
     self.ID=ID
     self.all_sec = []
-    self.add_comp('axon')
+    # self.add_comp('soma')
     self.set_morphology()
     self.insert_conductances()
     self.set_props()
@@ -109,10 +108,10 @@ class AxonA ():
     for sec in self.all_sec:
       sec.insert('k_ion')
       sec.insert('na_ion')
-      sec.insert('pas') # passive
       sec.insert('hh') # 
       sec.insert('nafjr') # altered naf
     for sec in []:  # could add other sections here
+      sec.insert('pas') # passive
       sec.insert('ih') # h-current      
       sec.insert('ca_ion') # calcium channels
       sec.insert('cal') # cal_mig.mod
