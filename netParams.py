@@ -2,7 +2,7 @@ from netpyne import specs
 from cfg import cfg
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 # PT cell params (6-comp)
-cellRule = netParams.importCellParams(label='axA', conds={'cellType': 'axon', 'cellModel': 'HH_reduced'}, fileName='axonA.py', cellName='axA')
+cellRule = netParams.importCellParams(label='axA', conds={'cellType': 'axA', 'cellModel': 'HH_reduced'}, fileName='axonA.py', cellName='AxonA')
 
 def setena (en=50):
   global ena
