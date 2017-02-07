@@ -1,7 +1,18 @@
+'''
+import axonA
+ax=axonA.AxonA()
+reload(axonA) # can edit and reload
+'''
+
 from neuron import h
 
-axonL = 594.292937602 
-axonDiam =  1.40966286462 
+axonL = 1000
+axonDiam =  10
+
+# passive properties 
+axonCap =  1.01280903702 
+somaCap =  1.78829677463 
+rall = 35.4 # default value
 
 class AxonA ():
   "Simplest axon"
@@ -71,29 +82,17 @@ class AxonA ():
     self.nexusdist = nexusdist = 300.0
     self.h_gbar_tuftm = h_gbar_tuftm = h_gbar_tuft / gbar_h
     self.h_lambda = h_lambda = nexusdist / log(h_gbar_tuftm)
-    for sec in self.apic:
-      self.set_calprops(sec)
-      for seg in sec:
-        d = h.distance(seg.x,sec=sec)
-        if d <= nexusdist: seg.gbar_ih = gbar_h * exp(d/h_lambda)
-        else: seg.gbar_ih = h_gbar_tuft
-      sec.gbar_naf = gbar_naf * naf_gbar_dendm
-    self.apic[1].gcalbar_cal = cal_gcalbar * calginc # middle apical dend gets more iL
 
   # set properties
   def set_props (self):
     self.set_geom()
     # cm - can differ across locations
     self.axon.cm = axonCap
-    self.soma.cm = somaCap
-    self.Bdend.cm = bdendCap
-    for sec in self.apic: sec.cm = apicCap
+    # self.soma.cm = somaCap
     # g_pas == 1.0/rm - can differ across locations
-    self.axon.g_pas = 1.0/axonRM
-    self.soma.g_pas = 1.0/somaRM
-    self.Bdend.g_pas = 1.0/bdendRM
-    for sec in self.apic: sec.g_pas = 1.0/apicRM
-    for sec in self.all_sec:
+    # self.axon.g_pas = 1.0/axonRM
+    # self.soma.g_pas = 1.0/somaRM
+    for sec in []:
       sec.ek = p_ek # K+ current reversal potential (mV)
       sec.ena = p_ena # Na+ current reversal potential (mV)
       sec.Ra = rall; sec.e_pas = Vrest # passive      
@@ -113,7 +112,7 @@ class AxonA ():
       sec.insert('pas') # passive
       sec.insert('hh') # 
       sec.insert('nafjr') # altered naf
-    for sec in [self.Adend3, self.Adend2, self.Adend1, self.Bdend, self.soma]:
+    for sec in []:  # could add other sections here
       sec.insert('ih') # h-current      
       sec.insert('ca_ion') # calcium channels
       sec.insert('cal') # cal_mig.mod
