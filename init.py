@@ -1,2 +1,4 @@
 from netpyne import sim
-sim.createSimulateAnalyze()
+import netParams
+from cfg import cfg
+sim.createSimulateAnalyze(simConfig = cfg, netParams = netParams)
