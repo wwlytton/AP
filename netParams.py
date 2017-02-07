@@ -3,14 +3,6 @@ from cfg import cfg
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 cellRule = netParams.importCellParams(label='axA', conds={'cellType': 'axA'}, fileName='axonA.py', cellName='AxonA')
 
-def setena (en=50):
-  global ena
-  ena=en
-  for x in axon.axon: x.ena=ena
-
-ena = cfg.ena
-setena()
-
 netParams.popParams['axA'] = {'cellModel': 'HH_reduced', 'cellType': 'axA', 'numCells': 1}
 
 if cfg.addIClamp:	
