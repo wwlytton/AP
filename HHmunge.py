@@ -6,7 +6,6 @@ ncl =  []
 
 axon=axonA.AxonA()
 axon.axon.nseg=100
-axon.axon.insert('hh')
 axon.axon.gnabar_hh, axon.axon.gkbar_hh, axon.axon.gl_hh, axon.axon.el_hh = 0.12, 0.036, 3e-4, -54.3  # set for all segments with underscore notation
 
 stim=h.IClamp()

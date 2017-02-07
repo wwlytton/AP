@@ -15,11 +15,10 @@ def runBatch(b, label):
 	b.runCfg = {'type': 'mpi', 'script': 'init.py', 'skip': True}
 	b.run() # run batch
 
-def batchNa():
-	b = createBatch({'dendNa': [0.025, 0.03],
-                         ('IClamp1', 'amp'): [0.1, 0.5]})
-	runBatch(b, 'batchNa')
+def batchaxA():
+	b = createBatch({'ena': [50, 5], ('stim', 'amp'): [2, 4]})
+	runBatch(b, 'baxA')
 
 # Main code
 if __name__ == '__main__':
-	batchNa() 
+	batchaxA() 
