@@ -29,7 +29,8 @@ cfg.analysis['plotTraces'] = {'include': ['axon'], 'oneFigPer': 'cell', 'saveFig
 							  'showFig': False, 'figSize': (10,8), 'timeRange': [0,cfg.duration]}
 
 # Parameters
-cfg.ena=50
+cfg.enahh=50.0
+cfg.gnabarhh=0.12
 
 # Current inputs 
 cfg.addIClamp = 1
