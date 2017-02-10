@@ -14,7 +14,7 @@ cfg.printRunTime = 0.1
 # cfg.printPopAvgRates = True
 
 # Recording 
-cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': [0.0, 0.5, 1.0], 'var': 'v'}}
+cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.5, 'var': 'v'}}
 cfg.recordStims = False  
 cfg.recordStep = 0.1 
 
@@ -26,7 +26,7 @@ cfg.saveJson = True
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 # Analysis and plotting 
-cfg.analysis.plotTraces = D({'include': ['axon'], 'oneFigPer': 'cell', 'saveFig': True, 
+cfg.analysis.plotTraces = D({'include': ['axA'], 'oneFigPer': 'cell', 'saveFig': True, 
                              'showFig': False, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
 
 # Parameters
@@ -35,4 +35,4 @@ cfg.gnabarhh = 0.12
 
 # Current inputs 
 cfg.addstim = 1
-cfg.stim = D({'popu': 'axon', 'sec': 'axon', 'loc': 0.0, 'start': 0, 'dur': 5, 'amp': 2.0}) # avoid word pop since that's a builtin method
+cfg.stim = D({'popu': 'axA', 'sec': 'axon', 'loc': 0.0, 'start': 0, 'dur': 5, 'amp': 2.0}) # avoid word pop since that's a builtin method
