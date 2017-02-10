@@ -1,5 +1,9 @@
 from netpyne import specs
-from cfg import cfg
+try:
+	from __main__ import cfg  # import SimConfig object with params from parent module
+except:
+	from cfg import cfg
+	
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 cellRule = netParams.importCellParams(label='axA', conds={'cellType': 'axA'}, fileName='axonA.py', cellName='AxonA')
 netParams.popParams.axA = {'cellModel': 'HH_reduced', 'cellType': 'axA', 'numCells': 1}
