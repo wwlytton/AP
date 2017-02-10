@@ -1,4 +1,6 @@
-"""  """
+""" 
+mpiexec -np 4 nrniv -python -mpi batch.py 
+"""
 from netpyne.batch import Batch
 import numpy as np
 

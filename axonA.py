@@ -13,6 +13,7 @@ axonCap =  1.01280903702
 somaCap =  1.78829677463 
 rall = 35.4 # default value
 
+
 class AxonA ():
   "Simplest axon"
   def __init__(self,x=0,y=0,z=0,ID=0):
