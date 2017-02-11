@@ -9,9 +9,9 @@ axonDiam =  10
 
 class AxonA ():
   "Simplest axon"
-  def __init__(self,x=0,y=0,z=0,ID=0,percnajr=0,rall=35.4,nseg=100): # proportion j.r. na channel
+  def __init__(self,x=0,y=0,z=0,ID=0,gnabar=0.12,percnajr=0,rall=35.4,nseg=99): # proportion j.r. na channel
     self.x,self.y,self.z,self.ID=x,y,z,ID
-    self.percnajr,self.rall,self.nseg=percnajr,rall,nseg
+    self.gnabar,self.percnajr,self.rall,self.nseg=gnabar,percnajr,rall,nseg
     self.all_sec = []
     self.set_morphology()
     self.insert_conductances()
@@ -42,11 +42,14 @@ class AxonA ():
 
   # set properties
   def set_props (self):
+    "Sets for all sections rall,etc; nseg for axon only"
     self.set_geom()
     self.axon.nseg=self.nseg
     for sec in self.all_sec:
       sec.Ra = self.rall;
       # leave other hh stuff at default values
+      sec.gnabar_hh=self.gnabar*(1.0-self.percnajr)
+      sec.gnabar_nafjr=self.gnabar*self.percnajr
 
   def insert_conductances (self):
     for sec in self.all_sec:
