@@ -1,5 +1,5 @@
 '''
-from axonA import AxonA as cell
+import axonA
 ax=axonA.AxonA()
 reload(axonA) # can edit and reload
 '''
