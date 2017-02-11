@@ -40,11 +40,12 @@ def af (g):
 
 def ge (): [g.erase_all() for g in gg]
 
+'''
 ae() 
 h.run() 
-
 gg = [h.Graph() for i in range(2)]
 af(gg[0])
 setena(5)
 h.run() 
 af(gg[1])
+'''
