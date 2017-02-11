@@ -5,7 +5,7 @@ except:
 	from cfg import cfg
 	
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
-cellRule = netParams.importCellParams(label='axA', conds={'cellType': 'axA'}, fileName='axonA.py', cellName='AxonA', cellArgs: {'spercnajr': 50})
+axr=netParams.importCellParams(label='axA', conds={'cellType': 'axA'}, fileName='axonA.py', cellName='AxonA', cellArgs={'percnajr': 0.5})
 netParams.popParams.axA = {'cellType': 'axA', 'numCells': 1}
 
 cellRule.secs.axon.ions.na.e = cfg.enahh
