@@ -1,17 +1,15 @@
 '''
-import axonA
+from axonA import AxonA as cell
 ax=axonA.AxonA()
 reload(axonA) # can edit and reload
 '''
 from neuron import h
 axonL = 1000
 axonDiam =  10
-axonCap =  1
-rall = 35.4 # default value
 
 class AxonA ():
   "Simplest axon"
-  def __init__(self,x=0,y=0,z=0,ID=0,percnajr=0): # proportion j.r. na channel
+  def __init__(self,x=0,y=0,z=0,ID=0,percnajr=0,rall=35.4): # proportion j.r. na channel
     self.x,self.y,self.z=x,y,z
     self.percnajr=percnajr
     self.ID=ID
@@ -45,11 +43,11 @@ class AxonA ():
 
   # set properties
   def set_props (self):
-    axon = self.axon
     self.set_geom()
-    axon.cm = axonCap
-    # leave other hh stuff at default values
-    
+    for sec in self.all_sec:
+      sec.cm = axonCap
+      sec.Ra = rall;
+      # leave other hh stuff at default values
 
   def insert_conductances (self):
     for sec in self.all_sec:
