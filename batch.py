@@ -18,7 +18,7 @@ def runBatch(b, label):
 	b.run() # run batch
 
 def batchaxA():
-	b = createBatch({'enahh': [50, 5], ('stim', 'amp'): [2, 4]})
+	b = createBatch({'percnajr': [0, 0.5], ('stim', 'amp'): [2, 4]})
 	runBatch(b, 'baxA')
 
 # Main code
