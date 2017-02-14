@@ -27,7 +27,7 @@ cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 # Analysis and plotting 
 cfg.analysis.plotTraces = D({'include': ['axA'], 'oneFigPer': 'cell', 'saveFig': True, 
-                             'showFig': False, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
+                             'showFig': True, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
 
 # Parameters
 cfg.percnajr, cfg.rall, cfg.gnabar = 0.5, 34.5, 0.12
