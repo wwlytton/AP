@@ -1,9 +1,6 @@
 """ 
 mpiexec -np 4 nrniv -python -mpi batch.py 
 """
-import sys
-sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne')
-
 from netpyne.batch import Batch
 import numpy as np
 
