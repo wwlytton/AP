@@ -7,7 +7,7 @@ cfg = specs.SimConfig()
 cfg.duration = 1.0*1e3 
 # cfg.dt = 0.05
 # cfg.seeds = {'conn': 4321, 'stim': 1234, 'loc': 4321} 
-cfg.hParams = {'celsius': 34}
+cfg.hParams = {'celsius': 44.3}
 cfg.verbose = 1
 cfg.cvode_active = False
 cfg.printRunTime = 0.1
@@ -35,7 +35,7 @@ cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 #                              'showFig': True, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
 
 # Parameters
-cfg.percnajr, cfg.rall, cfg.gnabar = 0.5, 54.5, 0.12
+cfg.percnajr, cfg.rall, cfg.gnabar = 0.1, 5.18, 0.2
 
 # Current inputs 
 cfg.addstim = 1
