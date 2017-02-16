@@ -7,14 +7,19 @@ cfg = specs.SimConfig()
 cfg.duration = 1.0*1e3 
 # cfg.dt = 0.05
 # cfg.seeds = {'conn': 4321, 'stim': 1234, 'loc': 4321} 
-# cfg.hParams = {'celsius': 34, 'v_init': -80}  
+cfg.hParams = {'celsius': 34}
 cfg.verbose = 1
 cfg.cvode_active = False
 cfg.printRunTime = 0.1
 # cfg.printPopAvgRates = True
 
 # Recording 
-cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.5, 'var': 'v'}}
+cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.0, 'var': 'v'}}
+cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.2, 'var': 'v'}}
+cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.4, 'var': 'v'}}
+cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.6, 'var': 'v'}}
+cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.8, 'var': 'v'}}
+cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 1.0, 'var': 'v'}} # don't want to get too close to the end
 cfg.recordStims = False  
 cfg.recordStep = 0.1 
 
@@ -26,8 +31,8 @@ cfg.saveJson = True
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 # Analysis and plotting 
-cfg.analysis.plotTraces = D({'include': ['axA'], 'oneFigPer': 'cell', 'saveFig': True, 
-                             'showFig': True, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
+# cfg.analysis.plotTraces = D({'include': ['axA'], 'oneFigPer': 'cell', 'saveFig': True, 
+#                              'showFig': True, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
 
 # Parameters
 cfg.percnajr, cfg.rall, cfg.gnabar = 0.5, 34.5, 0.12
