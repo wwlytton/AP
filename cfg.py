@@ -14,12 +14,12 @@ cfg.printRunTime = 0.1
 # cfg.printPopAvgRates = True
 
 # Recording 
-cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.0, 'var': 'v'}}
-cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.2, 'var': 'v'}}
-cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.4, 'var': 'v'}}
-cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.6, 'var': 'v'}}
-cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.8, 'var': 'v'}}
-cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 1.0, 'var': 'v'}} # maybe don't want to get too close to the end
+cfg.recordTraces = {'V_axon_0.0': {'sec': 'axon', 'loc': 0.0, 'var': 'v'},
+					'V_axon_0.2': {'sec': 'axon', 'loc': 0.2, 'var': 'v'},
+ 					'V_axon_0.4': {'sec': 'axon', 'loc': 0.4, 'var': 'v'},
+					'V_axon_0.6': {'sec': 'axon', 'loc': 0.6, 'var': 'v'},
+ 					'V_axon_0.8': {'sec': 'axon', 'loc': 0.8, 'var': 'v'},
+ 					'V_axon_1.0': {'sec': 'axon', 'loc': 1.0, 'var': 'v'}} # maybe don't want to get too close to the end
 cfg.recordStims = False  
 cfg.recordStep = 0.1 
 
