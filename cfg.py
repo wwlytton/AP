@@ -21,7 +21,7 @@ cfg.recordTraces = {'V_axon_0.0': {'sec': 'axon', 'loc': 0.0, 'var': 'v'},
                     'V_axon_0.8': {'sec': 'axon', 'loc': 0.8, 'var': 'v'},
                     'V_axon_1.0': {'sec': 'axon', 'loc': 1.0, 'var': 'v'}}
 cfg.recordStims = False  
-cfg.recordStep = 0.1 
+cfg.recordStep = 0.05 
 
 # Saving
 cfg.simLabel = 'sim1'
