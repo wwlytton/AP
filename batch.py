@@ -18,7 +18,9 @@ def runBatch(b, label):
 	b.run() # run batch
 
 def batchaxA():
-	b = createBatch({'percnajr': [0, 0.5], ('stim', 'amp'): [2, 4]})
+	b = createBatch({'percnajr'        : np.linspace(0.0,1.0,9), 
+                         'rall'            : [34.5, 100, 200],
+                         ('hParams', 'celsius') : [6.3, 23, 37]})
 	runBatch(b, 'baxA')
 
 # Main code
