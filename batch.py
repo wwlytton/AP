@@ -18,8 +18,8 @@ def runBatch(b, label):
 	b.run() # run batch
 
 def batchaxA():
-	b = createBatch({'percnajr'        : np.linspace(0.0 ,1.0, 9), 
-                         'gnabar'            : [0.12, 0.30],
+	b = createBatch({'percnajr'        : list(np.linspace(0.0 ,1.0, 9)), 
+                         'gnabar'          : [0.12, 0.30],
                          'rall'            : [34.5, 200],
                          ('hParams', 'celsius') : [6.3, 37]})
 	runBatch(b, 'baxA')
