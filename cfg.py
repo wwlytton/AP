@@ -19,7 +19,7 @@ cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.2, 'var': 'v'}}
 cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.4, 'var': 'v'}}
 cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.6, 'var': 'v'}}
 cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 0.8, 'var': 'v'}}
-cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 1.0, 'var': 'v'}} # don't want to get too close to the end
+cfg.recordTraces = {'V_axon': {'sec': 'axon', 'loc': 1.0, 'var': 'v'}} # maybe don't want to get too close to the end
 cfg.recordStims = False  
 cfg.recordStep = 0.1 
 
@@ -31,8 +31,8 @@ cfg.saveJson = True
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 # Analysis and plotting 
-# cfg.analysis.plotTraces = D({'include': ['axA'], 'oneFigPer': 'cell', 'saveFig': True, 
-#                              'showFig': True, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
+cfg.analysis.plotTraces = D({'include': ['axA'], 'oneFigPer': 'cell', 'saveFig': False, 
+                             'showFig': False, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
 
 # Parameters
 cfg.percnajr, cfg.rall, cfg.gnabar = 0.1, 5.18, 0.2
