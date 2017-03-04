@@ -1,3 +1,4 @@
+params, data = None, None
 def read ():
     global params, data
     sys.path.append('/usr/site/nrniv/local/python/netpyne/examples/batchCell')
