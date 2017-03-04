@@ -1,3 +1,4 @@
+import sys
 params, data = None, None
 def read ():
     global params, data
