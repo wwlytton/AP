@@ -4,7 +4,13 @@ def read ():
     global params, data
     sys.path.append('/usr/site/nrniv/local/python/netpyne/examples/batchCell')
     from utils import readBatchData
-    params, data = readBatchData('data/', 'baxA', loadAll=0, saveAll=0, vars=None, maxCombs=None) 
+    params, data = readBatchData('data/', 'baxA', loadAll=1, saveAll=0, vars=None, maxCombs=None) 
+
+def loadall (): 
+  global params, data
+  filename = 'data/baxA/baxA_allData.json'
+  with open(filename, 'r') as fileObj: dataLoad = json.load(fileObj, object_pairs_hook=specs.OrderedDict)
+  params, data = dataLoad['params'], dataLoad['data']
 
 def plotf (dataDir='data/', batchLabel='baxA', params=params, data=data): # from plotfINa
     import utils
