@@ -1,11 +1,29 @@
 import sys
 import itertools as itr
+import pandas as pd
 params, data = None, None
 
-fig, ax = plt.subplots(1, 1)  17mar08a\gref
-# df4.query('gnabar==0.12 & temp==6.3 & rall==200').plot('percnajr','V0max',label="abc",ax=ax)
+# reading data section
+def read ():
+    global params, data
+    sys.path.append('/usr/site/nrniv/local/python/netpyne/examples/batchCell')
+    from utils import readBatchData
+    params, data = readBatchData('data/', 'baxA', loadAll=1, saveAll=0, vars=None, maxCombs=None) 
 
-def eq (a,b): return np.isclose(a,b)
+def loadall (filename = 'data/baxA/baxA_allData.json'): 
+  global params, data
+  with open(filename, 'r') as fileObj: dataLoad = json.load(fileObj, object_pairs_hook=specs.OrderedDict)
+  params, data = dataLoad['params'], dataLoad['data']
+
+def loadpd (filename = 'data/baxA/df4.pd'):
+  "need precise_float=True to get the correct numbers"
+  return pd.read_json('data/baxA/df4.pd',precise_float=True)
+
+# fig, ax = plt.subplots(1, 1)
+# df4.query('gnabar==0.12 & temp==6.3 & rall==200').plot('percnajr','V0max',label="abc",ax=ax)
+# df4[(df4.gnabar==0.12) & (df4.temp==6.3) & (df4.rall==200)].plot('percnajr','V0max',label="abc",ax=ax)
+
+
 
 def mkqstr (l):
   'Create a query string from a list of tuples with (name, value)'
@@ -13,25 +31,13 @@ def mkqstr (l):
   for x in l: st+="%s==%g&"%(x[0],x[1])
   return st.strip('[ &]')
 
-def ae ():
+def supfigs ():
  ax.clear()
  for tup in [zip(labs,x) for x in itr.product(*[v for x,v in vals.iteritems()])]:
    st=mkqstr(tup)
    res=df4.query(st)
    print st,len(res),'; ',
    if len(res)>2: res.plot('percnajr','V0max',label=st,ax=ax)
-
-def read ():
-    global params, data
-    sys.path.append('/usr/site/nrniv/local/python/netpyne/examples/batchCell')
-    from utils import readBatchData
-    params, data = readBatchData('data/', 'baxA', loadAll=1, saveAll=0, vars=None, maxCombs=None) 
-
-def loadall (): 
-  global params, data
-  filename = 'data/baxA/baxA_allData.json'
-  with open(filename, 'r') as fileObj: dataLoad = json.load(fileObj, object_pairs_hook=specs.OrderedDict)
-  params, data = dataLoad['params'], dataLoad['data']
 
 def plotf (dataDir='data/', batchLabel='baxA', params=params, data=data): # from plotfINa
     import utils
