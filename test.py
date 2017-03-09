@@ -1,5 +1,26 @@
 import sys
+import itertools as itr
 params, data = None, None
+
+fig, ax = plt.subplots(1, 1)  17mar08a\gref
+# df4.query('gnabar==0.12 & temp==6.3 & rall==200').plot('percnajr','V0max',label="abc",ax=ax)
+
+def eq (a,b): return np.isclose(a,b)
+
+def mkqstr (l):
+  'Create a query string from a list of tuples with (name, value)'
+  st=''
+  for x in l: st+="%s==%g&"%(x[0],x[1])
+  return st.strip('[ &]')
+
+def ae ():
+ ax.clear()
+ for tup in [zip(labs,x) for x in itr.product(*[v for x,v in vals.iteritems()])]:
+   st=mkqstr(tup)
+   res=df4.query(st)
+   print st,len(res),'; ',
+   if len(res)>2: res.plot('percnajr','V0max',label=st,ax=ax)
+
 def read ():
     global params, data
     sys.path.append('/usr/site/nrniv/local/python/netpyne/examples/batchCell')
