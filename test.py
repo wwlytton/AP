@@ -23,8 +23,6 @@ def loadpd (filename = 'data/baxA/df4.pd'):
 # df4.query('gnabar==0.12 & temp==6.3 & rall==200').plot('percnajr','V0max',label="abc",ax=ax)
 # df4[(df4.gnabar==0.12) & (df4.temp==6.3) & (df4.rall==200)].plot('percnajr','V0max',label="abc",ax=ax)
 
-
-
 def mkqstr (l):
   'Create a query string from a list of tuples with (name, value)'
   st=''
@@ -32,12 +30,12 @@ def mkqstr (l):
   return st.strip('[ &]')
 
 def supfigs ():
- ax.clear()
- for tup in [zip(labs,x) for x in itr.product(*[v for x,v in vals.iteritems()])]:
-   st=mkqstr(tup)
-   res=df4.query(st)
-   print st,len(res),'; ',
-   if len(res)>2: res.plot('percnajr','V0max',label=st,ax=ax)
+  global res
+  ax.clear()
+  for tup in [zip(labs,x) for x in itr.product(*[v for x,v in vals.iteritems()])]:
+    st=mkqstr(tup)
+    res=df4.query(st)
+    if len(res)>2: res.plot('percnajr','V0max',label=st,ax=ax,linewidth=6)
 
 def plotf (dataDir='data/', batchLabel='baxA', params=params, data=data): # from plotfINa
     import utils
