@@ -7,6 +7,7 @@ import pylab as plt
 import json
 fig, ax, params, data = None, None, None, None
 from netpyne import specs, sim
+from collections import OrderedDict
 
 # reading data section
 def read ():
@@ -45,6 +46,7 @@ def supfigs ():
   for i,tup in enumerate([zip(labs,x) for x in itr.product(*[v for x,v in vals.iteritems()])]):
     st,sr=mkqstr(tup)
     res=df4.query(st)
+    if (len(res)<2): print st
     res.plot('percnajr','V0max',label=sr,ax=ax,linewidth=10-i)
 
 def mkdf4 ():
@@ -57,7 +59,7 @@ def mkdf4 ():
   df3 = pd.merge(df1,df2,left_index=True,right_index=True)
   tmp=pd.DataFrame(columns=['numspks']).from_dict(numdi, orient='index')  # can't set the column names at start??
   df4 = pd.merge(df3,tmp,left_index=True,right_index=True)
-  df4.columns=['vmax0','gnabar','rall','temp','percnajr','numspks']
+  df4.columns=['V0max','gnabar','rall','temp','percnajr','numspks']
   return df4
 
 if __name__ == '__main__':
@@ -67,7 +69,9 @@ if __name__ == '__main__':
     df4=mkdf4()
   else:
     df4=loadpd()
-  labs=['temp', 'gnabar', 'rall']  # should grab labs from pandas table
-  vals = {x:set(df4[x].tolist()) for x in labs}
+  labs=['temp', 'gnabar', 'rall']  # should grab param names from pandas table; would need 
+  vals = OrderedDict([(x,set(df4[x].tolist())) for x in labs])  # guarantee same order
   mkfig()
   supfigs()
+  plt.show()
+  
