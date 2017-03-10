@@ -45,9 +45,9 @@ def supfigs ():
     res.plot('percnajr','V0max',label=sr,ax=ax,linewidth=10-i)
 
 if __name__ == '__main__':
-  labs=['gnabar', 'rall', 'temp']  # should grab labs and vals from pandas table but need to ident which are params
-  vals={'gnabar': [0.3, 0.12], 'rall': [34.5, 200.0], 'temp': [6.3, 37.0]} 
-  mkfig()
   df4=loadpd()
+  labs=['temp', 'gnabar', 'rall']  # should grab labs from pandas table
+  vals = {x:list(set(df4[x])) for x in labs} # yuk more roundoff problems??
+  mkfig()
   supfigs()
-  plt.show()
+  
