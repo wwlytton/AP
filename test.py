@@ -1,9 +1,12 @@
 import sys
+sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne')
 import itertools as itr
 import pandas as pd
 import numpy as np
 import pylab as plt
+import json
 fig, ax, params, data = None, None, None, None
+from netpyne import specs, sim
 
 # reading data section
 def read ():
@@ -44,10 +47,27 @@ def supfigs ():
     res=df4.query(st)
     res.plot('percnajr','V0max',label=sr,ax=ax,linewidth=10-i)
 
+def mkdf4 ():
+  spkdi={key: max(d['simData']['V_axon_0.0']['cell_0']) for key, d in data.iteritems()}
+  spks={key: max for key, max in spkdi.iteritems() if max>-30}
+  pdi={k:d['paramValues'] for k,d in data.iteritems()}
+  numdi={key: len(d['simData']['spkt']) for key, d in data.iteritems()}
+  df1 = pd.DataFrame.from_dict(spkdi, orient='index') 
+  df2 = pd.DataFrame.from_dict(pdi, orient='index') 
+  df3 = pd.merge(df1,df2,left_index=True,right_index=True)
+  tmp=pd.DataFrame(columns=['numspks']).from_dict(numdi, orient='index')  # can't set the column names at start??
+  df4 = pd.merge(df3,tmp,left_index=True,right_index=True)
+  df4.columns=['vmax0','gnabar','rall','temp','percnajr','numspks']
+  return df4
+
 if __name__ == '__main__':
-  df4=loadpd()
+  createdf4=True
+  if createdf4:
+    loadall()      # data and params
+    df4=mkdf4()
+  else:
+    df4=loadpd()
   labs=['temp', 'gnabar', 'rall']  # should grab labs from pandas table
-  vals = {x:set(df4[x].tolist())) for x in labs}
+  vals = {x:set(df4[x].tolist()) for x in labs}
   mkfig()
   supfigs()
-  
