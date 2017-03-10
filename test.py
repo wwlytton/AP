@@ -63,7 +63,7 @@ def mkdf4 ():
   return df4
 
 if __name__ == '__main__':
-  createdf4=True
+  createdf4=False
   if createdf4:
     loadall()      # data and params
     df4=mkdf4()
