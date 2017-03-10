@@ -47,7 +47,7 @@ def supfigs ():
 if __name__ == '__main__':
   df4=loadpd()
   labs=['temp', 'gnabar', 'rall']  # should grab labs from pandas table
-  vals = {x:list(set(df4[x])) for x in labs} # yuk more roundoff problems??
+  vals = {x:set(df4[x].tolist())) for x in labs}
   mkfig()
   supfigs()
   
