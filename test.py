@@ -9,6 +9,8 @@ fig, ax, params, data = None, None, None, None
 from netpyne import specs, sim
 from collections import OrderedDict
 
+c0='cell_0' # convenient since only the 1 cell
+
 # reading data section
 def read ():
     global params, data
@@ -28,6 +30,11 @@ def loadpd (filename = 'data/baxA/df4.pd'):
 # fig, ax = plt.subplots(1, 1)
 # df4.query('gnabar==0.12 & temp==6.3 & rall==200').plot('percnajr','V0max',label="abc",ax=ax)
 # df4[(df4.gnabar==0.12) & (df4.temp==6.3) & (df4.rall==200)].plot('percnajr','V0max',label="abc",ax=ax)
+
+def dfq (cel,na,ra): 
+  "order of temp, na, ra"
+  from numpy import isclose as eq
+  return df4[eq(df4.gnabar,na) & eq(df4.temp,cel) & eq(df4.rall,ra)]
 
 def mkfig (): 
   global fig,ax
