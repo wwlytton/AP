@@ -41,13 +41,13 @@ def mkqstr (l):
     sr+="%g,"%(x[1])
   return (st.strip('[ &]'),sr.strip('[,]'))
 
-def supfigs ():
+def supfigs (y='V0max'):
   ax.clear()
   for i,tup in enumerate([zip(labs,x) for x in itr.product(*[v for x,v in vals.iteritems()])]):
     st,sr=mkqstr(tup)
     res=df4.query(st)
     if (len(res)<2): print st
-    res.plot('percnajr','V0max',label=sr,ax=ax,linewidth=10-i)
+    res.plot('percnajr',y,label=sr,ax=ax,linewidth=10-i)
 
 def mkdf4 ():
   spkdi={key: max(d['simData']['V_axon_0.0']['cell_0']) for key, d in data.iteritems()}
