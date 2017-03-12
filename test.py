@@ -10,6 +10,7 @@ from netpyne import specs, sim
 from collections import OrderedDict
 
 c0='cell_0' # convenient since only the 1 cell
+dca = {}
 
 # reading data section
 def read ():
@@ -26,6 +27,16 @@ def loadall (filename = 'data/baxA/baxA_allData.json'):
 def loadpd (filename = 'data/baxA/df4.pd'):
   "need precise_float=True to get the correct numbers"
   return pd.read_json('data/baxA/df4.pd',precise_float=True)
+
+def mkdict (vecl=vecl,tvec=tvec,idvec=idvec):
+  di = {'v%g'%(loc):v.c() for loc,v in zip(np.linspace(0,1,9), vecl)}
+  di['tvec'],di['idvec'] = tvec.c(),idvec.c()
+  return di
+
+def runfew ():
+  for ax.percnajr in np.linspace(0,0.5,5):
+    h.run()
+    dca['perc%g'%(ax.percnajr)] = mkdict()
 
 # fig, ax = plt.subplots(1, 1)
 # df4.query('gnabar==0.12 & temp==6.3 & rall==200').plot('percnajr','V0max',label="abc",ax=ax)
