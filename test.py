@@ -42,8 +42,9 @@ def setrec ():
   [nc.record(tvec, idvec, id) for id,nc in enumerate(ncl)]           
 
 def plotone (key='perc0'):
-  tv1=dca[key]['tvec']
+  tv1=dca[key]['tvec']; vl=h.Vector(tv1.size()); vl.fill(-25.0)
   tv=h.Vector(dca[key]['v0'].size()); tv.indgen(h.dt)
+  plt.scatter(tv1,vl)
   for k,v in dca.iteritems(): 
     if k.startswith('v'):
       plt.plot(tv,v)
