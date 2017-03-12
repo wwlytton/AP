@@ -28,6 +28,17 @@ def loadpd (filename = 'data/baxA/df4.pd'):
   "need precise_float=True to get the correct numbers"
   return pd.read_json('data/baxA/df4.pd',precise_float=True)
 
+vecl,tvec,idvec = [], h.Vector(100), h.Vector(100)
+def setrec ():
+  global vecl,tvec,idvec
+  ncl = []
+  for x in np.linspace(0,1,9):
+    v=h.Vector(20e3+10)
+    vecl.extend(v)
+    v.record(ax.axon(x)._ref_v)
+    ncl.extend(h.NetCon(ax.axon(x)._ref_v, None))
+  [nc.record(tvec, idvec, id) for id,nc in enumerate(ncl)]           
+
 def mkdict (vecl=vecl,tvec=tvec,idvec=idvec):
   di = {'v%g'%(loc):v.c() for loc,v in zip(np.linspace(0,1,9), vecl)}
   di['tvec'],di['idvec'] = tvec.c(),idvec.c()
