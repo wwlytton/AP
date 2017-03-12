@@ -68,8 +68,11 @@ def showvels ():
   L = 1.0  # ax.axon.L = 1000 so 1 mm; want to end up with mm/ms
   pts = dca[dca.keys()[0]]['tvec'].size()  # num of points recorded from on axon
   vec=h.Vector(pts) # of spots being recorded
-  vec.fill(L/(pts-1)) # spots are 125 mu apart
-  vels = {k:(vec.c().div(v['tvec'].c().deriv()), (1.0/(v['tvec'].max()-v['tvec'].min())))  for k,v in dca.iteritems() if v['tvec'].size()==9}
+  for k,v in dca.iteritems():
+    if v['tvec'].size()>2:
+      vec.resize(v['tvec'].size())
+      vec.fill(L/(pts-1)) # spots are 125 mu apart
+      vels[k] = (vec.c().div(v['tvec'].c().deriv()), (1.0/(v['tvec'].max()-v['tvec'].min())))  
   return vels
 
 # fig, ax = plt.subplots(1, 1)

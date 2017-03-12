@@ -4,8 +4,8 @@ ax=axonA.AxonA()
 reload(axonA) # can edit and reload
 '''
 from neuron import h
-axonL = 1000
-axonDiam =  10
+axonL = 2000
+axonDiam = 10
 
 class AxonA ():
   "Simplest axon"
