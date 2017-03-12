@@ -65,7 +65,7 @@ def showvels ():
   vec=h.Vector(pts) # of spots being recorded
   vec.fill(L/(pts-1)) # spots are 125 mu apart
   vels = {k:vec.c().div(v['tvec'].c().deriv()) for k,v in dca.iteritems() if v['tvec'].size()==9}
-  print ['%s %g '%(k,v.mean()) for k,v in vels.iteritems()]
+  print ['%.4g'%(0.9/(v['tvec'].max()-v['tvec'].min())) for k,v in dca.iteritems() if v['tvec'].size()==9]
   return vels
 
 # fig, ax = plt.subplots(1, 1)
