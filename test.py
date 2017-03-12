@@ -31,13 +31,19 @@ def loadpd (filename = 'data/baxA/df4.pd'):
 vecl,tvec,idvec = [], h.Vector(100), h.Vector(100)
 def setrec ():
   global vecl,tvec,idvec
-  ncl = []
+  ncl,vecl = [],[]
   for x in np.linspace(0,1,9):
     v=h.Vector(20e3+10)
     vecl.append(v)
     v.record(ax.axon(x)._ref_v)
     ncl.append(h.NetCon(ax.axon(x)._ref_v, None))
   [nc.record(tvec, idvec, id) for id,nc in enumerate(ncl)]           
+
+def plotone ():
+  tv=h.Vector(vecl[0].size())
+  tv.indgen(h.dt)
+  plt.clf()
+  for v in vecl: plt.plot(tv,v) 
 
 def mkdict (vecl=vecl,tvec=tvec,idvec=idvec):
   di = {'v%g'%(loc):v.c() for loc,v in zip(np.linspace(0,1,9), vecl)}
