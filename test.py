@@ -34,10 +34,21 @@ def mkdict (vecl=vecl,tvec=tvec,idvec=idvec):
   return di
 
 def runfew ():
+  dca = {}
   for ax.percnajr in np.linspace(0,0.9,9):
     ax.set_props()
     h.run()
     dca['perc%g'%(ax.percnajr)] = mkdict()
+  return dca
+
+def showvels (dca=dca):
+  L = 1000  # ax.axon.L = 1000
+  pts = dca[dca.keys()[0]]['tvec'].size()  # num of points recorded from on axon
+  vec=h.Vector(pts) # of spots being recorded
+  vec.fill(L/(pts-1)) # spots are 125 mu apart
+  vels = {k:vec.c().div(v['tvec'].c().deriv()) for k,v in dca.iteritems() if v['tvec'].size()==9}
+  print ['%s %g '%(k,v.mean()) for k,v in vels.iteritems()]
+  return vels
 
 # fig, ax = plt.subplots(1, 1)
 # df4.query('gnabar==0.12 & temp==6.3 & rall==200').plot('percnajr','V0max',label="abc",ax=ax)
