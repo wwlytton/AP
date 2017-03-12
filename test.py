@@ -34,9 +34,9 @@ def setrec ():
   ncl = []
   for x in np.linspace(0,1,9):
     v=h.Vector(20e3+10)
-    vecl.extend(v)
+    vecl.append(v)
     v.record(ax.axon(x)._ref_v)
-    ncl.extend(h.NetCon(ax.axon(x)._ref_v, None))
+    ncl.append(h.NetCon(ax.axon(x)._ref_v, None))
   [nc.record(tvec, idvec, id) for id,nc in enumerate(ncl)]           
 
 def mkdict (vecl=vecl,tvec=tvec,idvec=idvec):
