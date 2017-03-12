@@ -9,6 +9,13 @@ fig, ax, params, data = None, None, None, None
 from netpyne import specs, sim
 from collections import OrderedDict
 
+import axonA
+ax=axonA.AxonA()
+h.dt=0.00025
+h.tstop=10
+stim=h.IClamp(0.0,sec=ax.axon)
+stim.amp, stim.dur = 2, 5
+
 c0='cell_0' # convenient since only the 1 cell
 dca = {}
 
@@ -32,18 +39,18 @@ vecl,tvec,idvec = [], h.Vector(100), h.Vector(100)
 def setrec ():
   global vecl,tvec,idvec
   ncl,vecl = [],[]
-  for x in np.linspace(0,1,9):
+  for x in np.linspace(0,0.5,9): # these are relative locations so only go halfway
     v=h.Vector(20e3+10)
     vecl.append(v)
     v.record(ax.axon(x)._ref_v)
     nc = h.NetCon(ax.axon(x)._ref_v, None)
-    nc.thresh=-35 # default is -25
+    nc.threshold=-35 # default is -25
     ncl.append(nc)
   [nc.record(tvec, idvec, id) for id,nc in enumerate(ncl)]           
 
 def plotone (key='perc0'):
   plt.clf()
-  tv1=dca[key]['tvec']; vl=h.Vector(tv1.size()); vl.fill(-25.0)
+  tv1=dca[key]['tvec']; vl=h.Vector(tv1.size()); vl.fill(-35.0)
   tv=h.Vector(dca[key]['v0'].size()); tv.indgen(h.dt)
   plt.scatter(tv1,vl)
   for k,v in dca[key].iteritems(): 
@@ -65,7 +72,8 @@ def runfew ():
   return dca
 
 def showvels ():
-  L = 1.0  # ax.axon.L = 1000 so 1 mm; want to end up with mm/ms
+  vels={}
+  L = 1.0  # ax.axon.L = 2mm but only looking at first 1mm
   pts = dca[dca.keys()[0]]['tvec'].size()  # num of points recorded from on axon
   vec=h.Vector(pts) # of spots being recorded
   for k,v in dca.iteritems():
@@ -117,6 +125,7 @@ def mkdf4 ():
   df4.columns=['V0max','gnabar','rall','temp','percnajr','numspks']
   return df4
 
+'''
 if __name__ == '__main__':
   createdf4=False
   if createdf4:
@@ -129,4 +138,4 @@ if __name__ == '__main__':
   mkfig()
   supfigs()
   plt.show()
-  
+'''
