@@ -75,9 +75,9 @@ def showvels ():
       vels[k] = (vec.c().div(v['tvec'].c().deriv()), (1.0/(v['tvec'].max()-v['tvec'].min())))  
   return vels
 
-# fig, ax = plt.subplots(1, 1)
-# df4.query('gnabar==0.12 & temp==6.3 & rall==200').plot('percnajr','V0max',label="abc",ax=ax)
-# df4[(df4.gnabar==0.12) & (df4.temp==6.3) & (df4.rall==200)].plot('percnajr','V0max',label="abc",ax=ax)
+# fig, axi = plt.subplots(1, 1)
+# df4.query('gnabar==0.12 & temp==6.3 & rall==200').plot('percnajr','V0max',label="abc",ax=axi)
+# df4[(df4.gnabar==0.12) & (df4.temp==6.3) & (df4.rall==200)].plot('percnajr','V0max',label="abc",ax=axi)
 
 def dfq (cel,na,ra): 
   "order of temp, na, ra"
@@ -85,8 +85,8 @@ def dfq (cel,na,ra):
   return df4[eq(df4.gnabar,na) & eq(df4.temp,cel) & eq(df4.rall,ra)]
 
 def mkfig (): 
-  global fig,ax
-  fig, ax = plt.subplots(1, 1)
+  global fig,axi
+  fig, axi = plt.subplots(1, 1)
 
 def mkqstr (l):
   'Create a query string from a list of tuples with (name, value)'
@@ -97,12 +97,12 @@ def mkqstr (l):
   return (st.strip('[ &]'),sr.strip('[,]'))
 
 def supfigs (y='V0max'):
-  ax.clear()
+  axi.clear()
   for i,tup in enumerate([zip(labs,x) for x in itr.product(*[v for x,v in vals.iteritems()])]):
     st,sr=mkqstr(tup)
     res=df4.query(st)
     if (len(res)<2): print st
-    res.plot('percnajr',y,label=sr,ax=ax,linewidth=10-i)
+    res.plot('percnajr',y,label=sr,ax=axi,linewidth=10-i)
 
 def mkdf4 ():
   spkdi={key: max(d['simData']['V_axon_0.0']['cell_0']) for key, d in data.iteritems()}
