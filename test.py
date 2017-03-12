@@ -65,6 +65,7 @@ def mkdict ():
 
 def runfew ():
   dca = {}
+  setrec()
   for ax.percnajr in np.linspace(0,0.9,9):
     ax.set_props()
     h.run()
