@@ -45,9 +45,10 @@ def plotone ():
   plt.clf()
   for v in vecl: plt.plot(tv,v) 
 
-def mkdict (vecl=vecl,tvec=tvec,idvec=idvec):
+def mkdict ():
+  global vecl,tvec,idvec
   di = {'v%g'%(loc):v.c() for loc,v in zip(np.linspace(0,1,9), vecl)}
-  di['tvec'],di['idvec'] = tvec.c(),idvec.c()
+  di['tvec'], di['idvec'] = tvec.c(), idvec.c()
   return di
 
 def runfew ():
