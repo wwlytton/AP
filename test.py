@@ -35,7 +35,7 @@ def mkdict (vecl=vecl,tvec=tvec,idvec=idvec):
 
 def runfew ():
   for ax.percnajr in np.linspace(0,0.5,5):
-    axon.set_props()
+    ax.set_props()
     h.run()
     dca['perc%g'%(ax.percnajr)] = mkdict()
 
