@@ -42,10 +42,11 @@ def runfew ():
   return dca
 
 def showvels (dca=dca):
-  L = 1000  # ax.axon.L = 1000
+  L = 1  # ax.axon.L = 1000 so 1 mm; want to end up with mm/ms
   pts = dca[dca.keys()[0]]['tvec'].size()  # num of points recorded from on axon
   vec=h.Vector(pts) # of spots being recorded
   vec.fill(L/(pts-1)) # spots are 125 mu apart
+  vec.printf()
   vels = {k:vec.c().div(v['tvec'].c().deriv()) for k,v in dca.iteritems() if v['tvec'].size()==9}
   print ['%s %g '%(k,v.mean()) for k,v in vels.iteritems()]
   return vels
