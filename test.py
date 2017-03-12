@@ -36,14 +36,17 @@ def setrec ():
     v=h.Vector(20e3+10)
     vecl.append(v)
     v.record(ax.axon(x)._ref_v)
-    ncl.append(h.NetCon(ax.axon(x)._ref_v, None))
+    nc = h.NetCon(ax.axon(x)._ref_v, None)
+    nc.thresh=-35 # default is -25
+    ncl.append(nc)
   [nc.record(tvec, idvec, id) for id,nc in enumerate(ncl)]           
 
-def plotone ():
-  tv=h.Vector(vecl[0].size())
-  tv.indgen(h.dt)
-  plt.clf()
-  for v in vecl: plt.plot(tv,v) 
+def plotone (key='perc0'):
+  tv1=dca[key]['tvec']
+  tv=h.Vector(dca[key]['v0'].size()); tv.indgen(h.dt)
+  for k,v in dca.iteritems(): 
+    if k.startswith('v'):
+      plt.plot(tv,v)
 
 def mkdict ():
   global vecl,tvec,idvec
@@ -60,7 +63,7 @@ def runfew ():
   return dca
 
 def showvels ():
-  L = 1  # ax.axon.L = 1000 so 1 mm; want to end up with mm/ms
+  L = 1.0  # ax.axon.L = 1000 so 1 mm; want to end up with mm/ms
   pts = dca[dca.keys()[0]]['tvec'].size()  # num of points recorded from on axon
   vec=h.Vector(pts) # of spots being recorded
   vec.fill(L/(pts-1)) # spots are 125 mu apart
