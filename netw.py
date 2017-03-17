@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne') # make sure get the right one
 from netpyne import specs, sim
 
 # Network parameters
