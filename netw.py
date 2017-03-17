@@ -1,3 +1,4 @@
+# execfile('netw.py')
 import sys
 sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne') # make sure get the right one
 from netpyne import specs, sim
@@ -71,7 +72,7 @@ simConfig.filename = 'model_output'  # Set file output name
 simConfig.savePickle = False         # Save params, network and sim output to pickle file
 
 simConfig.analysis['plotRaster'] = {'orderBy': 'y', 'orderInverse': True}      # Plot a raster
-simConfig.analysis['plotTraces'] = False # {'include': [('E2',0), ('E4', 0), ('E5', 5)]}      # Plot recorded traces for this list of cells
+simConfig.analysis['plotTraces'] = [] # {'include': [('E2',0), ('E4', 0), ('E5', 5)]}      # Plot recorded traces for this list of cells
 simConfig.analysis['plot2Dnet'] = False            # plot 2D visualization of cell positions and connections
 simConfig.analysis['plotConn'] = False             # plot connectivity matrix
 
