@@ -2,3 +2,34 @@ DEFAULT nafjr
 DEFAULT vecst
 DEFAULT stats
 DEFAULT misc
+
+DEFAULT vecst
+DEFAULT nstim
+DEFAULT samnutils
+
+DEFAULT MyExp2SynNMDABB
+ 
+: Ben Suter ion channels
+DEFAULT kap_BS
+DEFAULT kdmc_BS
+DEFAULT kdr_BS
+DEFAULT nax_BS
+
+: Mainen/Sej cell ion channels
+DEFAULT cadad
+
+: mig ion channels
+DEFAULT can_mig
+DEFAULT cal_mig
+
+: from Ben
+DEFAULT savedist
+
+: Kole 2006 H channel
+DEFAULT h_kole
+
+: BK channel with ca and voltage dependence
+DEFAULT kBK
+
+: NMDA and AMPA mod files from Neurosim repo /usr/site/nrniv/local/mod
+DEFAULT AMPA
