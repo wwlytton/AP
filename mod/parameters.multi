@@ -2,8 +2,6 @@ DEFAULT nafjr
 DEFAULT vecst
 DEFAULT stats
 DEFAULT misc
-
-DEFAULT vecst
 DEFAULT nstim
 DEFAULT samnutils
 
