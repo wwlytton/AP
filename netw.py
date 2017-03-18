@@ -1,6 +1,7 @@
 # execfile('netw.py')
 import sys
 sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne') # make sure get the right one
+sys.path.append('/u/graham/projects/eee/sim/cells')
 from netpyne import specs, sim
 
 # Network parameters
@@ -14,6 +15,7 @@ netParams.probLengthConst = 150.0 # length constant for conn probability (um)
 
 
 ## Population parameters
+spi7=netParams.importCellParams(label='spi7',conds={'cellType':'E'}, fileName='SPI7.py', cellName='SPI7')
 netParams.popParams['E2'] = {'cellType': 'E', 'numCells': 50, 'yRange': [100,300], 'cellModel': 'SPI7'}
 netParams.popParams['I2'] = {'cellType': 'I', 'numCells': 50, 'yRange': [100,300], 'cellModel': 'HH'}
 netParams.popParams['E4'] = {'cellType': 'E', 'numCells': 50, 'yRange': [300,600], 'cellModel': 'HH'}
