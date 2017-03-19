@@ -75,6 +75,8 @@ simConfig.analysis['plot2Dnet'] = True            # plot 2D visualization of cel
 simConfig.analysis['plotConn'] = True             # plot connectivity matrix
 
 # Create network and run simulation
-sim.createSimulateAnalyze(netParams = netParams, simConfig = simConfig)    
-   
+# sim.createSimulateAnalyze(netParams = netParams, simConfig = simConfig)    
+sim.create(netParams = netParams, simConfig = simConfig)      
+sim.simRun()
+ 
 # import pylab; pylab.show()  # this line is only necessary in certain systems where figures appear empty
