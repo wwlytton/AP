@@ -4,10 +4,11 @@ ax=axonA.AxonA()
 reload(axonA) # can edit and reload
 '''
 from neuron import h
-axonL = 2000
-axonDiam = 10
 
 class AxonA ():
+  axonL = 2000
+  axonDiam = 10
+
   "Simplest axon"
   def __init__(self,x=0,y=0,z=0,ID=0,gnabar=0.12,percnajr=0,rall=35.4,nseg=99): # proportion j.r. na channel
     self.x,self.y,self.z,self.ID=x,y,z,ID
@@ -34,8 +35,8 @@ class AxonA ():
     self.set_geom()
 
   def set_geom (self):
-    self.axon.L = axonL
-    self.axon.diam = axonDiam;
+    self.axon.L = AxonA.axonL
+    self.axon.diam = AxonA.axonDiam;
 
   def activeoff (self):
     for sec in self.all_sec: sec.gbar_naf=sec.gbar_kdr=sec.gbar_nafjr=0.0

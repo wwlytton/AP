@@ -17,7 +17,7 @@ netParams.probLengthConst = 150.0 # length constant for conn probability (um)
 
 
 ## Population parameters
-# spi7=netParams.importCellParams(label='spi7',conds={'cellType':'E'}, fileName='SPI7.py', cellName='SPI7')
+spi7=netParams.importCellParams(label='spi7',conds={'cellType':'Q'}, fileName='SPI7.py', cellName='SPI7')
 netParams.popParams['E2'] = {'cellType': 'E', 'numCells': 50, 'yRange': [100,300], 'cellModel': 'HH'}
 netParams.popParams['I2'] = {'cellType': 'I', 'numCells': 50, 'yRange': [100,300], 'cellModel': 'HH'}
 netParams.popParams['E4'] = {'cellType': 'E', 'numCells': 50, 'yRange': [300,600], 'cellModel': 'HH'}
