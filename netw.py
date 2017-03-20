@@ -18,7 +18,7 @@ netParams.probLengthConst = 150.0 # length constant for conn probability (um)
 
 ## Population parameters
 spi7=netParams.importCellParams(label='spi7',conds={'cellType':'E', 'cellModel': 'Cmp7'}, fileName='SPI7.py', cellName='SPI7')
-netParams.popParams['E2'] = {'cellType': 'E', 'numCells': 50, 'yRange': [100,300], 'cellModel': 'HH'}
+netParams.popParams['E2'] = {'cellType': 'E', 'numCells': 50, 'yRange': [100,300], 'cellModel': 'Cmp7'}
 netParams.popParams['I2'] = {'cellType': 'I', 'numCells': 50, 'yRange': [100,300], 'cellModel': 'HH'}
 netParams.popParams['E4'] = {'cellType': 'E', 'numCells': 50, 'yRange': [300,600], 'cellModel': 'HH'}
 netParams.popParams['I4'] = {'cellType': 'I', 'numCells': 50, 'yRange': [300,600], 'cellModel': 'HH'}
@@ -77,7 +77,7 @@ simConfig.filename = 'model_output'  # Set file output name
 simConfig.savePickle = False         # Save params, network and sim output to pickle file
 
 simConfig.analysis['plotRaster'] = {'orderBy': 'y', 'orderInverse': True}      # Plot a raster
-simConfig.analysis['plotTraces'] = {} # {'include': [('E2',0), ('E4', 0), ('E5', 5)]}      # Plot recorded traces for this list of cells
+simConfig.analysis['plotTraces'] = {'include': [('E2',0), ('E2',5), ('E2', 10), ('E2', 15)]}      # Plot recorded traces for this list of cells
 simConfig.analysis['plot2Dnet'] = False            # plot 2D visualization of cell positions and connections
 simConfig.analysis['plotConn'] = False             # plot connectivity matrix
 
