@@ -1,7 +1,9 @@
 # execfile('netw.py')
 import sys
-sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne') # make sure get the right one
+if '/usr/site/nrniv/local/python/netpyne' not in sys.path: sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne')
 sys.path.append('/u/graham/projects/eee/sim/cells')
+
+# make sure get the right one
 from netpyne import specs, sim
 
 # Network parameters
@@ -47,6 +49,7 @@ netParams.synMechParams['inh'] = {'mod': 'Exp2Syn', 'tau1': 0.6, 'tau2': 8.5, 'e
 netParams.stimSourceParams['bkg'] = {'type': 'NetStim', 'rate': 20, 'noise': 0.3}
 netParams.stimTargetParams['bkg->all'] = {'source': 'bkg', 'conds': {'cellType': ['E','I']}, 'weight': 0.01, 'delay': 'max(1, gauss(5,2))', 'synMech': 'exc'}
 
+
 ## Cell connectivity rules
 netParams.connParams['E->all'] = {
   'preConds': {'cellType': 'E'}, 'postConds': {'y': [100,1000]},  #  E -> all (100-1000 um)
@@ -65,8 +68,8 @@ netParams.connParams['I->E'] = {
 
 # Simulation options
 simConfig = specs.SimConfig()        # object of class SimConfig to store simulation configuration
-simConfig.duration = 100             # Duration of the simulation, in ms
-simConfig.dt = 0.05                  # Internal integration timestep to nuse
+simConfig.duration = 1*1e3           # Duration of the simulation, in ms
+simConfig.dt = 0.05                  # Internal integration timestep to use
 simConfig.verbose = False            # Show detailed messages 
 simConfig.recordTraces = {'V_soma':{'sec':'soma','loc':0.5,'var':'v'}}  # Dict with traces to record
 simConfig.recordStep = 1             # Step size in ms to save data (eg. V traces, LFP, etc)
@@ -74,13 +77,16 @@ simConfig.filename = 'model_output'  # Set file output name
 simConfig.savePickle = False         # Save params, network and sim output to pickle file
 
 simConfig.analysis['plotRaster'] = {'orderBy': 'y', 'orderInverse': True}      # Plot a raster
-simConfig.analysis['plotTraces'] = {'include': [('E2',0), ('E4', 0), ('E5', 5)]}      # Plot recorded traces for this list of cells
+simConfig.analysis['plotTraces'] = {} # {'include': [('E2',0), ('E4', 0), ('E5', 5)]}      # Plot recorded traces for this list of cells
 simConfig.analysis['plot2Dnet'] = False            # plot 2D visualization of cell positions and connections
 simConfig.analysis['plotConn'] = False             # plot connectivity matrix
 
 # Create network and run simulation
-sim.create(netParams = netParams, simConfig = simConfig)    
-
+# sim.createSimulateAnalyze(netParams = netParams, simConfig = simConfig)    
+sim.create(netParams = netParams, simConfig = simConfig)      
+# sim.runSim()
+# sim.analyze()
+ 
 def numspks (ty='E2'): 
   spt,spi = sim.allSimData.spkt, sim.allSimData.spkid
   ll = [x.gid for x in sim.net.allCells if x.tags.popLabel == ty]
