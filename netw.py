@@ -44,11 +44,9 @@ netParams.cellParams['Irule'] = cellRule                          # add dict to 
 netParams.synMechParams['exc'] = {'mod': 'Exp2Syn', 'tau1': 0.8, 'tau2': 5.3, 'e': 0}  # NMDA synaptic mechanism
 netParams.synMechParams['inh'] = {'mod': 'Exp2Syn', 'tau1': 0.6, 'tau2': 8.5, 'e': -75}  # GABA synaptic mechanism
 
-
 # Stimulation parameters
 netParams.stimSourceParams['bkg'] = {'type': 'NetStim', 'rate': 20, 'noise': 0.3}
 netParams.stimTargetParams['bkg->all'] = {'source': 'bkg', 'conds': {'cellType': ['E','I']}, 'weight': 0.01, 'delay': 'max(1, gauss(5,2))', 'synMech': 'exc'}
-
 
 ## Cell connectivity rules
 netParams.connParams['E->all'] = {
@@ -77,7 +75,7 @@ simConfig.filename = 'model_output'  # Set file output name
 simConfig.savePickle = False         # Save params, network and sim output to pickle file
 
 simConfig.analysis['plotRaster'] = {'orderBy': 'y', 'orderInverse': True}      # Plot a raster
-simConfig.analysis['plotTraces'] = {'include': [('E2',0), ('E2',5), ('E2', 10), ('E2', 15)]}      # Plot recorded traces for this list of cells
+simConfig.analysis['plotTraces'] = {'include': [('E2',0), ('E4', 0), ('E5', 5)]}      # Plot recorded traces for this list of cells
 simConfig.analysis['plot2Dnet'] = False            # plot 2D visualization of cell positions and connections
 simConfig.analysis['plotConn'] = False             # plot connectivity matrix
 
