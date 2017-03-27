@@ -84,6 +84,7 @@ simConfig.analysis['plotConn'] = False             # plot connectivity matrix
 sim.create(netParams = netParams, simConfig = simConfig)      
 sim.runSim()
 sim.gatherData()
+sim.saveData()
 # sim.analysis.rasterPlot()
  
 tt=[]
