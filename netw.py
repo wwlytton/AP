@@ -86,8 +86,10 @@ sim.create(netParams = netParams, simConfig = simConfig)
 # sim.gatherData()
 # sim.analysis.rasterPlot()
  
+tt=[]
 def numspks (ty='E2'): 
+  global tt
   spt,spi = sim.allSimData.spkt, sim.allSimData.spkid
   ll = [x.gid for x in sim.net.allCells if x.tags.popLabel == ty]
-  tt = [t for t,i in zip(spt,spi) if i in ll]
+  tt = [(i,t) for t,i in zip(spt,spi) if i in ll]
   return len(tt)
