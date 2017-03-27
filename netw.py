@@ -66,7 +66,7 @@ netParams.connParams['I->E'] = {
 
 # Simulation options
 simConfig = specs.SimConfig()        # object of class SimConfig to store simulation configuration
-simConfig.duration = 1*1e3           # Duration of the simulation, in ms
+simConfig.duration = 1*1e2           # Duration of the simulation, in ms
 simConfig.dt = 0.05                  # Internal integration timestep to use
 simConfig.verbose = False            # Show detailed messages 
 simConfig.recordTraces = {'V_soma':{'sec':'soma','loc':0.5,'var':'v'}}  # Dict with traces to record
