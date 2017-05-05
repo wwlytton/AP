@@ -50,14 +50,14 @@ netParams.stimTargetParams['bkg->all'] = {'source': 'bkg', 'conds': {'cellType':
 ## Cell connectivity rules
 netParams.connParams['E->most'] = {
   'preConds': {'cellType': 'E'}, 
-  'postConds': {'cellType':p for p in netParams.popParams if p != 'E2'},  #  E -> not E2
+  'postConds': {'popLabel':p for p in netParams.popParams if p != 'E2'},  #  E -> not E2
   'probability': 0.1 ,                  # probability of connection
   'weight': '0.005*post_ynorm',         # synaptic weight 
   'delay': 'dist_3D/propVelocity',      # transmission delay (ms) 
   'synMech': 'exc'}                     # synaptic mechanism 
 
 netParams.connParams['E->E2'] = {
-  'preConds': {'cellType': 'E'}, 'postConds': {'cellType': 'E2'},  #  E -> E2
+  'preConds': {'cellType': 'E'}, 'postConds': {'popLabel': 'E2'},  #  E -> E2
   'probability': 0.1 ,                  # probability of connection
   'weight': '0.005*post_ynorm',         # synaptic weight 
   'delay': 'dist_3D/propVelocity',      # transmission delay (ms) 
