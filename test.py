@@ -1,3 +1,4 @@
+# execfile('test.py')
 import sys
 sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne')
 import itertools as itr
@@ -30,6 +31,8 @@ def loadall (filename = 'data/baxA/baxA_allData.json'):
   global params, data
   with open(filename, 'r') as fileObj: dataLoad = json.load(fileObj, object_pairs_hook=specs.OrderedDict)
   params, data = dataLoad['params'], dataLoad['data']
+  pdi={k:d['paramValues'] for k,d in data.iteritems()} # pdi gives the values in a list for each of those codes
+  for k in data.keys(): data[str(pdi[k])] = data.pop(k)
 
 def loadpd (filename = 'data/baxA/df4.pd'):
   "need precise_float=True to get the correct numbers"
