@@ -119,11 +119,14 @@ def supfigs (y='V0max'):
 def mkdf4 ():
   spkdi={key: max(d['simData']['V_axon_0.0']['cell_0']) for key, d in data.iteritems()}
   spks={key: max for key, max in spkdi.iteritems() if max>-30}
+  pdi1={ str(d['paramValues'])[1:-1].replace(',',''): d['paramValues'] for k,d in data.iteritems()}
   numdi={key: len(d['simData']['spkt']) for key, d in data.iteritems()}
   df1 = pd.DataFrame.from_dict(spkdi, orient='index') 
+  df2 = pd.DataFrame.from_dict(pdi1, orient='index') 
+  df3 = pd.merge(df1,df2,left_index=True,right_index=True)
   tmp=pd.DataFrame(columns=['numspks']).from_dict(numdi, orient='index')  # can't set the column names at start??
-  df4 = pd.merge(df1,tmp,left_index=True,right_index=True)
-  df4.columns=['percnajr','numspks']
+  df4 = pd.merge(df3,tmp,left_index=True,right_index=True)
+  df4.columns=['V0max','gnabar','rall','temp','percnajr','numspks']
   return df4
 
 '''
