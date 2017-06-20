@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import pylab as plt
 import json
-fig, ax, params, data = None, None, None, None
+fig, ax, params, data, pdi = None, None, None, None, None
 from netpyne import specs, sim
 from collections import OrderedDict
 
@@ -28,10 +28,10 @@ def read ():
     params, data = readBatchData('data/', 'baxA', loadAll=1, saveAll=0, vars=None, maxCombs=None) 
 
 def loadall (filename = 'data/baxA/baxA_allData.json'): 
-  global params, data
+  global params, data, pdi
   with open(filename, 'r') as fileObj: dataLoad = json.load(fileObj, object_pairs_hook=specs.OrderedDict)
   params, data = dataLoad['params'], dataLoad['data']
-  pdi={k:d['paramValues'] for k,d in data.iteritems()} # pdi gives the values in a list for each of those codes
+  pdi={k:str(d['paramValues'])[1:-1].replace(',','')  for k,d in data.iteritems()} # pdi gives the values in a list for each of those codes
   for k in data.keys(): data[str(pdi[k])] = data.pop(k)
 
 def loadpd (filename = 'data/baxA/df4.pd'):
@@ -119,14 +119,11 @@ def supfigs (y='V0max'):
 def mkdf4 ():
   spkdi={key: max(d['simData']['V_axon_0.0']['cell_0']) for key, d in data.iteritems()}
   spks={key: max for key, max in spkdi.iteritems() if max>-30}
-  pdi={k:d['paramValues'] for k,d in data.iteritems()}
   numdi={key: len(d['simData']['spkt']) for key, d in data.iteritems()}
   df1 = pd.DataFrame.from_dict(spkdi, orient='index') 
-  df2 = pd.DataFrame.from_dict(pdi, orient='index') 
-  df3 = pd.merge(df1,df2,left_index=True,right_index=True)
   tmp=pd.DataFrame(columns=['numspks']).from_dict(numdi, orient='index')  # can't set the column names at start??
-  df4 = pd.merge(df3,tmp,left_index=True,right_index=True)
-  df4.columns=['V0max','gnabar','rall','temp','percnajr','numspks']
+  df4 = pd.merge(df1,tmp,left_index=True,right_index=True)
+  df4.columns=['percnajr','numspks']
   return df4
 
 '''
