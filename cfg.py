@@ -1,6 +1,6 @@
 """ cfg.py """
 from netpyne import specs
-D = specs.Dict
+from netpyne.specs import Dict, ODict
 cfg = specs.SimConfig()  
 
 # Run parameters
@@ -31,7 +31,7 @@ cfg.saveJson = True
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 # Analysis and plotting 
-cfg.analysis.plotTraces = D({'include': ['axA'], 'oneFigPer': 'cell', 'saveFig': False, 
+cfg.analysis.plotTraces = Dict({'include': ['axA'], 'oneFigPer': 'cell', 'saveFig': False, 
                              'showFig': False, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
 
 # Parameters
@@ -39,4 +39,4 @@ cfg.percnajr, cfg.rall, cfg.gnabar = 0.0, 35.5, 0.5
 
 # Current inputs 
 cfg.addstim = 1
-cfg.stim = D({'popu': 'axA', 'sec': 'axon', 'loc': 0.0, 'start': 0, 'dur': 5, 'amp': 2.0}) # avoid word pop since that's a builtin method
+cfg.stim = Dict({'popu': 'axA', 'sec': 'axon', 'loc': 0.0, 'start': 0, 'dur': 5, 'amp': 2.0}) # avoid word pop since that's a builtin method
