@@ -1,9 +1,4 @@
 from netpyne import specs
-try:
-	from __main__ import cfg  # import SimConfig object with params from parent module
-except:
-	from cfg import cfg
-	
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 axr=netParams.importCellParams(label='axA', conds={'cellType': 'axA'}, fileName='axonA.py', cellName='AxonA', 
                                cellArgs={'percnajr':cfg.percnajr, 'rall':cfg.rall, 'gnabar':cfg.gnabar})
