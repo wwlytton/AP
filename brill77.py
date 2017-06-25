@@ -5,6 +5,7 @@ import numpy as np
 import pylab as plt
 h.load_file('stdrun.hoc')
 fig, axi = None, None
+datestr = os.popen('datestring').read()
 
 def setup ():
   global myel,nodl,stim
@@ -41,8 +42,9 @@ def plotv (name=''):
   axi.clear()
   xval = np.linspace(0, h.tstop, len(nrec[0]))
   for x in nrec: plt.plot(xval,x)
-  if len(name)>0: plt.savefig(name)
-  plt.show()
+  if name: 
+    plt.savefig(name)
+    plt.show()
     
 def recv (thresh=35):
   global nrec
@@ -60,6 +62,13 @@ def speed ():
   spv = ndist/np.diff(spkt)/1e3  # somehow alternative values
   maxt = [vec.max_ind()*h.dt for vec in nrec]
   vel = ndist/np.diff(maxt)/1e3
+
+def rf ():
+  for x in range(11):
+    print x, 
+    setparams(pnafjr=x/10)
+    h.run()
+    plotv(name='gif/%s_pnafjr%d.png'%(datestr,x*10))
 
 setup()
 setparams()
