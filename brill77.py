@@ -3,20 +3,28 @@ from neuron import h
 import os, sys, json
 import numpy as np
 import pylab as plt
-
 h.load_file('stdrun.hoc')
-h.tstop = 6
 
-h.load_file('brill77/cable.hoc')  # make(50, 1000) is called at bottom of file; 50 nodes with 1e3 internode interval
-stim=h.IClamp(0.5,sec=h.node[0])
-nodl = [x for x in h.allsec() if 'node' in str(x)]
-myel = [x for x in h.allsec() if 'myel' in str(x)]
-stim.delay, stim.dur, stim.amp = 0, 0.1, 10
+def setup ():
+  global myel,nodl,stim
+  h.load_file('brill77/cable.hoc')  # make(50, 1000) is called at bottom of file; 50 nodes with 1e3 internode interval
+  h.tstop = 6
+  myel = [x for x in h.allsec() if 'myel' in str(x)]
+  nodl = [x for x in h.allsec() if 'node' in str(x)]
+  stim=h.IClamp(0.5,sec=h.node[0])
+  stim.delay, stim.dur, stim.amp = 0, 0.1, 10
+  for n in nodl: 
+    n.insert('nafjr')
+    n(0.5).nafjr.gnabar=0.0
+
+def setparams (pnafjr=0.0, gnabar=1.2):
+  for n in nodl:
+    n(0.5).nafjr.gnabar = pnafjr*gnabar
+    n(0.5).hh.gnabar = (1-pnafjr)*gnabar
 
 def mkfig (): 
   global fig,axi
   fig, axi = plt.subplots(1, 1)
-mkfig()
 
 def gr ():
   g=h.Graph()
@@ -49,8 +57,11 @@ def speed ():
   maxt = [vec.max_ind()*h.dt for vec in nrec]
   vel = ndist/np.diff(maxt)/1e3
 
+setup()
+setparams()
 recv()
-h.run()  
-axi.clear()
-plot()
-
+mkfig()
+def run ():
+  h.run()  
+  axi.clear()
+  plot()
