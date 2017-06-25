@@ -42,10 +42,12 @@ def recv (thresh=35):
   for v,n in zip(nrec,nodl): v.record(n(0.5)._ref_v)
 
 def speed ():
-  global spv, Ltot, dist
+  global spv, Ltot, dist, vel
   Ltot = sum([x.L for x in h.allsec()])
   ndist = nodl[0].L + myel[0].L # 1003.183
   spv = ndist/np.diff(spkt)/1e3  # somehow alternative values
+  maxt = [vec.max_ind()*h.dt for vec in nrec]
+  vel = ndist/np.diff(maxt)/1e3
 
 recv()
 h.run()  
