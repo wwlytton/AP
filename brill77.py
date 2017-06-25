@@ -40,6 +40,10 @@ def recv ():
   for i,nc in enumerate(ncl): nc.record(spkt,spkid, i)  # netcon.record(tvec, idvec, id)
   for v,n in zip(nrec,nodl): v.record(n(0.5)._ref_v)
 
+def speed ():
+  global spv
+  spv = h.Vector().deriv(spkt,h.dt, 2) # method 2 is default
+
 recv()
 h.run()  
 axi.clear()
