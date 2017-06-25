@@ -32,10 +32,11 @@ def plot ():
   xval = np.linspace(0, h.tstop, len(nrec[0]))
   for x in nrec: plt.plot(xval,x)
 
-def recv ():
+def recv (thresh=35):
   global nrec
   spkt, spkid = h.Vector(len(nodl)+10), h.Vector(len(nodl)+10)
   ncl = [h.NetCon(sec(0.5)._ref_v, None, sec=sec) for sec in nodl]
+  for nc in ncl: nc.threshold=thresh
   nrec = [h.Vector(h.tstop/h.dt+10) for x in range(len(nodl))]
   for i,nc in enumerate(ncl): nc.record(spkt,spkid, i)  # netcon.record(tvec, idvec, id)
   for v,n in zip(nrec,nodl): v.record(n(0.5)._ref_v)
@@ -44,7 +45,7 @@ def speed ():
   global spv, Ltot, dist
   Ltot = sum([x.L for x in h.allsec()])
   ndist = nodl[0].L + myel[0].L # 1003.183
-  spv = h.Vector().deriv(spkt, ndist, 2) # ms/micron
+  spv = ndist/np.diff(spkt)/1e3  # somehow alternative values
 
 recv()
 h.run()  
