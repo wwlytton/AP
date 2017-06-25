@@ -15,7 +15,7 @@ def setup ():
   myel = [x for x in h.allsec() if 'myel' in str(x)]
   nodl = [x for x in h.allsec() if 'node' in str(x)]
   stim=h.IClamp(0.5,sec=h.node[0])
-  stim.delay, stim.dur, stim.amp = 0, 0.1, 10
+  stim.delay, stim.dur, stim.amp = 0, 0.1, 5
   for n in nodl: 
     n.insert('nafjr')
     n(0.5).nafjr.gnabar=0.0
