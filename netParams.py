@@ -1,6 +1,6 @@
 from netpyne import specs
 from netpyne.specs import Dict, ODict
-import cfg
+from cfg import cfg
 
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 axr=netParams.importCellParams(label='axA', conds={'cellType': 'axA'}, fileName='axonA.py', cellName='AxonA', 
