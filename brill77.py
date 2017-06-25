@@ -66,7 +66,7 @@ def speed ():
 def rf ():
   for x in range(11):
     print x, 
-    setparams(pnafjr=x/10)
+    setparams(pnafjr=x/10.0)
     h.run()
     plotv(name='gif/%s_pnafjr%d.png'%(datestr,x*10))
 
