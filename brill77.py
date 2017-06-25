@@ -8,7 +8,7 @@ h.load_file('stdrun.hoc')
 def setup ():
   global myel,nodl,stim
   h.load_file('brill77/cable.hoc')  # make(50, 1000) is called at bottom of file; 50 nodes with 1e3 internode interval
-  h.tstop = 6
+  h.tstop = 10
   myel = [x for x in h.allsec() if 'myel' in str(x)]
   nodl = [x for x in h.allsec() if 'node' in str(x)]
   stim=h.IClamp(0.5,sec=h.node[0])
