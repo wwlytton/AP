@@ -36,12 +36,12 @@ def gr ():
   g.addvar("node49",h.node[49](0.5)._ref_v,2,2)
   h.graphList[0].append(g)
 
-def plotv (pr=True, name='aa.png'):
+def plotv (name=''):
   if fig is None: mkfig()
   axi.clear()
   xval = np.linspace(0, h.tstop, len(nrec[0]))
   for x in nrec: plt.plot(xval,x)
-  if pr: plt.savefig(name)
+  if len(name)>0: plt.savefig(name)
   plt.show()
     
 def recv (thresh=35):
