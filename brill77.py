@@ -13,6 +13,10 @@ nodl = [x for x in h.allsec() if 'node' in str(x)]
 myel = [x for x in h.allsec() if 'myel' in str(x)]
 stim.delay, stim.dur, stim.amp = 0, 0.1, 10
 
+def mkfig (): 
+  global fig,axi
+  fig, axi = plt.subplots(1, 1)
+
 def gr ():
   g=h.Graph()
   g.size(0, h.tstop, -80, 50)
@@ -22,6 +26,11 @@ def gr ():
   g.addvar("node49",h.node[49](0.5)._ref_v,2,2)
   h.graphList[0].append(g)
 
+def plot ():
+  axi.clear()
+  xval = np.linspace(0, h.tstop, len(nrec[0]))
+  for x in nrec: plt.plot(xval,x)
+
 def recv ():
   global nrec
   nrec = [h.Vector(h.tstop/h.dt+10) for x in range(len(nodl))]
@@ -29,3 +38,6 @@ def recv ():
 
 recv()
 h.run()  
+mkfig()
+plot()
+
