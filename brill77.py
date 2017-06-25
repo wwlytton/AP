@@ -3,6 +3,7 @@ from neuron import h
 import os, sys, json
 import numpy as np
 import pylab as plt
+import pickle as pkl
 h.load_file('stdrun.hoc')
 fig, axi = None, None
 datestr = os.popen('datestring').read()
@@ -63,12 +64,15 @@ def speed ():
   maxt = [vec.max_ind()*h.dt for vec in nrec]
   vel = ndist/np.diff(maxt)/1e3
 
-def rf ():
+def rf (name=datestr, svfig=True, svdata=True):
+  if svdata: fp = open('data/%s.pkl'%(name), 'w')
   for x in range(11):
     print x, 
     setparams(pnafjr=x/10.0)
     h.run()
-    plotv(name='gif/%s_pnafjr%d.png'%(datestr,x*10))
+    if svfig: plotv(name='gif/%s_pnafjr%d.png'%(name,x*10))
+    if svdata: pkl.dump(nrec, fp)
+  if svdata: fp.close()
 
 setup()
 setparams()
