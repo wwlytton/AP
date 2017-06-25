@@ -4,6 +4,7 @@ import os, sys, json
 import numpy as np
 import pylab as plt
 h.load_file('stdrun.hoc')
+fig, axi = None, None
 
 def setup ():
   global myel,nodl,stim
@@ -36,6 +37,7 @@ def gr ():
   h.graphList[0].append(g)
 
 def plotv (pr=True, name='aa.png'):
+  if fig is None: mkfig()
   axi.clear()
   xval = np.linspace(0, h.tstop, len(nrec[0]))
   for x in nrec: plt.plot(xval,x)
