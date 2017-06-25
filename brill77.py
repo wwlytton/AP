@@ -16,6 +16,7 @@ stim.delay, stim.dur, stim.amp = 0, 0.1, 10
 def mkfig (): 
   global fig,axi
   fig, axi = plt.subplots(1, 1)
+mkfig()
 
 def gr ():
   g=h.Graph()
@@ -33,11 +34,14 @@ def plot ():
 
 def recv ():
   global nrec
+  spkt, spkid = h.Vector(len(nodl)+10), h.Vector(len(nodl)+10)
+  ncl = [h.NetCon(sec(0.5)._ref_v, None, sec=sec) for sec in nodl]
   nrec = [h.Vector(h.tstop/h.dt+10) for x in range(len(nodl))]
+  for i,nc in enumerate(ncl): nc.record(spkt,spkid, i)  # netcon.record(tvec, idvec, id)
   for v,n in zip(nrec,nodl): v.record(n(0.5)._ref_v)
 
 recv()
 h.run()  
-mkfig()
+axi.clear()
 plot()
 
