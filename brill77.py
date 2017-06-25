@@ -41,8 +41,10 @@ def recv ():
   for v,n in zip(nrec,nodl): v.record(n(0.5)._ref_v)
 
 def speed ():
-  global spv
-  spv = h.Vector().deriv(spkt,h.dt, 2) # method 2 is default
+  global spv, Ltot, dist
+  Ltot = sum([x.L for x in h.allsec()])
+  ndist = nodl[0].L + myel[0].L # 1003.183
+  spv = h.Vector().deriv(spkt, ndist, 2) # ms/micron
 
 recv()
 h.run()  
