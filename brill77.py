@@ -38,14 +38,13 @@ def gr ():
   g.addvar("node49",h.node[49](0.5)._ref_v,2,2)
   h.graphList[0].append(g)
 
-def plotv (name=''):
+def plotv (name='', label=''):
   if fig is None: mkfig()
   axi.clear()
   xval = np.linspace(0, h.tstop, len(nrec[0]))
   for x in nrec: plt.plot(xval,x)
-  if name: 
-    plt.savefig(name)
-    plt.show()
+  if label: plt.title(label, fontdict={'family':'sansserif','color':'black','weight': 'bold','size': 36})
+  if name: plt.savefig(name)
     
 def recv (thresh=35):
   global nrec
@@ -64,13 +63,13 @@ def speed ():
   maxt = [vec.max_ind()*h.dt for vec in nrec]
   vel = ndist/np.diff(maxt)/1e3
 
-def rf (name=datestr, svfig=True, svdata=True):
+def rf (name='', svfig=True, svdata=True):
   if svdata: fp = open('data/%s.pkl'%(name), 'w')
-  for x in range(11):
+  for x in np.linspace(0,1.0,6):
     print x, 
-    setparams(pnafjr=x/10.0)
+    setparams(pnafjr=x)
     h.run()
-    if svfig: plotv(name='gif/%s_pnafjr%d.png'%(name,x*10))
+    if svfig: plotv('gif/%s%s_pnafjr%d.png'%(datestr,name,x*100), '%d%% mutated Naf'%(x*100))
     if svdata: pkl.dump(nrec, fp)
   if svdata: fp.close()
 
