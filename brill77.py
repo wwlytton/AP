@@ -8,6 +8,7 @@ h.load_file('stdrun.hoc')
 fig, axi = None, None
 datestr = os.popen('datestring').read()
 
+# simulation defs
 def setup ():
   global myel,nodl,stim,distl
   h.load_file('brill77/cable.hoc')  # make(50, 1000) is called at bottom of file; 50 nodes with 1e3 internode interval
@@ -27,6 +28,7 @@ def setparams (pnafjr=0.0, gnabar=1.2):
     n(0.5).nafjr.gnabar = pnafjr*gnabar
     n(0.5).hh.gnabar = (1-pnafjr)*gnabar
 
+# graphics and data figs
 def mkfig (): 
   global fig,axi
   fig, axi = plt.subplots(1, 1)
@@ -48,6 +50,7 @@ def plotv (name='', label=''):
   if label: plt.title(label, fontdict={'family':'sansserif','color':'black','weight': 'bold','size': 36})
   if name: plt.savefig(name)
     
+# recording
 def recv (thresh=35):
   global nrec
   spkt, spkid = h.Vector(len(nodl)+10), h.Vector(len(nodl)+10)
@@ -57,7 +60,14 @@ def recv (thresh=35):
   for i,nc in enumerate(ncl): nc.record(spkt,spkid, i)  # netcon.record(tvec, idvec, id)
   for v,n in zip(nrec,nodl): v.record(n(0.5)._ref_v)
 
-def speed ():
+# calculate speed
+def speed (tl, beg=2, end=-3): 
+  'takes vector of times (length # of nodes); defaults beg 2 and end -3 to avoid edge effects'
+  if len(tl)!=len(distl): raise Exception('time list wrong length; should be %d'%(len(distl)))
+  return round((br.distl[end]-br.distl[beg])/(tl[end]-tl[beg])/1e3, 3)
+
+def speed1 ():
+  'speed1() reads from current sim'
   global spv, Ltot, dist, vel
   Ltot = sum([x.L for x in h.allsec()])
   ndist = nodl[0].L + myel[0].L # 1003.183
