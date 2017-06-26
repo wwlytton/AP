@@ -182,7 +182,8 @@ add_dc(0.1)		// set 0.1 nA dc current to adjust to -65 mV
 //  insert electrode in the soma
 //----------------------------------------------------------------------------
 
-load_file("El.oc")		// Electrode with series resistance
+sprint(tmpstr,"%s/%s",fileloc,"El.oc")
+load_file(tmpstr)		// Electrode with series resistance
 
 access soma
 objectvar El			// insert electrode
