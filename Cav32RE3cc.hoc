@@ -209,10 +209,12 @@ v_init = -70
 //  add graphs
 //----------------------------------------------------------------------------
 
-addgraph("soma.v(0.5)",-120,40)
-//addgraph("dend1[3].v(0.5)",-120,40)  	// for dissociated cell
-//addgraph("dend1[3].v(0.5)",-120,40)	// for intact cell
-//addgraph("dend1[8].v(0.5)",-120,40)	// for intact cell
-//addgraph("dend1[12].v(0.5)",-120,40)	// for intact cell
-addgraph("dend1[0].v(0.5)",-120,40)  	// for simplified cell
-addgraph("dend1[1].v(0.5)",-120,40)  	// for simplified cell
+proc graphs () {
+  addgraph("soma.v(0.5)",-120,40)
+  //addgraph("dend1[3].v(0.5)",-120,40)  	// for dissociated cell
+  //addgraph("dend1[3].v(0.5)",-120,40)	// for intact cell
+  //addgraph("dend1[8].v(0.5)",-120,40)	// for intact cell
+  //addgraph("dend1[12].v(0.5)",-120,40)	// for intact cell
+  addgraph("dend1[0].v(0.5)",-120,40)  	// for simplified cell
+  addgraph("dend1[1].v(0.5)",-120,40)  	// for simplified cell
+}
