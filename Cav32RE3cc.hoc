@@ -1,0 +1,202 @@
+/*----------------------------------------------------------------------------
+
+	VOLTAGE-CLAMP SIMULATIONS OF RE CELLS
+	=====================================
+
+	- passive and structural parameters estimated from SimFit
+	- electrode with adjustable series resistance
+	- simulations at 36 degC
+	- calcium diffusion
+	- Q10=2.5
+	- hyperpolarized leak of -82 mV; dc current to maintain at -65
+
+
+	  ** current-clamp in RE cell simplified to 3 compartments **
+
+
+  For more details, see:
+
+  Destexhe, A., Contreras, D., Steriade, M., Sejnowski, T.J. and Huguenard,
+  J.R.  In vivo, in vitro and computational analysis of dendritic calcium
+  currents in thalamic reticular neurons.  J. Neurosci. 16: 169-185, 1996.
+
+  See also:
+
+  http://www.cnl.salk.edu/~alain
+  http://cns.fmed.ulaval.ca
+
+----------------------------------------------------------------------------*/
+
+
+
+//----------------------------------------------------------------------------
+//  load and define general graphical procedures
+//----------------------------------------------------------------------------
+
+// xopen("$(NEURONHOME)/lib/hoc/stdrun.hoc")
+load_file("nrngui.hoc")
+
+objectvar g[20]			// max 20 graphs
+ngraph = 0
+
+proc addgraph() { local ii	// define subroutine to add a new graph
+				// addgraph("variable", minvalue, maxvalue)
+	ngraph = ngraph+1
+	ii = ngraph-1
+	g[ii] = new Graph()
+	g[ii].size(tstart,tstop,$2,$3)
+	g[ii].xaxis()
+	g[ii].yaxis()
+	g[ii].addvar($s1,1,0)
+	g[ii].save_name("graphList[0].")
+	graphList[0].append(g[ii])
+}
+
+if(ismenu==0) {
+  nrnmainmenu()			// create main menu
+  nrncontrolmenu()		// create control menu
+}
+
+
+
+
+//----------------------------------------------------------------------------
+//  transient time
+//----------------------------------------------------------------------------
+
+trans = 200
+
+print " "
+print ">> Transient time of ",trans," ms"
+print " "
+
+
+
+
+
+//----------------------------------------------------------------------------
+//  create multi-compartment geometry and insert currents
+//----------------------------------------------------------------------------
+
+xopen("cells/re3.geo")	// read geometry file
+
+corrD = 3.777			// dendritic surface correction (SimFit)
+
+forall { 			// insert passive current everywhere
+	insert pas
+	g_pas = 5e-5 * corrD	// (from simfit)
+//	e_pas = -72.843		// (from simfit)
+	e_pas = -82		// corrected for liquid junction potential
+	cm = 1 * corrD		// (from simfit)
+	Ra = 260		// (from simfit)
+	L = L
+}
+
+soma {
+	g_pas = 5e-5		// (from simfit)
+	cm = 1			// (from simfit)
+
+	insert hh2		// insert fast spikes
+	ena = 50
+	ek = -100
+	vtraub_hh2 = -67	// threshold for spikes is low
+	gnabar_hh2 = 0.1
+	gkbar_hh2 = 0.08
+
+}
+
+
+forall {
+	insert it2		// T-current everywhere
+	cai = 2.4e-4 
+	cao = 2 
+	eca = 120 
+	shift_it2 = 0		// no shift of ITs
+	gcabar_it2 = corrD * 0.0002
+	qm_it2 = 2.5		// low q10
+	qh_it2 = 2.5
+
+	insert cad		// calcium diffusion everywhere
+	depth_cad = corrD	// NEED TO BE RESCALED
+	kt_cad = 0		// no pump
+	kd_cad = 1e-4
+	taur_cad = 5
+	cainf_cad = 2.4e-4	
+}
+
+
+
+xopen("loc3.oc")	// load procedure for localizing T-current
+
+localize(4.5e-5, 4.5e-5, 6.8e-4) 	// initial distribution of T-current
+
+
+
+xopen("leak.oc")	// load dc current injection
+
+access soma
+add_dc(0.1)		// set 0.1 nA dc current to adjust to -65 mV
+
+
+
+	
+
+
+
+
+//----------------------------------------------------------------------------
+//  insert electrode in the soma
+//----------------------------------------------------------------------------
+
+load_file("El.oc")		// Electrode with series resistance
+
+access soma
+objectvar El			// insert electrode
+El = new Electrode()
+electrodes_present=1
+
+//
+// CURRENT-CLAMP MODE
+//
+
+	soma El.stim.loc(0.5)		// put electrode in current-clamp mode
+	El.stim.del = 100
+	El.stim.dur = 200
+	El.stim.amp = -0.3
+
+
+
+//----------------------------------------------------------------------------
+//  setup simulation parameters
+//----------------------------------------------------------------------------
+
+Dt = 0.1
+npoints = 4000
+
+objectvar Sim			// create vector of simulation points
+Sim = new Vector(npoints)
+
+dt = 0.1			// must be submultiple of Dt
+tstart = trans-100
+tstop = trans + npoints * Dt
+runStopAt = tstop
+steps_per_ms = 1/Dt
+celsius = 36
+v_init = -70
+
+
+
+
+
+
+//----------------------------------------------------------------------------
+//  add graphs
+//----------------------------------------------------------------------------
+
+addgraph("soma.v(0.5)",-120,40)
+//addgraph("dend1[3].v(0.5)",-120,40)  	// for dissociated cell
+//addgraph("dend1[3].v(0.5)",-120,40)	// for intact cell
+//addgraph("dend1[8].v(0.5)",-120,40)	// for intact cell
+//addgraph("dend1[12].v(0.5)",-120,40)	// for intact cell
+addgraph("dend1[0].v(0.5)",-120,40)  	// for simplified cell
+addgraph("dend1[1].v(0.5)",-120,40)  	// for simplified cell
