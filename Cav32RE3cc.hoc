@@ -68,8 +68,42 @@ print " "
 //----------------------------------------------------------------------------
 //  create multi-compartment geometry and insert currents
 //----------------------------------------------------------------------------
-
+print "----------------------------------------------"
+print "Simplified reticular cell with 3 compartments"
+print "----------------------------------------------"
 lxopen("cells/re3.geo")	// read geometry file
+
+/* create compartments (sections) */
+create soma[1], \
+       dend1[2]
+
+/* connect compartments */
+soma connect dend1[0](0),1
+dend1[0] connect dend1[1](0),1
+
+/* setup 3d geometry : */
+soma {			/* define soma first */
+  nseg = 1
+  pt3dclear()
+  pt3dadd(0, 0, 0, 14.0754)	 	/* x,y,z,diam */
+  pt3dadd(0, 34.546, 0, 14.0754)
+}
+
+
+
+dend1[0] {			/* beginning dendrites */
+  nseg = 1
+  pt3dclear()
+  pt3dadd(0, 34.546, 0, 5.56)
+  pt3dadd(0, 137.786, 0, 5.56)
+}
+
+dend1[1] {			/* beginning dendrites */
+  nseg = 1
+  pt3dclear()
+  pt3dadd(0, 137.786, 0, 3.06)
+  pt3dadd(0, 328.476, 0, 3.06)
+}
 corrD = 3.777			// dendritic surface correction (SimFit)
 
 forall { 			// insert passive current everywhere
@@ -97,27 +131,42 @@ soma {
 
 
 forall {
-	cai = 2.4e-4 
-	cao = 2 
-	eca = 120 
+  insert ca_ion  
+  cai = 2.4e-4 
+  cao = 2 
+  eca = 120 
 
-	insert cad		// calcium diffusion everywhere
-	depth_cad = corrD	// NEED TO BE RESCALED
-	kt_cad = 0		// no pump
-	kd_cad = 1e-4
-	taur_cad = 5
-	cainf_cad = 2.4e-4	
+  insert cad		// calcium diffusion everywhere
+  depth_cad = corrD	// NEED TO BE RESCALED
+  kt_cad = 0		// no pump
+  kd_cad = 1e-4
+  taur_cad = 5
+  cainf_cad = 2.4e-4	
 }
 
+// lxopen("loc3.oc")	// load procedure for localizing T-current
+// localize(4.5e-5, 4.5e-5, 6.8e-4) 	// initial distribution of T-current
 
-
-lxopen("loc3.oc")	// load procedure for localizing T-current
-
-localize(4.5e-5, 4.5e-5, 6.8e-4) 	// initial distribution of T-current
-
-
-
-lxopen("leak.oc")	// load dc current injection
+// lxopen("leak.oc")	// load dc current injection
+proc add_leak() {
+   forall{
+	g_pas = $1 + G_pas
+	e_pas = (G_pas * E_pas + $1 * $2) / (G_pas + $1)
+   }
+}
+proc add_dc() { // local idc
+	dc = dc + $1
+	idc = 100 * $1 / area(0.5)		// conversion to mA/cm2
+	e_pas = e_pas + idc/g_pas
+}
+proc reset() {
+	forall {
+		g_pas = G_pas
+		e_pas = E_pas
+	}
+	dc = 0
+}
+dc = 0		// dc variable initialized to zero
 
 access soma
 add_dc(0.1)		// set 0.1 nA dc current to adjust to -65 mV
