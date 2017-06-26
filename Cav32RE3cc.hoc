@@ -176,7 +176,7 @@ add_dc(0.1)		// set 0.1 nA dc current to adjust to -65 mV
 //----------------------------------------------------------------------------
 access soma
 objectvar stim			// insert electrode
-soma stim = new Iclamp(0.5)
+soma stim = new IClamp(0.5)
 electrodes_present=1
 
 //
