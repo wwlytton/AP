@@ -107,14 +107,9 @@ soma {
 
 
 forall {
-	insert it2		// T-current everywhere
 	cai = 2.4e-4 
 	cao = 2 
 	eca = 120 
-	shift_it2 = 0		// no shift of ITs
-	gcabar_it2 = corrD * 0.0002
-	qm_it2 = 2.5		// low q10
-	qh_it2 = 2.5
 
 	insert cad		// calcium diffusion everywhere
 	depth_cad = corrD	// NEED TO BE RESCALED
