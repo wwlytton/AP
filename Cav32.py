@@ -14,8 +14,15 @@ h.xopen('Cav32RE3cc.hoc')
 # need a Ca channel -- start with WT
 seclist = h.SectionList()
 seclist.wholetree()
-def insertcav (it2='it2WT'):
+
+def setup (it2='it2WT'):
+  h.soma[0].insert('hh2nafjr')
+  h.soma[0].gnabar_hh2nafjr = 0.0
   for sec in seclist: sec.insert(it2)
   h('soma.gcabar_%s = %g'%(it2, 4.5e-5)) #  h.soma[0](0.5).it2WT.gcabar
   h('dend1[0].gcabar_%s = %g'%(it2, h.corrD*4.5e-5))
   h('dend1[1].gcabar_%s = %g'%(it2, h.corrD*6.8e-4))
+
+def setparams (pnafjr=0.0, gnabar=0.1):
+  h.soma[0].gnabar_hh2nafjr = pnafjr *gnabar
+  h.soma[0].gnabar_hh2  =  (1-pnafjr)*gnabar
