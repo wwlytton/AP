@@ -14,13 +14,10 @@ TITLE Hippocampal HH channels
 INDEPENDENT {t FROM 0 TO 1 WITH 1 (ms)}
 
 NEURON {
-	SUFFIX hh2
+	SUFFIX hh2nafjr
 	USEION na READ ena WRITE ina
-	USEION k READ ek WRITE ik
-	RANGE gnabar, gkbar, vtraub
-	RANGE m_inf, h_inf, n_inf
-	RANGE tau_m, tau_h, tau_n
-	RANGE m_exp, h_exp, n_exp
+	RANGE gnabar, vtraub
+	RANGE m_inf, tau_m, m_exp 
 }
 
 
@@ -31,10 +28,8 @@ UNITS {
 
 PARAMETER {
 	gnabar	= .003 	(mho/cm2)
-	gkbar	= .005 	(mho/cm2)
 
 	ena	= 50	(mV)
-	ek	= -90	(mV)
 	celsius = 36    (degC)
 	dt              (ms)
 	v               (mV)
@@ -47,17 +42,9 @@ STATE {
 
 ASSIGNED {
 	ina	(mA/cm2)
-	ik	(mA/cm2)
-	il	(mA/cm2)
 	m_inf
-	h_inf
-	n_inf
 	tau_m
-	tau_h
-	tau_n
 	m_exp
-	h_exp
-	n_exp
 	tadj
 }
 
@@ -65,22 +52,12 @@ ASSIGNED {
 BREAKPOINT {
 	SOLVE states
 	ina = gnabar * m*m*m*h * (v - ena)
-	ik  = gkbar * n*n*n*n * (v - ek)
 }
 
-
-:DERIVATIVE states {   : exact Hodgkin-Huxley equations
-:	evaluate_fct(v)
-:	m' = (m_inf - m) / tau_m
-:	h' = (h_inf - h) / tau_h
-:	n' = (n_inf - n) / tau_n
-:}
 
 PROCEDURE states() {	: exact when v held constant
 	evaluate_fct(v)
 	m = m + m_exp * (m_inf - m)
-	h = h + h_exp * (h_inf - h)
-	n = n + n_exp * (n_inf - n)
 	VERBATIM
 	return 0;
 	ENDVERBATIM
@@ -89,13 +66,9 @@ PROCEDURE states() {	: exact when v held constant
 UNITSOFF
 INITIAL {
 	m = 0
-	h = 0
-	n = 0
 :
 :  Q10 was assumed to be 3 for both currents
-:
 : original measurements at roomtemperature?
-
 	tadj = 3.0 ^ ((celsius-36)/ 10 )
 }
 
@@ -108,19 +81,7 @@ PROCEDURE evaluate_fct(v(mV)) { LOCAL a,b,v2
 	tau_m = 1 / (a + b) / tadj
 	m_inf = a / (a + b)
 
-	a = 0.128 * exp((17-v2)/18)
-	b = 4 / ( 1 + exp((40-v2)/5) )
-	tau_h = 1 / (a + b) / tadj
-	h_inf = a / (a + b)
-
-	a = 0.032 * (15-v2) / ( exp((15-v2)/5) - 1)
-	b = 0.5 * exp((10-v2)/40)
-	tau_n = 1 / (a + b) / tadj
-	n_inf = a / (a + b)
-
 	m_exp = 1 - exp(-dt/tau_m)
-	h_exp = 1 - exp(-dt/tau_h)
-	n_exp = 1 - exp(-dt/tau_n)
 }
 
 UNITSON
