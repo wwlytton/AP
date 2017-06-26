@@ -20,8 +20,8 @@ def setup ():
   h.soma[0].gnabar_hh2nafjr = 0.0
   for sec in seclist: 
     for mech in ['it2WT', 'it2C456S', 'it2R788C']: 
-      sec.insert(it2)
-      h('%s.gcabar_%s = 0.0'%(str(sec),it2))
+      sec.insert(mech)
+      h('%s.gcabar_%s = 0.0'%(str(sec),mech))
 
 def setparams (it2='it2WT', pnafjr=0.0, gnabar=0.1):
   h.soma[0].gnabar_hh2nafjr = pnafjr *gnabar
@@ -29,3 +29,6 @@ def setparams (it2='it2WT', pnafjr=0.0, gnabar=0.1):
   h('soma.gcabar_%s = %g'%(it2, 4.5e-5)) #  h.soma[0](0.5).it2WT.gcabar
   h('dend1[0].gcabar_%s = %g'%(it2, h.corrD*4.5e-5))
   h('dend1[1].gcabar_%s = %g'%(it2, h.corrD*6.8e-4))
+
+setup()
+setparams()
