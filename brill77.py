@@ -64,7 +64,7 @@ def speed ():
   vel = ndist/np.diff(maxt)/1e3
 
 def rf (name='', svfig=True, svdata=True):
-  if svdata: fp = open('data/%s.pkl'%(name), 'w')
+  if svdata: fp = open('data/%s%s.pkl'%(datestr,name), 'w')
   for x in np.linspace(0,1.0,6):
     print x, 
     setparams(pnafjr=x)
@@ -72,6 +72,10 @@ def rf (name='', svfig=True, svdata=True):
     if svfig: plotv('gif/%s%s_pnafjr%d.png'%(datestr,name,x*100), '%d%% mutated Naf'%(x*100))
     if svdata: pkl.dump(nrec, fp)
   if svdata: fp.close()
+
+def rdpklf (file=''):
+  with open(file) as f:
+    d.append(pkl.load(f)) 
 
 setup()
 setparams()
