@@ -170,36 +170,22 @@ dc = 0		// dc variable initialized to zero
 
 access soma
 add_dc(0.1)		// set 0.1 nA dc current to adjust to -65 mV
-
-
-
 	
-
-
-
-
 //----------------------------------------------------------------------------
 //  insert electrode in the soma
 //----------------------------------------------------------------------------
-
-sprint(tmpstr,"%s/%s",fileloc,"El.oc")
-load_file(tmpstr)		// Electrode with series resistance
-
 access soma
-objectvar El			// insert electrode
-El = new Electrode()
+objectvar stim			// insert electrode
+soma stim = new Iclamp(0.5)
 electrodes_present=1
 
 //
 // CURRENT-CLAMP MODE
 //
-
-	soma El.stim.loc(0.5)		// put electrode in current-clamp mode
-	El.stim.del = 100
-	El.stim.dur = 200
-	El.stim.amp = -0.3
-
-
+//	soma El.stim.loc(0.5)		// put electrode in current-clamp mode
+stim.del = 100
+stim.dur = 200
+stim.amp = -0.3
 
 //----------------------------------------------------------------------------
 //  setup simulation parameters
@@ -218,11 +204,6 @@ runStopAt = tstop
 steps_per_ms = 1/Dt
 celsius = 36
 v_init = -70
-
-
-
-
-
 
 //----------------------------------------------------------------------------
 //  add graphs
