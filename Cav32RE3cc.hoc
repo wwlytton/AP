@@ -33,11 +33,14 @@
 //  load and define general graphical procedures
 //----------------------------------------------------------------------------
 
-// xopen("$(NEURONHOME)/lib/hoc/stdrun.hoc")
-load_file("nrngui.hoc")
-
 objectvar g[20]			// max 20 graphs
 ngraph = 0
+strdef fileloc, tmpstr
+fileloc = "zippedModels/Cav32_WT"
+proc lxopen () {
+  sprint(tmpstr,"%s/%s",fileloc,$s1)
+  xopen(tmpstr)
+}
 
 proc addgraph() { local ii	// define subroutine to add a new graph
 				// addgraph("variable", minvalue, maxvalue)
@@ -52,14 +55,6 @@ proc addgraph() { local ii	// define subroutine to add a new graph
 	graphList[0].append(g[ii])
 }
 
-if(ismenu==0) {
-  nrnmainmenu()			// create main menu
-  nrncontrolmenu()		// create control menu
-}
-
-
-
-
 //----------------------------------------------------------------------------
 //  transient time
 //----------------------------------------------------------------------------
@@ -70,16 +65,11 @@ print " "
 print ">> Transient time of ",trans," ms"
 print " "
 
-
-
-
-
 //----------------------------------------------------------------------------
 //  create multi-compartment geometry and insert currents
 //----------------------------------------------------------------------------
 
-xopen("cells/re3.geo")	// read geometry file
-
+lxopen("cells/re3.geo")	// read geometry file
 corrD = 3.777			// dendritic surface correction (SimFit)
 
 forall { 			// insert passive current everywhere
@@ -121,13 +111,13 @@ forall {
 
 
 
-xopen("loc3.oc")	// load procedure for localizing T-current
+lxopen("loc3.oc")	// load procedure for localizing T-current
 
 localize(4.5e-5, 4.5e-5, 6.8e-4) 	// initial distribution of T-current
 
 
 
-xopen("leak.oc")	// load dc current injection
+lxopen("leak.oc")	// load dc current injection
 
 access soma
 add_dc(0.1)		// set 0.1 nA dc current to adjust to -65 mV
