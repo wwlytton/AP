@@ -82,12 +82,8 @@ def rf (name='', svfig=True, svdata=True):
     setparams(pnafjr=x)
     h.run()
     if svfig: plotv('gif/%s%s_pnafjr%d.png'%(datestr,name,x*100), '%d%% mutated Naf'%(x*100))
-    if svdata: pkl.dump(nrec, fp)
+    if svdata: pkl.dump((x*100, nrec), fp)
   if svdata: fp.close()
-
-def rdpklf (file=''):
-  with open(file) as f:
-    d.append(pkl.load(f)) 
 
 setup()
 setparams()
