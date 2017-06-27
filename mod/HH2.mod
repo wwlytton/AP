@@ -20,7 +20,6 @@ NEURON {
 	RANGE gnabar, gkbar, vtraub
 	RANGE m_inf, h_inf, n_inf
 	RANGE tau_m, tau_h, tau_n
-	RANGE m_exp, h_exp, n_exp
 }
 
 
@@ -55,9 +54,6 @@ ASSIGNED {
 	tau_m
 	tau_h
 	tau_n
-	m_exp
-	h_exp
-	n_exp
 	tadj
 }
 
@@ -76,16 +72,6 @@ DERIVATIVE states {   : exact Hodgkin-Huxley equations
 	n' = (n_inf - n) / tau_n
 }
 
-:  PROCEDURE states() {	: exact when v held constant
-:        evaluate_fct(v)
-:        m = m + m_exp * (m_inf - m)
-:        h = h + h_exp * (h_inf - h)
-:        n = n + n_exp * (n_inf - n)
-:        VERBATIM
-:        return 0;
-:        ENDVERBATIM
-:  }
-
 UNITSOFF
 INITIAL {
 	m = 0
@@ -99,7 +85,7 @@ INITIAL {
 	tadj = 3.0 ^ ((celsius-36)/ 10 )
 }
 
-PROCEDURE evaluate_fct(v(mV)) { LOCAL a,b,v2
+PROCEDURE evaluate_fct (v(mV)) { LOCAL a,b,v2
 
 	v2 = v - vtraub : convert to traub convention
 
@@ -117,10 +103,6 @@ PROCEDURE evaluate_fct(v(mV)) { LOCAL a,b,v2
 	b = 0.5 * exp((10-v2)/40)
 	tau_n = 1 / (a + b) / tadj
 	n_inf = a / (a + b)
-
-	m_exp = 1 - exp(-dt/tau_m)
-	h_exp = 1 - exp(-dt/tau_h)
-	n_exp = 1 - exp(-dt/tau_n)
 }
 
 UNITSON

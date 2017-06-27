@@ -17,7 +17,7 @@ NEURON {
 	SUFFIX hh2nafjr
 	USEION na READ ena WRITE ina
 	RANGE gnabar, vtraub
-	RANGE m_inf, tau_m, m_exp 
+	RANGE m_inf, tau_m
 }
 
 
@@ -44,7 +44,6 @@ ASSIGNED {
 	ina	(mA/cm2)
 	m_inf
 	tau_m
-	m_exp
 	tadj
 }
 
@@ -78,8 +77,6 @@ PROCEDURE evaluate_fct(v(mV)) { LOCAL a,b,v2
 	b = 0.28 * (v2-40) / ( exp((v2-40)/5) - 1)
 	tau_m = 1 / (a + b) / tadj
 	m_inf = a / (a + b)
-
-	m_exp = 1 - exp(-dt/tau_m)
 }
 
 UNITSON
