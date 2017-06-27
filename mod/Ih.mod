@@ -125,7 +125,7 @@ STATE {
 ASSIGNED {
 	v	(mV)
 	cai	(mM)
-	ih	(mA/cm2)
+	iha	(mA/cm2)
         gh	(mho/cm2)
 	h_inf
 	tau_s	(ms)
