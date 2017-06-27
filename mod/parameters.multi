@@ -1,16 +1,36 @@
 DEFAULT nafjr
-DEFAULT HH2nafjr
-DEFAULT HH2
-DEFAULT capump
-DEFAULT IT_Cav32_C456S
-DEFAULT IT_Cav32_R788C
-DEFAULT IT_Cav32_WT
 DEFAULT vecst
 DEFAULT stats
 DEFAULT misc
 DEFAULT nstim
 DEFAULT samnutils
 
+: from ../zippedModels/Cav32_WT
+DEFAULT HH2nafjr  # my naf version
+DEFAULT HH2
+DEFAULT capump
+DEFAULT IT_Cav32_C456S
+DEFAULT IT_Cav32_R788C
+DEFAULT IT_Cav32_WT
+
+: from ../Knox_Absence_model
+: DEFAULT HH2 -- from above
+DEFAULT ampa
+DEFAULT cadecay
+DEFAULT gabaa
+DEFAULT gabab
+DEFAULT gapJ
+DEFAULT Ih
+DEFAULT IM
+DEFAULT IT2
+DEFAULT IT
+DEFAULT ITREcustom
+DEFAULT ITTCcustom
+DEFAULT kleak
+DEFAULT nmda
+DEFAULT vecevent
+
+: old maciej revision
 DEFAULT MyExp2SynNMDABB
  
 : Ben Suter ion channels
@@ -18,6 +38,8 @@ DEFAULT kap_BS
 DEFAULT kdmc_BS
 DEFAULT kdr_BS
 DEFAULT nax_BS
+: from Ben
+DEFAULT savedist
 
 : Mainen/Sej cell ion channels
 DEFAULT cadad
@@ -25,9 +47,6 @@ DEFAULT cadad
 : mig ion channels
 DEFAULT can_mig
 DEFAULT cal_mig
-
-: from Ben
-DEFAULT savedist
 
 : Kole 2006 H channel
 DEFAULT h_kole
