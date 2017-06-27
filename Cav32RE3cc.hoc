@@ -136,12 +136,12 @@ forall {
   cao = 2 
   eca = 120 
 
-  insert cad		// calcium diffusion everywhere
-  depth_cad = corrD	// NEED TO BE RESCALED
-  kt_cad = 0		// no pump
-  kd_cad = 1e-4
-  taur_cad = 5
-  cainf_cad = 2.4e-4	
+  insert capump		// calcium diffusion everywhere
+  depth_capump = corrD	// NEED TO BE RESCALED
+  kt_capump = 0		// no pump
+  kd_capump = 1e-4
+  taur_capump = 5
+  cainf_capump = 2.4e-4	
 }
 
 // lxopen("loc3.oc")	// load procedure for localizing T-current

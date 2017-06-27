@@ -33,7 +33,7 @@ TITLE decay of internal calcium concentration
 INDEPENDENT {t FROM 0 TO 1 WITH 1 (ms)}
 
 NEURON {
-	SUFFIX cad
+	SUFFIX capump
 	USEION ca READ ica, cai WRITE cai
 	RANGE depth,kt,kd,cainf,taur
 }

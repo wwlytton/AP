@@ -22,7 +22,7 @@ TITLE Fast mechanism for submembranal Ca++ concentration (cai)
 INDEPENDENT {t FROM 0 TO 1 WITH 1 (ms)}
 
 NEURON {
-	SUFFIX cadecay
+	SUFFIX cad
 	USEION ca READ ica, cai WRITE cai
 	RANGE depth,kt,kd,cainf,taur
 }
