@@ -82,7 +82,7 @@ INDEPENDENT {t FROM 0 TO 1 WITH 1 (ms)}
 
 NEURON {
 	SUFFIX iar
-	USEION h READ eh WRITE ih VALENCE 1
+	USEION ha READ eha WRITE iha VALENCE 1
 	USEION ca READ cai
         RANGE ghbar, h_inf, tau_s, m, shift
 	GLOBAL k2, cac, k4, Pc, nca, nexp, ginc, taum
@@ -98,7 +98,7 @@ UNITS {
 
 
 PARAMETER {
-	eh	= -40	(mV)
+	eha	= -40	(mV)
 	celsius = 36	(degC)
 	ghbar	= 2e-5 (mho/cm2)
 	cac	= 0.002 (mM)		: half-activation of calcium dependence
@@ -143,7 +143,7 @@ BREAKPOINT {
 
 	m = o1 + ginc * o2
 
-	ih = ghbar * m * (v - eh)
+	iha = ghbar * m * (v - eha)
 }
 
 KINETIC ihkin {
