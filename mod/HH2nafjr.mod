@@ -57,10 +57,8 @@ BREAKPOINT {
 
 PROCEDURE states() {	: exact when v held constant
 	evaluate_fct(v)
-	m = m + m_exp * (m_inf - m)
-	VERBATIM
-	return 0;
-	ENDVERBATIM
+	: m = m + m_exp * (m_inf - m)
+        m' = (m_inf - m) / tau_m        
 }
 
 UNITSOFF
