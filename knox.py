@@ -17,12 +17,12 @@ def mksecls ():
     INsl.append(h.IN[i]) 
 
 def setup ():
-  for ty in mksecls:
+  for ty in [TCsl, REsl, PYsl, INsl]:
     for ce in ty:
       ce.soma[0].insert('hh2nafjr')
       ce.soma[0].gnabar_hh2nafjr = 0.0
 
-def setparams (pnafjr=0.0, gnabar=0.1, cli='REsl'):
+def setparams (pnafjr=0.0, gnabar=0.1, cli=REsl):
   for ce in cli:
     ce.soma[0].gnabar_hh2nafjr = pnafjr *gnabar
     ce.soma[0].gnabar_hh2  =  (1-pnafjr)*gnabar
