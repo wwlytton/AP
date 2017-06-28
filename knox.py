@@ -11,7 +11,6 @@ h.load_file('Knox_Absence_model/Fspikewave.oc')
 
 def setup ():
   h.trans=0 # this means don't read from SaveState
-  h.cvode_active(1)
   if False:
     h.soma[0].insert('hh2nafjr')
     h.soma[0].gnabar_hh2nafjr = 0.0
