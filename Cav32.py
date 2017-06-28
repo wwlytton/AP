@@ -1,3 +1,15 @@
+''' USAGE example
+import Cav32 as cv
+print cv.it2l # the list of items
+cv.setparams(it2=cv.it2l[0], pnafjr=0.0) # WT control
+h.run()
+cv.setparams(it2=cv.it2l[1], pnafjr=0.0) # test one of the cav mutants without compensation
+cv.setparams(it2=cv.it2l[1], pnafjr=0.7) # test one of the cav mutants with 1/2 naf mutant
+cv.setparams(it2=cv.it2l[2], pnafjr=0.0) # test one of the cav mutants without compensation
+cv.setparams(it2=cv.it2l[2], pnafjr=0.5) # test one of the cav mutants with 1/2 naf mutant
+'''
+
+
 from neuron import h
 import os, sys, json
 import numpy as np
