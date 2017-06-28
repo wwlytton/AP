@@ -864,7 +864,7 @@ if (largePY==1) {
 
   for i = 0, (ncorticalcells/5)-1 PY[i*(ncorticalcells/20)+largePYoffset].soma { 
 	PYstim[i] = new IClamp(0.5)
-	PYstim[i].dur = 100
+	PYstim[i].dur = 500
 	PYstim[i].amp = 0.7
 
 	if(randomstim==1) {
@@ -890,7 +890,7 @@ if (smallPY==1) {
   for i = 0, (ncorticalcells/20)-1 PY[i*(ncorticalcells/5-1)+11].soma {
 	PYstim[i] = new IClamp(0.5)
 	PYstim[i].del = stimtime
-	PYstim[i].dur = 100
+	PYstim[i].dur = 500
 	PYstim[i].amp = 0.7
   }
 }
@@ -899,7 +899,7 @@ if (mediumPY==1) {
   for i = 0, (ncorticalcells/10)-3 PY[i*(ncorticalcells/10+2)+mediumPYoffset].soma { //most were done with +1
 	PYstim[i] = new IClamp(0.5)
 	PYstim[i].del = stimtime
-	PYstim[i].dur = 100
+	PYstim[i].dur = 500
 	PYstim[i].amp = 0.7
   }
   if (smallPYhole==1) {
@@ -912,7 +912,7 @@ objectvar REstim[nthalamiccells/5]
 for i = 0, (nthalamiccells/5)-1 RE[i*(nthalamiccells/20)+nthalamiccells/10].soma {
 	REstim[i] = new IClamp(0.5)
 	REstim[i].del = stimtime
-	REstim[i].dur = 100
+	REstim[i].dur = 500
 	REstim[i].amp = 0
 }
 */
@@ -925,7 +925,7 @@ for i = 0, (nthalamiccells/5)-1 TC[i*(nthalamiccells/20-1)+10].soma {
 //for i = 0, 9 TC[i*9+9].soma {
 	TCstim[i] = new IClamp(0.5)
 	TCstim[i].del = stimtime
-	TCstim[i].dur = 100
+	TCstim[i].dur = 500
 	TCstim[i].amp = -0.1
 }
 */
