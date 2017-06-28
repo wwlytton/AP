@@ -7,13 +7,14 @@ fig, axi = None, None
 datestr = os.popen('datestring').read()
 
 h.load_file('Fspikewave.oc')
+
 def mksecls (): 
   global TCsl, REsl, PYsl, INsl
-  TCsl, REsl, PYsl, INsl = [h.SectionList() for i in range(4)]
+  TCsl, REsl, PYsl, INsl = [],[],[],[]
   for i in range(int(h.nthalamiccells)):
-    TCsl.append(h.IN[i]) 
-    REsl.append(h.IN[i])
-    PYsl.append(h.IN[i])
+    TCsl.append(h.TC[i]) 
+    REsl.append(h.RE[i])
+    PYsl.append(h.PY[i])
     INsl.append(h.IN[i]) 
 
 def setup ():
@@ -30,4 +31,3 @@ def setparams (pnafjr=0.0, gnabar=0.1, cli=REsl):
 mksecls()
 setup()
 setparams()
-
