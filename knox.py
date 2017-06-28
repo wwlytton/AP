@@ -9,13 +9,17 @@ datestr = os.popen('datestring').read()
 h.load_file('Fspikewave.oc')
 
 def mksecls (): 
-  global TCsl, REsl, PYsl, INsl
+  global TCsl, REsl, PYsl, INsl, thalDict
   TCsl, REsl, PYsl, INsl = [],[],[],[]
   for i in range(int(h.nthalamiccells)):
     TCsl.append(h.TC[i]) 
     REsl.append(h.RE[i])
     PYsl.append(h.PY[i])
     INsl.append(h.IN[i]) 
+  thalDict = {'TC': (TCsl, TCsl[0].soma[0].gnabar_hh2), 
+              'RE': (TCsl, REsl[0].soma[0].gnabar_hh2),
+              'PY': (TCsl, PYsl[0].soma[0].gnabar_hh2),
+              'IN': (INsl, TCsl[0].soma[0].gnabar_hh2)}
 
 def setup ():
   for ty in [TCsl, REsl, PYsl, INsl]:
