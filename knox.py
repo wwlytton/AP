@@ -46,13 +46,13 @@ def setparams (pnafjr=0.0, gnamult=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
 # recording
 def recv (thresh=-5):
   global spkt,spkid,nrec
-  thalDict['spkt'], thalDict['spkt'], thalDict['vrec'] = (h.Vector(5e3), h.Vector(5e3)), []
   for k,v in thalDict.iteritems():
+    v['spkt'], v['spkid'], v['vrec'] = h.Vector(5e3), h.Vector(5e3), []
     for j, (ce, nc) in enumerate(zip(v['cel'],v['ncl'])):
       ve = h.Vector(h.tstop/h.dt+10)
       ve.record(ce.soma[0](0.5)._ref_v)
-      thalDict['vrec'].append(ve)
-      nc.record(thalDict['spkt'], thalDict['spkid'], j)
+      v['vrec'].append(ve)
+      nc.record(v['spkt'], v['spkid'], j)
 
 thalDict = mkdict()
 setup()
