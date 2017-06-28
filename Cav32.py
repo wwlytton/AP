@@ -9,7 +9,6 @@ cv.setparams(it2=cv.it2l[2], pnafjr=0.0) # test one of the cav mutants without c
 cv.setparams(it2=cv.it2l[2], pnafjr=0.5) # test one of the cav mutants with 1/2 naf mutant
 '''
 
-
 from neuron import h
 import os, sys, json
 import numpy as np
