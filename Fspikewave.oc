@@ -2,7 +2,7 @@
 
 Implementation of:
 Destexhe, Alain, "Spike-and-Wave Oscillations Based on the Properties of GABAB Receptors"
-The Journal of Neuroscience, November 1, 1998, 18(21):9099–9111
+The Journal of Neuroscience, November 1, 1998, 18(21):9099-9111
 
 Andrew Knox 2014
 
@@ -14,11 +14,11 @@ nthalamiccells = 100
 narrowdiam = 5
 widediam = 10
 
-trans = 0
+trans = 10000
 Dt = 0.1
 dt = 0.1			// must be submultiple of Dt
 npoints = 30000
-stimtime = 100
+stimtime = 10050			
 randomstim = 0
 
 fieldlower = 30
@@ -42,7 +42,8 @@ gababpercent = 1
 //----------------------------------------------------------------------------
 //  load and define general graphical procedures
 //----------------------------------------------------------------------------
-load_file("stdrun.hoc")
+
+load_file("nrngui.hoc")
 
 
 objectvar g[20]			// max 20 graphs
@@ -65,8 +66,6 @@ proc addgraph() { local ii	// define subroutine to add a new graph
 	graphList[0].append(g[ii])
 }
 
-proc addgraph() {}
-
 proc addfieldgraph() { local ii	// hack solution for a better positioned graph of electrical field
 	ngraph = ngraph+1
 	ii = ngraph-1
@@ -79,8 +78,6 @@ proc addfieldgraph() { local ii	// hack solution for a better positioned graph o
 	g[ii].save_name("graphList[0].")
 	graphList[0].append(g[ii])
 }
-
-proc addfieldgraph() {}
 
 proc addtext() { local ii	// define subroutine to add a text graph
 				// addtext("text")
@@ -102,7 +99,6 @@ proc addline() {		// to add a comment to the text window
 	g[text_id].label($s1)
 }
 
-ismenu=1
 if(ismenu==0) {
   nrnmainmenu()			// create main menu
   nrncontrolmenu()		// create control menu
