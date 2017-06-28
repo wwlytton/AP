@@ -14,12 +14,13 @@ nthalamiccells = 100
 narrowdiam = 5
 widediam = 10
 
-trans = 10000
+trans = 0
 Dt = 0.1
 dt = 0.1			// must be submultiple of Dt
-npoints = 30000
-stimtime = 10050			
+npoints = 3000
+stimtime = 50			
 randomstim = 0
+tstop = 600
 
 fieldlower = 30
 fieldupper = 70
@@ -172,7 +173,6 @@ objectvar Sim			// create vector of simulation points
 Sim = new Vector(npoints)
 
 tstart = trans
-tstop = trans + npoints * Dt
 runStopAt = tstop
 steps_per_ms = 1/Dt
 celsius = 36
@@ -247,7 +247,7 @@ print "<<            CREATE CELLS          >>"
 print "<<==================================>>"
 print " "
 
-load_file("TC.tem")		// read geometry file
+load_file("Knox_Absence_model/TC.tem")		// read geometry file
 
 for i=0,nthalamiccells-1 {
   TC[i] = new sTC()
@@ -262,7 +262,7 @@ for i=0,nthalamiccells-1 {
 //  create RE cells
 //----------------------------------------------------------------------------
 
-load_file("RE.tem")		// read geometry file
+load_file("Knox_Absence_model/RE.tem")		// read geometry file
 
 
 for i=0,nthalamiccells-1 {
@@ -278,7 +278,7 @@ for i=0,nthalamiccells-1 {
 //  create PY cells
 //----------------------------------------------------------------------------
 
-load_file("sPY.tem")		// read geometry file
+load_file("Knox_Absence_model/sPY.tem")		// read geometry file
 
 for i=0,ncorticalcells-1 {
   PY[i] = new sPY()
@@ -292,7 +292,7 @@ for i=0,ncorticalcells-1 {
 //  create IN cells
 //----------------------------------------------------------------------------
 
-load_file("sIN.tem")		// read geometry file
+load_file("Knox_Absence_model/sIN.tem")		// read geometry file
 
 
 for i=0,ncorticalcells-1 {
