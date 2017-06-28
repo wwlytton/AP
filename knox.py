@@ -46,9 +46,9 @@ def setparams (pnafjr=0.0, gnamult=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
 # recording
 def recv (thresh=-5):
   global spkt,spkid,nrec
-  spkt, spkid, nrec = h.Vector(1e3), h.Vector(1e3), []
-  for k,v in thalDict.iteritems():
-    for i, (ce, nc) in enumerate(zip(v['cel'],v['ncl'])):
+  spkt, spkid, nrec = h.Vector(5e3), h.Vector(5e3), []
+  for i, (k,v) in enumerate(knox.thalDict.iteritems()):
+    for j, (ce, nc) in enumerate(zip(v['cel'],v['ncl'])):
       ve = h.Vector(h.tstop/h.dt +10)
       ve.record(ce.soma[0](0.5)._ref_v)
       nrec.append(ve)
