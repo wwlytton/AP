@@ -20,7 +20,6 @@ dt = 0.1			// must be submultiple of Dt
 npoints = 3000
 stimtime = 50			
 randomstim = 0
-tstop = 600
 
 fieldlower = 30
 fieldupper = 70
@@ -173,6 +172,7 @@ objectvar Sim			// create vector of simulation points
 Sim = new Vector(npoints)
 
 tstart = trans
+tstop = 1000
 runStopAt = tstop
 steps_per_ms = 1/Dt
 celsius = 36
