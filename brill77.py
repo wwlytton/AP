@@ -3,7 +3,9 @@ USAGE:
 import brill77 as br
 h.run()
 br.plotv()
-br.rf() # to run a set of sims
+br.rf(vals=np.linspace(0, 0.3, 6), name='HHcell', svfig=True, svdata=True) # small batch; run proportion of nafjr from 0 to 0.3; save to data and gif as datename
+# can use convert to concat png files -- see (/u/billl/nrniv/notebooks/nbAP.dol:2553:285)
+
 '''
 
 # execfile('test.py')
@@ -74,7 +76,7 @@ def plotv (name='', label=''):
   plt.xlim(0,h.tstop); plt.ylim(-80,50)
   if label: plt.title(label, fontdict={'family':'sansserif','color':'black','weight': 'bold','size': 36})
   if name: plt.savefig(name)
-    
+
 # recording
 def recv (thresh=35):
   global nrec
@@ -89,7 +91,16 @@ def recv (thresh=35):
 def speed (tl, beg=2, end=-3): 
   'takes vector of times (length # of nodes); defaults beg 2 and end -3 to avoid edge effects'
   if len(tl)!=len(distl): raise Exception('time list wrong length; should be %d'%(len(distl)))
-  return round((br.distl[end]-br.distl[beg])/(tl[end]-tl[beg])/1e3, 3)
+  return round((distl[end]-distl[beg])/(tl[end]-tl[beg])/1e3, 3)
+
+def speeds (data=None, beg=2, end=-3):
+  'make dictionary of speeds based on data file made from rf(); tuples with (% value, node-recordings-from-all-nodes); default to measure speed from pos 2 to -3'
+  s={}
+  l = [[ve.max_ind()*h.dt for ve in d[1] if ve.max()>-30] for d in data]
+  for i,tl in zip(data,l): 
+    if len(tl)>5: s[int(i[0])] = speed(tl, beg, end)
+    else: s[int(i[0])] = 0
+  return s
 
 def speed1 ():
   'speed1() reads from current sim'
