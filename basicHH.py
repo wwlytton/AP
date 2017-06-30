@@ -17,9 +17,8 @@ odef setparams (pnafjr=0.0, gnabar=1.2):
 
 soma=h.Section(name='soma')
 soma.insert('hh')
-''' soma.insert('nafjr')
-soma(0.5).nafjr.gnabar
-soma.gnabar_nafjr=0'''
+soma.insert('nafjr')
+soma.gnabar_nafjr=0
 stim = h.IClamp(soma(0.5))
 stim.delay, stim.dur, stim.amp = 0, 1, 15
 h.tstop=10
