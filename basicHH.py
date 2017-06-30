@@ -2,6 +2,15 @@
 USAGE:
 '''
 
+from neuron import h
+import os, sys, json
+import numpy as np
+import pylab as plt
+import pickle as pkl
+h.load_file('stdrun.hoc')
+fig, axi = None, None
+datestr = os.popen('datestring').read()
+
 def setparams (pnafjr=0.0, gnabar=1.2):
   soma.gnabar_nafjr =  pnafjr*gnabar
   soma.gnabar_hh = (1-pnafjr)*gnabar
