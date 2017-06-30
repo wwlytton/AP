@@ -13,7 +13,6 @@ UNITS {
 NEURON {
         SUFFIX nafjr
         USEION na READ ena WRITE ina
-        USEION k READ ek WRITE ik
         RANGE gnabar, gna, erev
         GLOBAL minf, hinf, mtau, htau
 	THREADSAFE : assigned GLOBALs will be per thread
@@ -29,12 +28,8 @@ STATE {
 }
  
 ASSIGNED {
-        v (mV)
-        celsius (degC)
         ena (mV)
         ina (mA/cm2)
-        ek (mV)
-        ik (mA/cm2)
 	gna (S/cm2)
         minf hinf
 	mtau (ms) htau (ms)

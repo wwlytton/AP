@@ -1,5 +1,8 @@
 '''
 USAGE:
+loaddll('/u/billl/nrniv/AP')
+import basicHH as hh
+from basicHH import stim, tvec, vecl, axi, setparams # so can reset stim and do plots
 '''
 
 from neuron import h
@@ -11,7 +14,7 @@ h.load_file('stdrun.hoc')
 fig, axi = None, None
 datestr = os.popen('datestring').read()
 
-odef setparams (pnafjr=0.0, gnabar=1.2):
+def setparams (pnafjr=0.0, gnabar=1.2):
   soma.gnabar_nafjr =  pnafjr*gnabar
   soma.gnabar_hh = (1-pnafjr)*gnabar
 
