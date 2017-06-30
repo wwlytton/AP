@@ -5,7 +5,11 @@ h.run()
 br.plotv()
 br.rf(vals=np.linspace(0, 0.3, 6), name='HHcell', svfig=True, svdata=True) # small batch; run proportion of nafjr from 0 to 0.3; save to data and gif as datename
 # can use convert to concat png files -- see (/u/billl/nrniv/notebooks/nbAP.dol:2553:285)
-
+# reading and using data files
+import wlutils as wlu
+basd = wlu.rdpkl('data/17jun30HHcell20.pkl') # os.listdir('./data')
+di=br.speeds(basd)
+plt.scatter(di.keys(), di.values()) # xlabel,ylabel,title,savefig
 '''
 
 # execfile('test.py')
