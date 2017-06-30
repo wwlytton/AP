@@ -5,7 +5,7 @@ access soma
 insert hh
 objref tvec,vvec,stim
 stim = new IClamp(0.5)
-{stim.dur=1 stim.del=0 stim.amp=15}
+{stim.del=0 stim.dur=1 stim.amp=15}
 tstop=50
 tvec = new Vector()
 vvec = new Vector()
