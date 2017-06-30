@@ -22,7 +22,7 @@ soma(0.5).nafjr.gnabar
 soma.gnabar_nafjr=0
 stim = h.IClamp(soma(0.5))
 stim.dur, stim.delay, stim.amp = 10, 2, 0
-h.tstop=10
+h.tstop=50
 fig, axi = plt.subplots(1, 1)
 axi.clear()
 tvec=h.Vector()
@@ -31,8 +31,8 @@ tvec.record(h._ref_t)
 vecl[0].record(soma(0.5)._ref_v)
 
 # sim runs
-setparams(0.0)
+# setparams(0.0)
 h.run()
 plt.plot(tvec,vecl[0],color='red',linewidth=5)
-setparams(1.0)
-plt.plot(tvec,vecl[0],color='blue',linewidth=5)
+# setparams(1.0)
+# plt.plot(tvec,vecl[0],color='blue',linewidth=5)
