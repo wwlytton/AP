@@ -1,0 +1,20 @@
+'''
+USAGE:
+'''
+
+create soma
+access soma
+insert 'hh'
+stim = h.IClamp(soma(0.5))
+stim.dur, stim.delay, stim.amp = 10, 2, 0
+h.tstop=50
+objref tvec,vvec
+tvec=new Vector()
+vvec=new Vector()
+tvec.record(&t)
+vvecl.record(&soma.v(0.5))
+
+h.run()
+print vvec.max()
+h.run()
+print vvec.max()
