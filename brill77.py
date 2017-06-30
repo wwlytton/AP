@@ -71,6 +71,7 @@ def plotv (name='', label=''):
   axi.clear()
   xval = np.linspace(0, h.tstop, len(nrec[0]))
   for x in nrec: plt.plot(xval,x)
+  plt.xlim(0,h.tstop); plt.ylim(-80,50)
   if label: plt.title(label, fontdict={'family':'sansserif','color':'black','weight': 'bold','size': 36})
   if name: plt.savefig(name)
     
