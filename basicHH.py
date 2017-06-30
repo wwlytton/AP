@@ -6,15 +6,13 @@ def setparams (pnafjr=0.0, gnabar=1.2):
   soma.gnabar_nafjr =  pnafjr*gnabar
   soma.gnabar_hh = (1-pnafjr)*gnabar
 
-
-loaddll('/u/billl/nrniv/AP')
 soma=h.Section(name='soma')
 soma.insert('hh')
 soma.insert('nafjr')
 soma(0.5).nafjr.gnabar
 soma.gnabar_nafjr=0
 stim = h.IClamp(soma(0.5))
-stim.dur, stim.delay, stim.amp = 10, 2, 100
+stim.dur, stim.delay, stim.amp = 10, 2, 0
 h.tstop=10
 fig, axi = plt.subplots(1, 1)
 axi.clear()
