@@ -1,3 +1,11 @@
+'''
+USAGE:
+import brill77 as br
+h.run()
+br.plotv()
+br.rf() # to run a set of sims
+'''
+
 # execfile('test.py')
 from neuron import h
 import os, sys, json
