@@ -38,32 +38,18 @@ def setparams (pnafjr=0.0, gnabar=1.2):
 
 def hhit ():
   'make it more hh squid axon in terms of temp, Ra, diam'
-  stim.amp=40000
+  stim.amp=30000
   h.celsius=6.3
   diam = 500
   h('forall Ra=34.5')
   for x in myel:
-    x.L=50
+    x.L=3.183
     x.diam=diam
     x.nseg=1
   for x in nodl:
     x.L=1000
     x.diam=diam
     x.nseg=100
-
-def unhhit ():
-  stim.amp=5
-  h.celsius=20
-  diam=10
-  for x in myel:
-    x.L=50
-    x.diam=10
-    x.nseg=10
-  for x in nodl:
-    x.L=1000
-    x.diam=10
-    x.nseg=1
-  h('forall Ra=1.26e8 * fac = PI*diam^2/4 * 1e-8') # this diam will come via the forall
     
 # graphics and data figs
 def mkfig (): 
