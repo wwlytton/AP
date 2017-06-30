@@ -32,9 +32,10 @@ def setup ():
     n(0.5).nafjr.gnabar=0.0
 
 def setparams (pnafjr=0.0, gnabar=1.2):
-  for n in nodl:
-    n(0.5).nafjr.gnabar = pnafjr*gnabar
-    n(0.5).hh.gnabar = (1-pnafjr)*gnabar
+  for nod in nodl:
+    for n in nod:
+      n.nafjr.gnabar = pnafjr*gnabar
+      n.hh.gnabar = (1-pnafjr)*gnabar
 
 def hhit ():
   'make it more hh squid axon in terms of temp, Ra, diam'
