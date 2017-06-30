@@ -1,16 +1,18 @@
+load_file("stdrun.hoc")
+
 create soma
 access soma
-insert 'hh'
-stim = h.IClamp(soma(0.5))
-stim.dur, stim.delay, stim.amp = 10, 2, 0
-h.tstop=50
-objref tvec,vvec
-tvec=new Vector()
-vvec=new Vector()
+insert hh
+objref tvec,vvec,stim
+stim = new IClamp(0.5)
+{stim.dur=10 stim.del=2 stim.amp=0}
+tstop=50
+tvec = new Vector()
+vvec = new Vector()
 tvec.record(&t)
-vvecl.record(&soma.v(0.5))
+vvec.record(&soma.v(0.5))
 
-h.run()
+run()
 print vvec.max()
-h.run()
+run()
 print vvec.max()
