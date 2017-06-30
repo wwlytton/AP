@@ -1,4 +1,10 @@
 ''' USAGE example
+ModelDB#
+/u/billl/articles/jnsci25:4844.pdf
+Iuliia Vitko, Yucai Chen, Juan M. Arias, Yen Shen, Xi-Ru Wu and Edward Perez-Reyes (2005)
+Functional Characterization and Neuronal Modeling of the Effects of Childhood Absence Epilepsy Variants of CACNA1H, a T-Type Calcium Channel. J Neurosci 25:4844-4855
+in simulations of the network, only REs were altered
+
 import Cav32 as cv
 print cv.it2l # the list of items
 cv.setparams(it2=cv.it2l[0], pnafjr=0.0) # WT control

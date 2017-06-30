@@ -16,7 +16,7 @@ datestr = os.popen('datestring').read()
 
 def setparams (pnafjr=0.0, gnabar=0.12):
   soma.gnabar_nafjr =  pnafjr*gnabar
-  # soma.gnabar_hh = (1.0-pnafjr)*gnabar
+  soma.gnabar_hh = (1.0-pnafjr)*gnabar
   return 1.0
 
 soma=h.Section(name='soma')
