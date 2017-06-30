@@ -21,7 +21,7 @@ soma.insert('nafjr')
 soma(0.5).nafjr.gnabar
 soma.gnabar_nafjr=0
 stim = h.IClamp(soma(0.5))
-stim.delay, stim.dur, stim.amp = 0, 5, 5
+stim.delay, stim.dur, stim.amp = 0, 1, 1
 h.tstop=10
 fig, axi = plt.subplots(1, 1)
 tvec=h.Vector()

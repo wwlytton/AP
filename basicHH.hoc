@@ -5,7 +5,7 @@ access soma
 insert hh
 objref tvec,vvec,stim
 stim = new IClamp(0.5)
-{stim.dur=10 stim.del=2 stim.amp=0}
+{stim.dur=1 stim.del=0 stim.amp=15}
 tstop=50
 tvec = new Vector()
 vvec = new Vector()
@@ -13,6 +13,3 @@ tvec.record(&t)
 vvec.record(&soma.v(0.5))
 
 run()
-print vvec.max()
-run()
-print vvec.max()
