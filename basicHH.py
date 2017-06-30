@@ -14,7 +14,7 @@ h.load_file('stdrun.hoc')
 fig, axi = None, None
 datestr = os.popen('datestring').read()
 
-def setparams (pnafjr=0.0, gnabar=1.2):
+def setparams (pnafjr=0.0, gnabar=0.12):
   soma.gnabar_nafjr =  pnafjr*gnabar
   # soma.gnabar_hh = (1.0-pnafjr)*gnabar
   return 1.0
@@ -37,5 +37,6 @@ axi.clear()
 setparams(0.0)
 h.run()
 plt.plot(tvec,vecl[0],color='red',linewidth=5)
-# setparams(1.0)
+setparams(1.0)
+h.run()
 plt.plot(tvec,vecl[0],color='blue',linewidth=5)
