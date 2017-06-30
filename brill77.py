@@ -41,7 +41,7 @@ def hhit ():
   stim.amp=30000
   h.celsius=6.3
   diam = 500
-  h('forall Ra=34.5')
+  h('forall {Ra=34.5 cm=1}')
   for x in myel:
     x.L=3.183
     x.diam=diam
