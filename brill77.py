@@ -96,7 +96,7 @@ def speed (tl, beg=2, end=-3):
   'takes vector of times (length # of nodes); defaults beg 2 and end -3 to avoid edge effects'
   lentl = len(tl)
   ldistl = distl[:lentl]
-  if lentl!=len(distl): print 'warning short time list: %d'%len(ldistl)
+  if lentl!=len(distl): print 'warning short time list: %d statt %d'%(len(ldistl),len(distl))
   return round((ldistl[end]-ldistl[beg])/(tl[end]-tl[beg])/1e3, 3)
 
 def speeds (data=None, beg=2, end=-3):
