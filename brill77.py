@@ -98,9 +98,9 @@ def speed1 ():
   maxt = [vec.max_ind()*h.dt for vec in nrec]
   vel = ndist/np.diff(maxt)/1e3
 
-def rf (name='', svfig=True, svdata=True):
+def rf (vals=np.linspace(0, 1.0, 6), name='', svfig=True, svdata=True):
   if svdata: fp = open('data/%s%s.pkl'%(datestr,name), 'w')
-  for x in np.linspace(0,1.0,6):
+  for x in vals:
     print x, 
     setparams(pnafjr=x)
     h.run()
