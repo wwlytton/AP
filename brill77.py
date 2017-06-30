@@ -94,8 +94,10 @@ def recv (thresh=35):
 # calculate speed
 def speed (tl, beg=2, end=-3): 
   'takes vector of times (length # of nodes); defaults beg 2 and end -3 to avoid edge effects'
-  if len(tl)!=len(distl): raise Exception('time list wrong length; should be %d'%(len(distl)))
-  return round((distl[end]-distl[beg])/(tl[end]-tl[beg])/1e3, 3)
+  lentl = len(tl)
+  ldistl = distl[:lentl]
+  if lentl!=len(distl): print 'warning short time list: %d'%len(ldistl)
+  return round((ldistl[end]-ldistl[beg])/(tl[end]-tl[beg])/1e3, 3)
 
 def speeds (data=None, beg=2, end=-3):
   'make dictionary of speeds based on data file made from rf(); tuples with (% value, node-recordings-from-all-nodes); default to measure speed from pos 2 to -3'
