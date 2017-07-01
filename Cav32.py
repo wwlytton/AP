@@ -50,6 +50,12 @@ def setparams (mun=0, pnafjr=0.0, gnabar=0.1):
   h('dend1[0].gcabar_%s = %g'%(it2, h.corrD*4.5e-5))
   h('dend1[1].gcabar_%s = %g'%(it2, h.corrD*6.8e-4))
 
+# recording and run
+def recv (thresh=-5):
+  global vvec
+  vvec = h.Vector(h.tstop/h.dt+10)
+  vvec.record(h.soma[0](0.5)._ref_v)
+
 def rf (vals=np.linspace(0, 1.0, 6), name='', mun=0, svfig=False, svdata=True):
   if svdata: fp = open('data/%s%sCav32.pkl'%(datestr,name), 'w')
   for x in vals:
