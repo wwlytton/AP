@@ -21,6 +21,8 @@ def replot (d, w=2, col='b'):
   for ax, d1 in zip(axi, d): 
     ax.plot(tvec, d1[1], linewidth=w, color=col)
     ax.set_axis_off()
+    # https://matplotlib.org/users/text_props.html
+    ax.text(0, 0, '%d%%'%d1[0],fontsize=14, ha='center', va='top')
   plt.vlines(600, 0, 50)
   plt.hlines(0, 550, 600)
 
