@@ -89,8 +89,6 @@ soma {			/* define soma first */
   pt3dadd(0, 34.546, 0, 14.0754)
 }
 
-
-
 dend1[0] {			/* beginning dendrites */
   nseg = 1
   pt3dclear()

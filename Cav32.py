@@ -63,7 +63,7 @@ def rf (vals=np.linspace(0, 1.0, 6), name='', mun=0, svfig=False, svdata=True):
     setparams(pnafjr=x, mun=mun)
     h.run()
     if svfig: plotv('gif/%s%s_pnafjr%d.png'%(datestr,name,x*100), '%d%% mutated Naf'%(x*100))
-    if svdata: pkl.dump((x*100, nrec), fp)
+    if svdata: pkl.dump((x*100, vvec), fp)
   if svdata: fp.close()
 
 setup()
