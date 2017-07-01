@@ -50,11 +50,11 @@ def setparams (mun=0, pnafjr=0.0, gnabar=0.1):
   h('dend1[0].gcabar_%s = %g'%(it2, h.corrD*4.5e-5))
   h('dend1[1].gcabar_%s = %g'%(it2, h.corrD*6.8e-4))
 
-def rf (vals=np.linspace(0, 1.0, 6), name='', svfig=False, svdata=True):
+def rf (vals=np.linspace(0, 1.0, 6), name='', mun=0, svfig=False, svdata=True):
   if svdata: fp = open('data/%s%sCav32.pkl'%(datestr,name), 'w')
   for x in vals:
     print x, 
-    setparams(pnafjr=x)
+    setparams(pnafjr=x, mun=mun)
     h.run()
     if svfig: plotv('gif/%s%s_pnafjr%d.png'%(datestr,name,x*100), '%d%% mutated Naf'%(x*100))
     if svdata: pkl.dump((x*100, nrec), fp)
