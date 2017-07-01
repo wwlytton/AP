@@ -10,8 +10,8 @@ import pickle as pkl
 tvec=[]
 
 def mkfig ():
-  global fig, axi0, axi
-  fig, axi0 = plt.subplots(6, 3)
+  global fig, axi, axit
+  fig, axi = plt.subplots(6, 3)
   axit = zip(*axi) # transpose
 
 def replot (d, w=2, column=0, color='b'):
@@ -24,7 +24,7 @@ def replot (d, w=2, column=0, color='b'):
     ax.plot(tvec, d1[1], linewidth=w, color=color)
     ax.set_axis_off()
     # https://matplotlib.org/users/text_props.html
-    ax.text(0, 0, '%d%%'%d1[0],fontsize=14, ha='center', va='top')
+    if column==0: ax.text(0, 0, '%d%%'%d1[0],fontsize=14, ha='center', va='top')
   plt.vlines(600, 0, 50)
   plt.hlines(0, 550, 600)
 
