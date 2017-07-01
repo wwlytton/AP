@@ -57,14 +57,17 @@ def recv (thresh=-5):
   vvec.record(h.soma[0](0.5)._ref_v)
 
 def rf (vals=np.linspace(0, 1.0, 6), name='', mun=0, svfig=False, svdata=True):
-  if svdata: fp = open('data/%s%s%s.pkl'%(datestr,name,it2l[mun]), 'w')
+  if svdata: 
+    filestem = '%s%s%s'%(datestr,name,it2l[mun])
+    fp = open('data/%s.pkl'%(filestem), 'w')
   for x in vals:
     print x, 
     setparams(pnafjr=x, mun=mun)
     h.run()
-    if svfig: plotv('gif/%s%s_pnafjr%d.png'%(datestr,name,x*100), '%d%% mutated Naf'%(x*100))
+    if svfig: plotv('gif/%s_pnafjr%d.png'%(filestem,x*100), '%d%% mutated Naf'%(x*100))
     if svdata: pkl.dump((x*100, vvec), fp)
   if svdata: fp.close()
+  return 'data/%s.pkl'%(filestem)
 
 setup()
 setparams()
