@@ -57,7 +57,7 @@ def recv (thresh=-5):
   vvec.record(h.soma[0](0.5)._ref_v)
 
 def rf (vals=np.linspace(0, 1.0, 6), name='', mun=0, svfig=False, svdata=True):
-  if svdata: fp = open('data/%s%sCav32.pkl'%(datestr,name), 'w')
+  if svdata: fp = open('data/%s%s%s.pkl'%(datestr,name,it2l[mun]), 'w')
   for x in vals:
     print x, 
     setparams(pnafjr=x, mun=mun)
