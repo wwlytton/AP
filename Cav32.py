@@ -60,7 +60,7 @@ def recv (thresh=-5):
 fl=[c.rf(mun=n) for n in range(3)] # saves to file
 dl=[wlu.rdpkl(f) for f in fl] # reads from file using import wlutils as wlu
 [g.replot(d,column=n) for n,d in enumerate(dl)] # graph using import graph as g
-''''
+'''
 def rf (vals=np.linspace(0, 1.0, 6), name='', mun=0, svfig=False, svdata=True, **kwargs):
   if svdata: 
     filestem = '%s%s%s'%(datestr,name,it2l[mun])
