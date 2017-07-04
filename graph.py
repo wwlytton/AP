@@ -29,13 +29,14 @@ def replot (d, w=2, column=0, color='b'):
   plt.vlines(600, 0, 50)
   plt.hlines(0, 550, 600)
 
-def TCraster (di):
+def TCraster (di, **kwargs):
   ax=axi[0][0]
   ax.clear()
   keys = ['RE', 'TC', 'PY', 'IN']
   for i,c,k in zip(range(4), colors, keys):
     v=di[k]
-    ax.scatter(v['spkt'],v['spkid'].c().add(i*110), color=c) # spkt, spkid belongs to the cell types
-    ax.text(0, i*110+50, k , color=c, fontsize=14, ha='right', va='top')
+    ax.scatter(v['spkt'],v['spkid'].c().add(i*110), linewidth=0, s=4, color=c) # spkt, spkid belongs to the cell types
+    ax.text(1e3, i*120+50, k , color=c, fontsize=14, ha='left', va='top')
   ax.set_axis_off()    
+  ax.set_xlim(175,1000)
   plt.hlines(-20, 950, 1000, linewidth=4)
