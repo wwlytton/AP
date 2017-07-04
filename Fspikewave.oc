@@ -99,6 +99,9 @@ proc addline() {		// to add a comment to the text window
 	g[text_id].label($s1)
 }
 
+proc addgraph() {}
+proc addfieldgraph() {}
+
 if(ismenu==0) {
   nrnmainmenu()			// create main menu
   nrncontrolmenu()		// create control menu
