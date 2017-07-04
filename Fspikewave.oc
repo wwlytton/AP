@@ -103,12 +103,6 @@ proc addline() {		// to add a comment to the text window
 proc addgraph() {}
 proc addfieldgraph() {}
 
-if(ismenu==0) {
-  nrnmainmenu()			// create main menu
-  nrncontrolmenu()		// create control menu
-  ismenu=1
-}
-
 objectvar synfile
 synfile = new File()
 //synfile.wopen(" C:\\Users\\aknox\\Desktop\\synapses.txt")
