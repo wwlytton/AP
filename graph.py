@@ -7,7 +7,6 @@ import numpy as np
 import pylab as plt
 import pickle as pkl
 
-fig, axi, axit = None, None, None
 tvec=[]
 colors = ['k','b','r','g','c','m','y']
 
@@ -36,6 +35,6 @@ def TCraster (di):
   keys = ['RE', 'TC', 'PY', 'IN']
   for i,c,k in zip(range(4), colors, keys):
     v=di[k]
-    ax.scatter(v['spkt'],v['spkid'].c().add(i*110)) # spkt, spkid belongs to the cell types
-    ax.text(0, i*100, k , color=c, fontsize=14, ha='right', va='top')
+    ax.scatter(v['spkt'],v['spkid'].c().add(i*110), color=c) # spkt, spkid belongs to the cell types
+    ax.text(0, i*100+50, k , color=c, fontsize=14, ha='right', va='top')
   ax.set_axis_off()    
