@@ -41,14 +41,14 @@ def setup ():
       sec.insert(mech)
       h('%s.gcabar_%s = 0.0'%(str(sec),mech))
 
-def setparams (mun=0, pnafjr=0.0, gnabar=0.1):
+def setparams (mun=0, pnafjr=0.0, gnabar=0.1, gnafac=1.0, gcavfac=1.0):
   '''Set mutant # mun, pnafjr proportion, na channel total density'''
   it2=it2l[mun]
-  h.soma[0].gnabar_hh2nafjr = pnafjr *gnabar
-  h.soma[0].gnabar_hh2  =  (1-pnafjr)*gnabar
-  h('soma.gcabar_%s = %g'%(it2, 4.5e-5)) #  h.soma[0](0.5).it2WT.gcabar
-  h('dend1[0].gcabar_%s = %g'%(it2, h.corrD*4.5e-5))
-  h('dend1[1].gcabar_%s = %g'%(it2, h.corrD*6.8e-4))
+  h.soma[0].gnabar_hh2nafjr = pnafjr *gnabar*gnafac
+  h.soma[0].gnabar_hh2  =  (1-pnafjr)*gnabar*gnacac
+  h('soma.gcabar_%s = %g'%(it2, 4.5e-5*gcavfac)) #  h.soma[0](0.5).it2WT.gcabar
+  h('dend1[0].gcabar_%s = %g'%(it2, h.corrD*4.5e-5*gcavfac))
+  h('dend1[1].gcabar_%s = %g'%(it2, h.corrD*6.8e-4*gcavfac))
 
 # recording and run
 def recv (thresh=-5):
