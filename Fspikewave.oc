@@ -18,6 +18,8 @@ Dt = 0.1
 dt = 0.1			// must be submultiple of Dt
 npoints = 3000
 stimtime = 50			
+tstart = 0
+tstop = 1000
 randomstim = 0
 
 fieldlower = 30
@@ -190,11 +192,7 @@ objref statefile
 //  create TC cells
 //----------------------------------------------------------------------------
 
-print " "
-print "<<==================================>>"
 print "<<            CREATE CELLS          >>"
-print "<<==================================>>"
-print " "
 
 load_file("Knox_Absence_model/TC.tem")		// read geometry file
 
@@ -322,12 +320,7 @@ for i=0,nthalamiccells-1 {
 //----------------------------------------------------------------------------
 //  PROCEDURES FOR SYNAPTIC CONNECTIVITY IN 1-DIM
 //----------------------------------------------------------------------------
-
-print " "
-print "<<==================================>>"
 print "<<     CREATE SYNAPTIC RECEPTORS    >>"
-print "<<==================================>>"
-print " "
 
 func ncon() { local nc		// function to get the number of connections 
 				// argument: interaction diameter
@@ -335,10 +328,6 @@ func ncon() { local nc		// function to get the number of connections
    if(nc>ncorticalcells) nc = ncoricalcells
    return nc
 }
-
-
-
-
 
 //----------------------------------------------------------------------------
 //  Glutamate AMPA receptors in synapses from TC to RE
@@ -358,12 +347,6 @@ for i=0,nthalamiccells-1 {
    }
 }
 
-print " "
-print "<< ",RE[0].TClist.count()," AMPA-MEDIATED SYNAPTIC CONTACTS FROM TC TO RE >>"
-print " "
-
-
-
 //----------------------------------------------------------------------------
 //  GABAa receptors in intra-RE synapses
 //----------------------------------------------------------------------------
@@ -382,11 +365,6 @@ for i=0,nthalamiccells-1 {
    }
 }
 	
-print " "
-print "<< ",RE[0].REgabaalist.count()," GABAa-MEDIATED SYNAPTIC CONTACTS FROM RE TO RE >>"
-print " "
-
-
 //----------------------------------------------------------------------------
 //  GABAa receptors in synapses from RE to TC cells
 //----------------------------------------------------------------------------
@@ -405,12 +383,6 @@ for i=0,nthalamiccells-1 {
    }
 }
 	
-print " "
-print "<< ",TC[jbound].REgabaalist.count()," GABAa-MEDIATED SYNAPTIC CONTACTS FROM RE TO TC >>"
-print " "
-
-
-
 //----------------------------------------------------------------------------
 //  GABAb receptors in synapses from RE to TC cells
 //----------------------------------------------------------------------------
@@ -431,11 +403,6 @@ for i=0,nthalamiccells-1 {
 	RE[i].soma TC[jbound].REgabablist.append(new NetCon(&v(0.5), gababsyn, 0, axondelay, 1))	
    }
 }
-	
-print " "
-print "<< ",TC[0].REgabablist.count()," GABAb-MEDIATED SYNAPTIC CONTACTS FROM RE TO TC >>"
-print " "
-
 
 //----------------------------------------------------------------------------
 //  Glutamate AMPA receptors in synapses from PY to PY
@@ -456,16 +423,7 @@ for i=0,ncorticalcells-1 {
 	PY[i].soma PY[jbound].PYlist.append(new NetCon(&v(0.5), PY[jbound].ampapostPY, 0, axondelay, 1))	
    }
 }
-
-print " "
-print "<< ",PY[0].PYlist.count()," AMPA-MEDIATED SYNAPTIC CONTACTS FROM PY TO PY >>"
-print " "
-
 	
-
-
-
-
 //----------------------------------------------------------------------------
 //  Glutamate AMPA receptors in synapses from PY to IN
 //----------------------------------------------------------------------------
@@ -483,12 +441,6 @@ for i=0,ncorticalcells-1 {
 	PY[i].soma IN[jbound].PYlist.append(new NetCon(&v(0.5), IN[jbound].ampapost, 0, axondelay, 1))	
    }
 }
-
-print " "
-print "<< ",IN[0].PYlist.count()," AMPA-MEDIATED SYNAPTIC CONTACTS FROM PY TO IN >>"
-print " "
-
-
 
 //----------------------------------------------------------------------------
 //  GABAa receptors in synapses from IN to PY cells
@@ -508,11 +460,6 @@ for i=0,ncorticalcells-1 {
    }
 }
 	
-print " "
-print "<< ",PY[0].INgabaalist.count()," GABAa-MEDIATED SYNAPTIC CONTACTS FROM IN TO PY >>"
-print " "
-
-
 //----------------------------------------------------------------------------
 //  GABAb receptors in synapses from IN to PY cells
 //----------------------------------------------------------------------------
@@ -532,12 +479,6 @@ for i=0,ncorticalcells-1 {
 	IN[i].soma PY[jbound].INgabablist.append(new NetCon(&v(0.5), gababsyn, 0, axondelay, 1))	
    }
 }
-	
-print " "
-print "<< ",PY[0].INgabablist.count()," GABAb-MEDIATED SYNAPTIC CONTACTS FROM IN TO PY >>"
-print " "
-
-
 
 //----------------------------------------------------------------------------
 //  Glutamate AMPA receptors in synapses from PY to RE
@@ -563,11 +504,6 @@ for (i=0;i<=ncorticalcells-1;i+=divergence) {
    }
 }
 
-print " "
-print "<< ",RE[0].PYlist.count()," AMPA-MEDIATED SYNAPTIC CONTACTS FROM PY TO RE >>"
-print " "
-
-
 //----------------------------------------------------------------------------
 //  Glutamate AMPA receptors in synapses from PY to TC
 //----------------------------------------------------------------------------
@@ -589,14 +525,7 @@ for (i=0;i<=ncorticalcells-1;i+=divergence) {
 	PY[i+divergence/2].soma TC[jbound].PYlist.append(new NetCon(&v(0.5), TC[jbound].ampapost, 0, axondelay, 1))	
    }
 }
-
-print " "
-print "<< ",TC[0].PYlist.count()," AMPA-MEDIATED SYNAPTIC CONTACTS FROM PY TO TC >>"
-print " "
-
 	
-
-
 //----------------------------------------------------------------------------
 //  Glutamate AMPA receptors in synapses from TC to PY
 //----------------------------------------------------------------------------
@@ -615,12 +544,6 @@ for i=0,nthalamiccells-1 {
 //	if (jbound > 200 && jbound < 800)	TC[i].soma PY[jbound+divergence/2+1].TClist.append(new NetCon(&v(0.5), PY[jbound+divergence/2+1].ampapostTC, 0, axondelay, 1))
    }
 }
-
-print " "
-print "<< ",PY[0].TClist.count()," AMPA-MEDIATED SYNAPTIC CONTACTS FROM TC TO RE >>"
-print " "
-
-
 
 //----------------------------------------------------------------------------
 //  Glutamate AMPA receptors in synapses from TC to IN
@@ -642,11 +565,6 @@ for i=0,nthalamiccells-1 {
    }
 }
 
-print " "
-print "<< ",IN[0].TClist.count()," AMPA-MEDIATED SYNAPTIC CONTACTS FROM TC TO IN >>"
-print " "
-
-	
 //Synapse parameters
 	Alpha_AMPA_S = 0.94		// kinetics from simplex with short pulses
 	Beta_AMPA_S = 0.18 //0.18
@@ -709,7 +627,7 @@ proc assign_synapses() {	// procedure to assign syn conductances
 				// 5=PYPY 6=PYIN 7=GABAa INPY
 				// 8=GABAb INPY 9=PYRE 10=PYTC
 				// 11=TCPY 12=TCIN
-  print "nRERE:", nRERE, "nRETC:", nRETC, "nTCRE:", nTCRE, "nPYPY:", nPYPY, "nINPY:", nINPY, "nPYRE:", nPYRE, "nPYTC:", nPYTC, "nTCPY:", nTCPY, "nTCIN:", nTCIN
+  // print "nRERE:", nRERE, "nRETC:", nRETC, "nTCRE:", nTCRE, "nPYPY:", nPYPY, "nINPY:", nINPY, "nPYRE:", nPYRE, "nPYTC:", nPYTC, "nTCPY:", nTCPY, "nTCIN:", nTCIN
   for i=0, nthalamiccells-1 {
     for j=0, RE[i].REgabaalist.count()-1 {
 	RE[i].REgabaalist.object(j).weight = $1 / nRERE               
@@ -735,7 +653,7 @@ proc assign_synapses() {	// procedure to assign syn conductances
   for i=0, ncorticalcells-1 {
     for j=0, PY[i].PYlist.count()-1 {
 	PY[i].PYlist.object(j).weight = $5 / nPYPY
-	print "PY", i, j, PY[i].PYlist.object(j).weight
+	// print "PY", i, j, PY[i].PYlist.object(j).weight
     }
     for j=0, IN[i].PYlist.count()-1 {
 	IN[i].PYlist.object(j).weight = $6 / nPYIN
@@ -802,7 +720,7 @@ for i=0,nthalamiccells-1 {
   TC[i].kl.gmax = rk1.repick() * 10^-4         //0.003
 //  TC[i].soma.ghbar_iar = 1.5*10^-5 //, 0.66e-3 for human
 //  TC[i].kl.gmax = 0.003
-  print "TC(",i,") gh:",TC[i].soma.ghbar_iar," gmax:",TC[i].kl.gmax
+//  print "TC(",i,") gh:",TC[i].soma.ghbar_iar," gmax:",TC[i].kl.gmax
 
 }
 
@@ -1223,9 +1141,5 @@ proc text() {
 }
 
 //text()
-
-
-print " "
 print "Use procedure text() to create a new window with actual parameters"
 print "Use procedure assign_synapses() to change synaptic conductances"
-print " "
