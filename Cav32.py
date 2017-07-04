@@ -40,6 +40,7 @@ def setup ():
     for mech in it2l:
       sec.insert(mech)
       h('%s.gcabar_%s = 0.0'%(str(sec),mech))
+  recv()
 
 def setparams (mun=0, pnafjr=0.0, gnabar=0.1, gnafac=1.0, gcavfac=1.0):
   '''Set mutant # mun, pnafjr proportion, na channel total density'''
@@ -76,3 +77,4 @@ def rf (vals=np.linspace(0, 1.0, 6), name='', mun=0, svfig=False, svdata=True, *
 
 setup()
 setparams()
+
