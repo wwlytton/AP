@@ -7,11 +7,13 @@ import numpy as np
 import pylab as plt
 import pickle as pkl
 
+fig, axi, axit = None, None, None
 tvec=[]
+colors = ['k','b','r','g','c','m','y']
 
-def mkfig ():
+def mkfig (rows=1, cols=1):
   global fig, axi, axit
-  fig, axi = plt.subplots(6, 3)
+  fig, axi = plt.subplots(rows, cols, squeeze=False) # squeeze to always get an array of axes even for 1x1
   axit = zip(*axi) # transpose
 
 def replot (d, w=2, column=0, color='b'):
@@ -28,3 +30,12 @@ def replot (d, w=2, column=0, color='b'):
   plt.vlines(600, 0, 50)
   plt.hlines(0, 550, 600)
 
+def TCraster (di):
+  ax=axi[0][0]
+  ax.clear()
+  keys = ['RE', 'TC', 'PY', 'IN']
+  for i,c,k in zip(range(4), colors, keys):
+    v=di[k]
+    ax.scatter(v['spkt'],v['spkid'].c().add(i*110)) # spkt, spkid belongs to the cell types
+    ax.text(0, i*100, k , color=c, fontsize=14, ha='right', va='top')
+  ax.set_axis_off()    

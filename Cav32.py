@@ -77,4 +77,3 @@ def rf (vals=np.linspace(0, 1.0, 6), name='', mun=0, svfig=False, svdata=True, *
 
 setup()
 setparams()
-
