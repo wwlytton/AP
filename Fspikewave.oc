@@ -14,7 +14,6 @@ nthalamiccells = 100
 narrowdiam = 5
 widediam = 10
 
-trans = 0
 Dt = 0.1
 dt = 0.1			// must be submultiple of Dt
 npoints = 3000
@@ -174,7 +173,6 @@ gababTCfield = 0
 objectvar Sim			// create vector of simulation points
 Sim = new Vector(npoints)
 
-tstart = trans
 tstop = 1000
 runStopAt = tstop
 steps_per_ms = 1/Dt
@@ -185,60 +183,8 @@ objectvar randvolt
 randvolt = new Random()
 randvolt.uniform(-80,-65)
 
-
 objref lstate 
 objref statefile
-
-proc init () {
-  finitialize(v_init)
-
-//Doesn't really change anything if you let model come to steady state
-//  for i=0,ncorticalcells-1 {
-//    PY[i].soma.v(0.5) = randvolt.repick()
-//    IN[i].soma.v(0.5) = randvolt.repick()
-//  }
-//  for i=0,nthalamiccells-1 {
-//    TC[i].soma.v(0.5) = randvolt.repick()
-//    RE[i].soma.v(0.5) = randvolt.repick()
-//  }
-
-  if (trans > 0)  {
-    lstate = new SaveState()
-    statefile = new File()
-    statefile.ropen("state_data.txt")
-    lstate.fread(statefile)
-    lstate.restore()
-  }
-
-  // params: RERE, RETCa,RETCb,TCRE, PYPY, PYIN, INPYa, INPYb, PYRE, PYTC, TCPY, TCIN
-  //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4)		// synaptic weights J neurophys
-  //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.1125,0.03,1.2,0.01,1.2,0.4)		// 75% IN->PY weight (0.1125)
-  //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.075,0.03,1.2,0.01,1.2,0.4)		// 50% IN->PY weight (0.075)
-  //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.06,0.03,1.2,0.01,1.2,0.4)		// 40% IN->PY weight (0.06)
-  //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.0375,0.03,1.2,0.01,1.2,0.4)		// 25% IN->PY weight (0.0375)
-  //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.015,0.03,1.2,0.01,1.2,0.4)		// 10% IN->PY weight (0.015)
-  //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.0,0.03,1.2,0.01,1.2,0.4)		// 0% IN->PY A weight
-  assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,gabaapercent*0.15,gababpercent*0.03,1.2,0.01,1.2,0.4)		// 0% IN->PY A weight
-  
-  
-  //assign_synapses(0.12,0.02,0.04,0.2,0.6,0.2,0,0.03,1.2,0.01,1.2,0.4)		// 0% IN->PY A weight, better RERE for new synapses
-  //assign_synapses(0,0,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4)		// 0% RERE and RETC
-  //assign_focal_gabaa_synapses(0,0,45,55)
-
-  fcurrent()
-  cvode.re_init()
-
-//  finitialize()
-//  if (cvode.active()) {
-//    cvode.re_init()
-//  } else {
-//    fcurrent()
-//  }
-  frecord_init()
-}
-
-
-
 
 //----------------------------------------------------------------------------
 //  create TC cells
@@ -809,6 +755,21 @@ proc assign_synapses() {	// procedure to assign syn conductances
     }
   }
 }
+
+// params: RERE, RETCa,RETCb,TCRE, PYPY, PYIN, INPYa, INPYb, PYRE, PYTC, TCPY, TCIN
+//assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4)		// synaptic weights J neurophys
+//assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.1125,0.03,1.2,0.01,1.2,0.4)		// 75% IN->PY weight (0.1125)
+//assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.075,0.03,1.2,0.01,1.2,0.4)		// 50% IN->PY weight (0.075)
+//assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.06,0.03,1.2,0.01,1.2,0.4)		// 40% IN->PY weight (0.06)
+//assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.0375,0.03,1.2,0.01,1.2,0.4)		// 25% IN->PY weight (0.0375)
+//assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.015,0.03,1.2,0.01,1.2,0.4)		// 10% IN->PY weight (0.015)
+//assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.0,0.03,1.2,0.01,1.2,0.4)		// 0% IN->PY A weight
+
+assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,gabaapercent*0.15,gababpercent*0.03,1.2,0.01,1.2,0.4)		// 0% IN->PY A weight  
+
+//assign_synapses(0.12,0.02,0.04,0.2,0.6,0.2,0,0.03,1.2,0.01,1.2,0.4)		// 0% IN->PY A weight, better RERE for new synapses
+//assign_synapses(0,0,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4)		// 0% RERE and RETC
+//assign_focal_gabaa_synapses(0,0,45,55)
 
 proc assign_focal_gabaa_synapses() {	// procedure to assign syn conductances 
 				// params: 1=GABAa in TC (RETC), 2=GABAa INPY

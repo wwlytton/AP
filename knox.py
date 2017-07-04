@@ -36,6 +36,7 @@ def setup ():
     for ce in vals['cel']:
       ce.soma[0].insert('hh2nafjr')
       ce.soma[0].gnabar_hh2nafjr = 0.0
+  recv()
       
 def setparams (pnafjr=0.0, gnamult=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
   for vals in thalDict.values():
