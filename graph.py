@@ -36,5 +36,6 @@ def TCraster (di):
   for i,c,k in zip(range(4), colors, keys):
     v=di[k]
     ax.scatter(v['spkt'],v['spkid'].c().add(i*110), color=c) # spkt, spkid belongs to the cell types
-    ax.text(0, i*100+50, k , color=c, fontsize=14, ha='right', va='top')
+    ax.text(0, i*110+50, k , color=c, fontsize=14, ha='right', va='top')
   ax.set_axis_off()    
+  plt.hlines(-20, 950, 1000, linewidth=4)
