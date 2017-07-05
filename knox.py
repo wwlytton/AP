@@ -14,6 +14,18 @@ h.load_file('Fspikewave.oc')
 it2l = ['it2WT', 'it2C456S', 'it2R788C', 'it2', 'it', 'itrecustom', 'ittccustom'] # it2 is RE, it is TC channel
 stims = [h.IClamp() for i in range(10)]
 
+# params: RERE, RETCa,RETCb,TCRE, PYPY, PYIN, INPYa, INPYb, PYRE, PYTC, TCPY, TCIN
+synparams = {'synaptic weights J neurophys':	       (0.2,0.02,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4),		
+'75% IN->PY weight (0.1125)':			       (0.2,0.02,0.04,0.2,0.6,0.2,0.1125,0.03,1.2,0.01,1.2,0.4),
+'50% IN->PY weight (0.075)':			       (0.2,0.02,0.04,0.2,0.6,0.2,0.075,0.03,1.2,0.01,1.2,0.4),
+'40% IN->PY weight (0.06)':			       (0.2,0.02,0.04,0.2,0.6,0.2,0.06,0.03,1.2,0.01,1.2,0.4),
+'25% IN->PY weight (0.0375)':			       (0.2,0.02,0.04,0.2,0.6,0.2,0.0375,0.03,1.2,0.01,1.2,0.4),
+'10% IN->PY weight (0.015)':			       (0.2,0.02,0.04,0.2,0.6,0.2,0.015,0.03,1.2,0.01,1.2,0.4),
+'0% IN->PY A weight':				       (0.2,0.02,0.04,0.2,0.6,0.2,0.0,0.03,1.2,0.01,1.2,0.4),
+'0% IN->PY A weight gababa,gababpercent were both 1':  (0.2,0.02,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4),
+'0% IN->PY A weight better RERE for new synapses ':    (0.12,0.02,0.04,0.2,0.6,0.2,0,0.03,1.2,0.01,1.2,0.4),
+'0% RERE and RETC':                                    (0,0,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4)}
+
 def barname (mech='it'):
   '''return the name of a gbar (max conductance) for a given mechanism name'''
   l = []

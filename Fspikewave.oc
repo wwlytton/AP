@@ -673,9 +673,7 @@ proc assign_synapses() {	// procedure to assign syn conductances
 //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.0375,0.03,1.2,0.01,1.2,0.4)		// 25% IN->PY weight (0.0375)
 //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.015,0.03,1.2,0.01,1.2,0.4)		// 10% IN->PY weight (0.015)
 //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.0,0.03,1.2,0.01,1.2,0.4)		// 0% IN->PY A weight
-
-assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,gabaapercent*0.15,gababpercent*0.03,1.2,0.01,1.2,0.4)		// 0% IN->PY A weight  
-
+//assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,gabaapercent*0.15,gababpercent*0.03,1.2,0.01,1.2,0.4)		// 0% IN->PY A weight  
 //assign_synapses(0.12,0.02,0.04,0.2,0.6,0.2,0,0.03,1.2,0.01,1.2,0.4)		// 0% IN->PY A weight, better RERE for new synapses
 //assign_synapses(0,0,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4)		// 0% RERE and RETC
 //assign_focal_gabaa_synapses(0,0,45,55)
