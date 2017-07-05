@@ -66,7 +66,9 @@ def setparams (mun=0, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['
       ce.soma[0].gnabar_hh2nafjr = pnafjr *  gnamult * vals['gnabar']
       ce.soma[0].gnabar_hh2  =  (1-pnafjr) * gnamult * vals['gnabar']
   for ce in thalDict['RE']['cel']: # just set the RE one for now; corrD=3.777 for surface correction (Cav32RE3cc.hoc:105:257)
-    ce.soma[0].__setattr__(Tdi[it2], gcabar*gcavfac)
+    sec=ce.soma[0]
+    for v in Tdi.values(): sec.__setattr__(v, 0.0) # turn all off
+    sec.__setattr__(Tdi[it2], gcabar*gcavfac)
 
 # recording
 def recv (thresh=-5):
