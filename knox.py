@@ -74,10 +74,12 @@ def recv (thresh=-5):
   for k,v in thalDict.iteritems():
     v['spkt'], v['spkid'], v['vrec'] = h.Vector(5e3), h.Vector(5e3), []
     for j, (ce, nc) in enumerate(zip(v['cel'],v['ncl'])):
-      ve = h.Vector(h.tstop/h.dt+10)
-      ve.record(ce.soma[0](0.5)._ref_v)
-      v['vrec'].append(ve)
       nc.record(v['spkt'], v['spkid'], j)
+    for j in [30, 70]:
+      ce = v['cel']
+      ve = h.Vector(h.tstop/h.dt+10)
+      v['vrec'].append(ve)
+      ve.record(ce.soma[0](0.5)._ref_v)
 
 thalDict = mkdict()
 setup()
