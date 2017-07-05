@@ -117,7 +117,7 @@ membranedatafile = new File()
 //----------------------------------------------------------------------------
 
 
-nstimsynapses = 100
+nstimsynapses = 0
 timefirststimulus = 20000
 nstimuli = 1
 nhfburst = 6
@@ -725,94 +725,9 @@ for i=0,nthalamiccells-1 {
 //TC[50].soma.ghbar_iar = 2e-5	// shorter interspindle period
 //TC[50].kl.gmax = 0.005
 
-
-//----------------------------------------------------------------------------
-//  set up current stimulus to cells
-//----------------------------------------------------------------------------
-
-
-objectvar PYstim[ncorticalcells/5]		
-objectvar jitter
-
-if (largePY==1) {
-  jitter = new Random()
-  jitter.uniform(-1,1)
-
-  for i = 0, (ncorticalcells/5)-1 PY[i*(ncorticalcells/20)+largePYoffset].soma { 
-	PYstim[i] = new IClamp(0.5)
-	PYstim[i].dur=1000
-	PYstim[i].amp = 0.7
-
-	if(randomstim==1) {
-	  PYstim[i].del = stimtime + jitter.repick()
-	} else {
-	  PYstim[i].del = stimtime
-	}
-  }
-  if (largePYhole==1)  {
-    PYstim[8].amp = 0
-    PYstim[9].amp = 0
-    PYstim[11].amp = 0
-    PYstim[12].amp = 0
-  }
-  if (smallPYhole==1) {
-    PYstim[9].amp = 0
-    PYstim[10].amp = 0
-  }
-}
-
-if (smallPY==1) {
-  //for i = 0, (ncorticalcells/20)-1 PY[i*(ncorticalcells/5)+9].soma {
-  for i = 0, (ncorticalcells/20)-1 PY[i*(ncorticalcells/5-1)+11].soma {
-	PYstim[i] = new IClamp(0.5)
-	PYstim[i].del = stimtime
-	PYstim[i].dur=1000
-	PYstim[i].amp = 0.7
-  }
-}
-
-if (mediumPY==1) {
-  for i = 0, (ncorticalcells/10)-3 PY[i*(ncorticalcells/10+2)+mediumPYoffset].soma { //most were done with +1
-	PYstim[i] = new IClamp(0.5)
-	PYstim[i].del = stimtime
-	PYstim[i].dur=1000
-	PYstim[i].amp = 0.7
-  }
-  if (smallPYhole==1) {
-    PYstim[5].amp=0
-  }
-}
-
-/*
-objectvar REstim[nthalamiccells/5]
-for i = 0, (nthalamiccells/5)-1 RE[i*(nthalamiccells/20)+nthalamiccells/10].soma {
-	REstim[i] = new IClamp(0.5)
-	REstim[i].del = stimtime
-	REstim[i].dur=1000
-	REstim[i].amp = 0
-}
-*/
-
-/*
-objectvar TCstim[nthalamiccells/5]
-//for i = 0, (nthalamiccells/20)-1 TC[i*(nthalamiccells/5)+nthalamiccells/10].soma {
-//for i = 0, (nthalamiccells/10)-1 TC[i*(nthalamiccells/10)+5].soma {
-for i = 0, (nthalamiccells/5)-1 TC[i*(nthalamiccells/20-1)+10].soma {
-//for i = 0, 9 TC[i*9+9].soma {
-	TCstim[i] = new IClamp(0.5)
-	TCstim[i].del = stimtime
-	TCstim[i].dur=1000
-	TCstim[i].amp = -0.1
-}
-*/
-
-
 //----------------------------------------------------------------------------
 //  setup stimulus vectors and synapses to pyramidal cell(s)
 //----------------------------------------------------------------------------
-
-
-
 objectvar jitter
 jitter = new Random()
 
@@ -834,7 +749,6 @@ for ctr=0,nstimsynapses-1 {
        ampavec[ctr].append(10)
        ampatimevec[ctr].append(stime+2*Dt)
        ampavec[ctr].append(-60)
-
      }
    }
 
