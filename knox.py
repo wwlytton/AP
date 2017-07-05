@@ -8,7 +8,6 @@ import os, sys, json
 import numpy as np
 import pylab as plt
 import pickle as pkl
-fig, axi = None, None
 datestr = os.popen('datestring').read()
 h.load_file('stdrun.hoc')
 h.load_file('Fspikewave.oc')

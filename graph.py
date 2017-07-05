@@ -14,6 +14,7 @@ def mkfig (rows=1, cols=1):
   global fig, axi, axit
   fig, axi = plt.subplots(rows, cols, squeeze=False) # squeeze to always get an array of axes even for 1x1
   axit = zip(*axi) # transpose
+  return (fig, axi, axit)
 
 def replot (d, w=2, column=0, color='b'):
   global tvec
