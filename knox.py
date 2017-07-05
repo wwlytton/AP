@@ -12,8 +12,22 @@ fig, axi = None, None
 datestr = os.popen('datestring').read()
 h.load_file('stdrun.hoc')
 h.load_file('Fspikewave.oc')
+it2l = ['it2WT', 'it2C456S', 'it2R788C', 'it2', 'it', 'itrecustom', 'ittccustom'] # it2 is RE, it is TC channel
+
+def barname (mech='it'):
+  '''return the name of a gbar (max conductance) for a given mechanism name'''
+  l = []
+  pname, ms  = h.ref(''), h.MechanismStandard(mech, 1)
+  for i in range(int(ms.count())):
+    ms.name(pname, i)
+    l.append(pname[0])
+  ll=[x for x in l if 'bar' in x]
+  if len(ll)!=1: raise Exception("Can't identify proper parameter for %s: %s"%(mech, ll))
+  return ll[0]
 
 def mkdict (): 
+  global Tdi
+  Tdi = {n:barname(n) for n in it2l}
   tD = {'TC': {'cel': [], 'gnabar': h.TC[0].soma[0].gnabar_hh2, 'ncl': []},
         'RE': {'cel': [], 'gnabar': h.RE[0].soma[0].gnabar_hh2, 'ncl': []},
         'PY': {'cel': [], 'gnabar': h.PY[0].soma[0].gnabar_hh2, 'ncl': []},
@@ -36,13 +50,23 @@ def setup ():
     for ce in vals['cel']:
       ce.soma[0].insert('hh2nafjr')
       ce.soma[0].gnabar_hh2nafjr = 0.0
+  for ce in thalDict['RE']['cel']:
+    sec=ce.soma[0]
+    for mech in it2l:
+      ce.soma[0].insert(mech)
+      h('%s.gcabar_%s = 0.0'%(str(sec),mech))
   recv()
       
-def setparams (pnafjr=0.0, gnamult=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
+def setparams (mun=0, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
+  it2= it2l[mun]
+  ms = h.MechanismStandard(it2, 1)
+  print "Using %s channels"%it2
   for vals in thalDict.values():
     for ce in vals['cel']:
       ce.soma[0].gnabar_hh2nafjr = pnafjr *  gnamult * vals['gnabar']
       ce.soma[0].gnabar_hh2  =  (1-pnafjr) * gnamult * vals['gnabar']
+  for ce in thalDict['RE']['cel']: # just set the RE one for now; corrD=3.777 for surface correction (Cav32RE3cc.hoc:105:257)
+    ce.soma[0].__setattr__(Tdi[it2], gcabar*gcavfac)
 
 # recording
 def recv (thresh=-5):
