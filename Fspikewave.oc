@@ -117,7 +117,7 @@ membranedatafile = new File()
 //----------------------------------------------------------------------------
 
 
-nstimsynapses = 0
+nstimsynapses = 1
 timefirststimulus = 20000
 nstimuli = 1
 nhfburst = 6
@@ -128,14 +128,11 @@ timehfburst = 3		//2.5
 objectvar ampavec[nstimsynapses]
 objectvar ampatimevec[nstimsynapses]
 double Vampa[nstimsynapses]
-
-
+nstimsynapses = 1
 
 //----------------------------------------------------------------------------
 // global simulation variables
 //----------------------------------------------------------------------------
-
-
 
 objectvar PY[ncorticalcells]		// create PY cells
 objectvar PYVtrace[ncorticalcells]
@@ -703,19 +700,18 @@ rgh = new Random()
 rk1 = new Random()
 //rgh.uniform(1.5e-5,2e-5)
 //rk1.uniform(0.003,0.005)
-//rgh.normal(17.5,0.8)        //random number generator behaves weirdly for very small numbers, so multiply by 10^-6 below
+//rgh.normal(17.5,0.8)        //random number generator behaves weirdly for very small numbers, so multiply by 1e-6 below
 //rk1.normal(40,3)
-rgh.normal(17.5,0.0008)        //random number generator behaves weirdly for very small numbers, so multiply by 10^-6 below
+rgh.normal(17.5,0.0008)        //random number generator behaves weirdly for very small numbers, so multiply by 1e-6 below
 rk1.normal(40,0.003)
 
 // setup TC cells in resting mode (no spontaneous oscillation)
 for i=0,nthalamiccells-1 { 
-  TC[i].soma.ghbar_iar = rgh.repick() * 10^-6   //1.5e-5, 0.66e-3 for human
-  TC[i].kl.gmax = rk1.repick() * 10^-4         //0.003
-//  TC[i].soma.ghbar_iar = 1.5*10^-5 //, 0.66e-3 for human
-//  TC[i].kl.gmax = 0.003
-//  print "TC(",i,") gh:",TC[i].soma.ghbar_iar," gmax:",TC[i].kl.gmax
-
+  TC[i].soma.ghbar_iar = rgh.repick() * 1e-6   //1.5e-5, 0.66e-3 for human
+  TC[i].kl.gmax = rk1.repick() * 1e-4         //0.003
+  TC[i].soma.ghbar_iar = 1.5e-5 //, 0.66e-3 for human
+  TC[i].kl.gmax = 0.003
+  // print "TC(",i,") gh:",TC[i].soma.ghbar_iar," gmax:",TC[i].kl.gmax
 }
 
 // setup first TC cell as an initiator (spontaneous waxing-waning)

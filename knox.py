@@ -12,6 +12,7 @@ datestr = os.popen('datestring').read()
 h.load_file('stdrun.hoc')
 h.load_file('Fspikewave.oc')
 it2l = ['it2WT', 'it2C456S', 'it2R788C', 'it2', 'it', 'itrecustom', 'ittccustom'] # it2 is RE, it is TC channel
+stims = [h.IClamp() for i in range(10)]
 
 def barname (mech='it'):
   '''return the name of a gbar (max conductance) for a given mechanism name'''
@@ -68,6 +69,14 @@ def setparams (mun=0, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['
     sec=ce.soma[0]
     for v in Tdi.values(): sec.__setattr__(v, 0.0) # turn all off
     sec.__setattr__(Tdi[it2], gcabar*gcavfac)
+
+def setstims (ctype='PY', nl=[11,30,49,68], amp=0.0, dly=10.0, dur=50.0):
+  if len(nl)>len(stims): stims += [h.IClamp() for i in range(len(nl) - len(stims))]
+  for x in stims: x.amp=0.0 # clear
+  for x,n in zip(stims,nl): # nl may be shorter than stim
+    loc=thalDict[ctype]['cel'][n].soma[0](0.5)
+    x.loc(loc)
+    x.amp, x.dur, x.delay = amp, dur, dly
 
 # recording
 def recv (thresh=-5):
