@@ -76,7 +76,7 @@ def recv (thresh=-5):
     for j, (ce, nc) in enumerate(zip(v['cel'],v['ncl'])):
       nc.record(v['spkt'], v['spkid'], j)
     for j in [30, 70]:
-      ce = v['cel']
+      ce = v['cel'][j]
       ve = h.Vector(h.tstop/h.dt+10)
       v['vrec'].append(ve)
       ve.record(ce.soma[0](0.5)._ref_v)
