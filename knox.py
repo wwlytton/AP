@@ -1,8 +1,10 @@
 ''' USAGE example
-import knox
-knox.setparams(pnafjr=0.5, tyli=['RE','TC'])
+import knox as kx
 h.run()
+import graph as g
+g.TCraster(kx.thalDict)
 '''
+
 from neuron import h
 import os, sys, json
 import numpy as np
@@ -75,7 +77,7 @@ def setup ():
       ce.soma[0].insert(mech)
       h('%s.gcabar_%s = 0.0'%(str(sec),mech))
       
-def setparams (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
+def setchans (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
   it2= it2l[mun]
   ms = h.MechanismStandard(it2, 1)
   print "Using %s channels"%it2
@@ -87,8 +89,6 @@ def setparams (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['
     sec=ce.soma[0]
     for v in Tdi.values(): sec.__setattr__(v, 0.0) # turn all off
     sec.__setattr__(Tdi[it2], gcabar*gcavfac)
-  setsyns()
-  setstims()
 
 def setstims (ctype='PY', nl=[11,30,49,68], amp=0.7, dly=10.0, dur=50.0):
   global stims
@@ -115,5 +115,6 @@ def recv (thresh=-5):
 thalDict = mkdict()
 setup()
 recv()
-setparams()
-
+setchans() # used to be setparams()
+setsyns()
+setstims()
