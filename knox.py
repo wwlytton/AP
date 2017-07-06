@@ -76,7 +76,7 @@ def setup ():
       h('%s.gcabar_%s = 0.0'%(str(sec),mech))
   recv()
       
-def setparams (mun=0, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
+def setparams (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
   it2= it2l[mun]
   ms = h.MechanismStandard(it2, 1)
   print "Using %s channels"%it2
