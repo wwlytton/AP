@@ -22,12 +22,12 @@ synparams = OD({'synaptic weights J neurophys':                  (0.20,  0.02,  
 '25% IN->PY weight (0.0375)':                                    (0.20,  0.02,  0.04,  0.2,  0.6,  0.2,  0.0375,  0.03,  1.2,  0.01,  1.2,  0.4), 
 '10% IN->PY weight (0.015)':                                     (0.20,  0.02,  0.04,  0.2,  0.6,  0.2,  0.0150,  0.03,  1.2,  0.01,  1.2,  0.4), 
 '0% IN->PY A weight':                                            (0.20,  0.02,  0.04,  0.2,  0.6,  0.2,  0.0000,  0.03,  1.2,  0.01,  1.2,  0.4), 
-'?? IN->PY A weight':                                            (0.20,  0.02,  0.04,  0.2,  0.6,  0.2,  0.1500,  0.03,  1.2,  0.01,  1.2,  0.4), 
+'orig IN->PY A weight':                                          (0.20,  0.02,  0.04,  0.2,  0.6,  0.2,  0.1500,  0.03,  1.2,  0.01,  1.2,  0.4), 
 '10% IN->PY A weight better RERE for new synapses':              (0.12,  0.02,  0.04,  0.2,  0.6,  0.2,  0.0000,  0.03,  1.2,  0.01,  1.2,  0.4), 
 '0% RERE and RETC':                                              (0.00,  0.00,  0.04,  0.2,  0.6,  0.2,  0.1500,  0.03,  1.2,  0.01,  1.2,  0.4)})
 # gababapercent, gababpercent were both == 1
 
-def setsyns (k='0% IN->PY A weight'):
+def setsyns (k='orig IN->PY A weight'):
   '''Allow abbreviation of dict key for synparams'''
   k1 = [x for x in synparams.keys() if k in x][0]
   print k1
