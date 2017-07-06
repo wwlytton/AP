@@ -11,7 +11,6 @@ import pickle as pkl
 from collections import OrderedDict as OD
 datestr = os.popen('datestring').read()
 h.load_file('stdrun.hoc')
-h.load_file('Fspikewave.oc')
 it2l = ['it2WT', 'it2C456S', 'it2R788C', 'it2', 'it', 'itrecustom', 'ittccustom'] # it2 is RE, it is TC channel
 stims = [h.IClamp() for i in range(10)]
                                                                # RERE    RETCa  RETCb  TCRE  PYPY  PYIN  INPYa    INPYb  PYRE  PYTC   TCPY  TCIN  
@@ -64,6 +63,7 @@ def mkdict ():
   return tD
 
 def setup ():
+  h.load_file('Fspikewave.oc')
   h.tstop=1e3
   for vals in thalDict.values():
     for ce in vals['cel']:
@@ -88,6 +88,8 @@ def setparams (mun=0, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['
     sec=ce.soma[0]
     for v in Tdi.values(): sec.__setattr__(v, 0.0) # turn all off
     sec.__setattr__(Tdi[it2], gcabar*gcavfac)
+  setsyns()
+  setstims()
 
 def setstims (ctype='PY', nl=[11,30,49,68], amp=0.0, dly=10.0, dur=50.0):
   global stims
