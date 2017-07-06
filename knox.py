@@ -90,7 +90,7 @@ def setparams (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['
   setsyns()
   setstims()
 
-def setstims (ctype='PY', nl=[11,30,49,68], amp=0.0, dly=10.0, dur=50.0):
+def setstims (ctype='PY', nl=[11,30,49,68], amp=0.7, dly=10.0, dur=50.0):
   global stims
   if len(nl)>len(stims): stims += [h.IClamp() for i in range(len(nl) - len(stims))]
   for x in stims: 
@@ -116,3 +116,4 @@ thalDict = mkdict()
 setup()
 recv()
 setparams()
+
