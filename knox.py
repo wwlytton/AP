@@ -14,8 +14,7 @@ from collections import OrderedDict as OD
 datestr = os.popen('datestring').read()
 h.load_file('stdrun.hoc')
 h.load_file('Fspikewave.oc')
-it2l = ['it2WT', 'it2C456S', 'it2R788C', 'it2', 'it', 'itrecustom', 'ittccustom'] # it2 is RE, it is TC channel
-stims = [h.IClamp() for i in range(10)]
+it2l = ['it2WT', 'it2C456S', 'it2R788C', 'it2' 'itrecustom'] # it2 is RE, it is TC channel
                                                                # RERE    RETCa  RETCb  TCRE  PYPY  PYIN  INPYa    INPYb  PYRE  PYTC   TCPY  TCIN  
 synparams = OD({'synaptic weights J neurophys':                  (0.20,  0.02,  0.04,  0.2,  0.6,  0.2,  0.1500,  0.03,  1.2,  0.01,  1.2,  0.4), 
 '75% IN->PY weight (0.1125)':                                    (0.20,  0.02,  0.04,  0.2,  0.6,  0.2,  0.1125,  0.03,  1.2,  0.01,  1.2,  0.4), 
@@ -47,12 +46,7 @@ def barname (mech='it'):
   return ll[0]
 
 def mkdict (): 
-  global Tdi
-  Tdi = {n:barname(n) for n in it2l}
-  tD = {'TC': {'cel': [], 'gnabar': h.TC[0].soma[0].gnabar_hh2, 'ncl': []},
-        'RE': {'cel': [], 'gnabar': h.RE[0].soma[0].gnabar_hh2, 'ncl': []},
-        'PY': {'cel': [], 'gnabar': h.PY[0].soma[0].gnabar_hh2, 'ncl': []},
-        'IN': {'cel': [], 'gnabar': h.TC[0].soma[0].gnabar_hh2, 'ncl': []}}
+  tD = {k, {'cel': [], 'gnabar': h.TC[0].soma[0].gnabar_hh2, 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
   for i in range(int(h.nthalamiccells)):
     tD['TC']['cel'].append(h.TC[i]) 
     tD['RE']['cel'].append(h.RE[i])
@@ -63,6 +57,7 @@ def mkdict ():
       ncl = h.cvode.netconlist(ce,'','')
       if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
       else: print 'No netcons found for cell %s'%str(ce)
+  tD['TC']['T'], tD['RE']['T']={n:barname(n) for n in it2l}, {n:barname(n) for n in ['ittccustom', 'it']}
   return tD
 
 def setup ():
@@ -83,7 +78,7 @@ def setchans (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['T
   print "Using %s channels"%it2
   for vals in thalDict.values():
     for ce in vals['cel']:
-      ce.soma[0].gnabar_hh2nafjr = pnafjr *  gnamult * vals['gnabar']
+      ce.soma[0].gnabar_hh2nafjr = pnafjr *  gnamult * vals['gnabar'] # what is this??
       ce.soma[0].gnabar_hh2  =  (1-pnafjr) * gnamult * vals['gnabar']
   for ce in thalDict['RE']['cel']: # just set the RE one for now; corrD=3.777 for surface correction (Cav32RE3cc.hoc:105:257)
     sec=ce.soma[0]
