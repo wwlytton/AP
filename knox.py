@@ -46,12 +46,7 @@ def barname (mech='it'):
   return ll[0]
 
 def mkdict (): 
-  tD = {k, {'cel': [], 'gnabar': h.TC[0].soma[0].gnabar_hh2, 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
-  for i in range(int(h.nthalamiccells)):
-    tD['TC']['cel'].append(h.TC[i]) 
-    tD['RE']['cel'].append(h.RE[i])
-    tD['PY']['cel'].append(h.PY[i])
-    tD['IN']['cel'].append(h.IN[i]) 
+  tD = {k, {'cel': [h.List('s%s'%k)], 'gnabar': h.TC[0].soma[0].gnabar_hh2, 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
   for tyl in tD.values():
     for i,ce in enumerate(tyl['cel']):
       ncl = h.cvode.netconlist(ce,'','')
