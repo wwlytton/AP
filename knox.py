@@ -46,13 +46,13 @@ def barname (mech='it'):
   return ll[0]
 
 def mkdict (): 
-  tD = {k: {'cel': [h.List('s%s'%k)], 'gnabar': h.TC[0].soma[0].gnabar_hh2, 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
+  tD = {k: {'cel': list(h.List('s%s'%k)), 'gnabar': h.TC[0].soma[0].gnabar_hh2, 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
   for tyl in tD.values():
     for i,ce in enumerate(tyl['cel']):
       ncl = h.cvode.netconlist(ce,'','')
       if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
       else: print 'No netcons found for cell %s'%str(ce)
-  tD['TC']['T'], tD['RE']['T']={n:barname(n) for n in it2l}, {n:barname(n) for n in ['ittcccustom', 'it']}
+  tD['TC']['T'], tD['RE']['T']={n:barname(n) for n in it2l}, {n:barname(n) for n in ['ittccustom', 'it']}
   return tD
 
 def setup ():
@@ -77,8 +77,8 @@ def setchans (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['T
       ce.soma[0].gnabar_hh2  =  (1-pnafjr) * gnamult * vals['gnabar']
   for ce in thalDict['RE']['cel']: # just set the RE one for now; corrD=3.777 for surface correction (Cav32RE3cc.hoc:105:257)
     sec=ce.soma[0]
-    for v in Tdi.values(): sec.__setattr__(v, 0.0) # turn all off
-    sec.__setattr__(Tdi[it2], gcabar*gcavfac)
+    for v in thalDict['RE'].values(): sec.__setattr__(v, 0.0) # turn all off
+    sec.__setattr__(thalDict['RE'][it2], gcabar*gcavfac)
 
 def setstims (ctype='PY', nl=[11,30,49,68], amp=0.7, dly=10.0, dur=50.0):
   global stims
