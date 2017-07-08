@@ -102,9 +102,11 @@ def recv (thresh=-5):
       v['vrec'].append(ve)
       ve.record(ce.soma[0](0.5)._ref_v)
 
+'''
 thalDict = mkdict()
 setup()
 recv()
 setchans() # used to be setparams()
 setsyns()
 setstims()
+'''
