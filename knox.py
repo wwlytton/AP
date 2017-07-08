@@ -14,7 +14,7 @@ from collections import OrderedDict as OD
 datestr = os.popen('datestring').read()
 h.load_file('stdrun.hoc')
 h.load_file('Fspikewave.oc')
-it2l = ['it2WT', 'it2C456S', 'it2R788C', 'it2' 'itrecustom'] # it2 is RE, it is TC channel
+it2l = ['it2WT', 'it2C456S', 'it2R788C', 'it2', 'itrecustom'] # it2 is RE, it is TC channel
                                                                # RERE    RETCa  RETCb  TCRE  PYPY  PYIN  INPYa    INPYb  PYRE  PYTC   TCPY  TCIN  
 synparams = OD({'synaptic weights J neurophys':                  (0.20,  0.02,  0.04,  0.2,  0.6,  0.2,  0.1500,  0.03,  1.2,  0.01,  1.2,  0.4), 
 '75% IN->PY weight (0.1125)':                                    (0.20,  0.02,  0.04,  0.2,  0.6,  0.2,  0.1125,  0.03,  1.2,  0.01,  1.2,  0.4), 
@@ -46,13 +46,13 @@ def barname (mech='it'):
   return ll[0]
 
 def mkdict (): 
-  tD = {k, {'cel': [h.List('s%s'%k)], 'gnabar': h.TC[0].soma[0].gnabar_hh2, 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
+  tD = {k: {'cel': [h.List('s%s'%k)], 'gnabar': h.TC[0].soma[0].gnabar_hh2, 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
   for tyl in tD.values():
     for i,ce in enumerate(tyl['cel']):
       ncl = h.cvode.netconlist(ce,'','')
       if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
       else: print 'No netcons found for cell %s'%str(ce)
-  tD['TC']['T'], tD['RE']['T']={n:barname(n) for n in it2l}, {n:barname(n) for n in ['ittccustom', 'it']}
+  tD['TC']['T'], tD['RE']['T']={n:barname(n) for n in it2l}, {n:barname(n) for n in ['ittcccustom', 'it']}
   return tD
 
 def setup ():
