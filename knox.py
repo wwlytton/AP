@@ -82,8 +82,8 @@ def setchans (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['T
     sec.__setattr__(thalDict['RE']['T'][it2], gcabar*gcavfac)
 
 def setstims (ctype='PY', nl=[11,30,49,68], amp=0.7, dly=10.0, dur=50.0):
-  global stims
-  if len(nl)>len(stims): stims += [h.IClamp() for i in range(len(nl) - len(stims))]
+  stims = thalDict[ctype]['stims']
+  if len(nl)>len(stims): stims += [h.IClamp() for i in range(len(nl) - len(stims))] # extend stim list
   for x in stims: 
     if x.get_segment(): x.amp=0.0 # clear
   for x,n in zip(stims,nl): # nl may be shorter than stim
@@ -109,4 +109,3 @@ recv()
 setchans() # used to be setparams()
 setsyns()
 setstims()
-
