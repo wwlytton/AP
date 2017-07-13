@@ -68,10 +68,11 @@ def setup ():
       ce.soma[0].insert(mech)
       h('%s.gcabar_%s = 0.0'%(str(sec),mech))
       
-def setchans (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
+def setchans (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=None, gcavfac=1.0, tyli=['TC', 'RE', 'PY', 'IN']):
   it2= it2l[mun]
   ms = h.MechanismStandard(it2, 1)
   print "Using %s channels"%it2
+  if gcabar: gcab=gcabar
   for vals in thalDict.values():
     for ce in vals['cel']:
       ce.soma[0].gnabar_hh2nafjr = pnafjr *  gnamult * vals['gnabar'] # what is this??
@@ -79,7 +80,7 @@ def setchans (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=3e-3, gcavfac=1.0, tyli=['T
   for ce in thalDict['RE']['cel']: # just set the RE one for now; corrD=3.777 for surface correction (Cav32RE3cc.hoc:105:257)
     sec=ce.soma[0]
     for v in thalDict['RE']['T'].values(): sec.__setattr__(v, 0.0) # turn all off
-    sec.__setattr__(thalDict['RE']['T'][it2], gcabar*gcavfac)
+    sec.__setattr__(thalDict['RE']['T'][it2], gcab*gcavfac)
 
 def setstims (ctype='PY', nl=[11,30,49,68], amp=0.7, dly=10.0, dur=50.0):
   stims = thalDict[ctype]['stims']
