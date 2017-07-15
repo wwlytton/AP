@@ -72,7 +72,7 @@ def setchans (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=None, gcavfac=1.0, tyli=['T
   it2= it2l[mun]
   ms = h.MechanismStandard(it2, 1)
   print "Using %s channels"%it2
-  if gcabar: gcab=gcabar
+  gcab = 3e-3 if not gcabar else gcabar
   for vals in thalDict.values():
     for ce in vals['cel']:
       ce.soma[0].gnabar_hh2nafjr = pnafjr *  gnamult * vals['gnabar'] # what is this??
