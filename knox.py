@@ -83,6 +83,12 @@ def setchans (mun=3, pnafjr=0.0, gnamult=1.0, gcabar=None, gcavfac=1.0, tyli=['T
     for v in thalDict['RE']['T'].values(): sec.__setattr__(v, 0.0) # turn all off
     sec.__setattr__(thalDict['RE']['T'][it2], gcab*gcavfac)
 
+def zeroselfs ():
+  selfconns = [nc for nc in h.List('NetCon') if nc.precell()==nc.postcell()]
+  for nc in selfconns:
+    for x in range(int(nc.wcnt())):
+      nc.weight[x]=0.0
+
 def setstims (ctype='PY', nl=[11,30,49,68], amp=0.7, dly=10.0, dur=50.0):
   stims = thalDict[ctype]['stims']
   if len(nl)>len(stims): stims += [h.IClamp() for i in range(len(nl) - len(stims))] # extend stim list
@@ -106,6 +112,7 @@ def recv (thresh=-5):
       ve.record(ce.soma[0](0.5)._ref_v)
 
 thalDict = mkdict()
+zeroselfs() # remove self connections
 setup()
 recv()
 setchans() # used to be setparams()
