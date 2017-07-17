@@ -112,9 +112,9 @@ def recv (thresh=-5):
       ve.record(ce.soma[0](0.5)._ref_v)
 
 thalDict = mkdict()
-zeroselfs() # remove self connections
 setup()
 recv()
 setchans() # used to be setparams()
 setsyns()
+zeroselfs() # remove self connections
 setstims()
