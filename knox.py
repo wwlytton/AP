@@ -46,12 +46,15 @@ def barname (mech='it'):
   return ll[0]
 
 def mkdict (): 
-  tD = {k: {'cel': list(h.List('s%s'%k)), 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
-  for tyl in tD.values():
-    for i,ce in enumerate(tyl['cel']):
-      ncl = h.cvode.netconlist(ce,'','')
-      if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
-      else: print 'No netcons found for cell %s'%str(ce)
+  tD = {k: {'cel': [], 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
+  for k in ['TC','RE']:
+    for i in range(nthalamiccells): tD[k]['cel'].append(h.__getattribute__('s'+k)()
+  for k in ['PY','IN']:
+    for i in range(ncorticalcells): tD[k]['cel'].append(h.__getattribute__('s'+k)()
+  #  for i,ce in enumerate(tyl['cel']):
+  #    ncl = h.cvode.netconlist(ce,'','')
+  #    if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
+  #    else: print 'No netcons found for cell %s'%str(ce)
   tD['RE']['T'], tD['TC']['T']={n:barname(n) for n in it2l}, {n:barname(n) for n in ['ittccustom', 'it']}
   for v in tD.itervalues(): v['gnabar'] = v['cel'][0].soma[0].gnabar_hh2
   return tD

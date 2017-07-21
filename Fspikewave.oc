@@ -180,67 +180,6 @@ objref lstate
 objref statefile
 
 //----------------------------------------------------------------------------
-//  create TC cells
-//----------------------------------------------------------------------------
-
-print "<<            CREATE CELLS          >>"
-
-load_file("TC.tem")		// read geometry file
-
-for i=0,nthalamiccells-1 {
-  TC[i] = new sTC()
-//  TCVtrace[i] = new Vector()
-//  TCVtrace[i].record(&TC[i].soma.v(0.5))
-}
-
-
-
-
-//----------------------------------------------------------------------------
-//  create RE cells
-//----------------------------------------------------------------------------
-
-load_file("RE.tem")		// read geometry file
-
-
-for i=0,nthalamiccells-1 {
-  RE[i] = new sRE()
-//  REVtrace[i] = new Vector()
-//  REVtrace[i].record(&RE[i].soma.v(0.5))
-}
-
-
-
-
-//----------------------------------------------------------------------------
-//  create PY cells
-//----------------------------------------------------------------------------
-
-load_file("sPY.tem")		// read geometry file
-
-for i=0,ncorticalcells-1 {
-  PY[i] = new sPY()
-//  PYVtrace[i] = new Vector()
-//  PYVtrace[i].record(&PY[i].soma.v(0.5))
-}
-
-
-
-//----------------------------------------------------------------------------
-//  create IN cells
-//----------------------------------------------------------------------------
-
-load_file("sIN.tem")		// read geometry file
-
-
-for i=0,ncorticalcells-1 {
-  IN[i] = new sIN()
-//  INVtrace[i] = new Vector()
-//  INVtrace[i].record(&IN[i].soma.v(0.5))
-}
-
-
-//----------------------------------------------------------------------------
 // set up recording stuff
 //----------------------------------------------------------------------------
 
