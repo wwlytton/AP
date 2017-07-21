@@ -45,12 +45,14 @@ def barname (mech='it'):
   if len(ll)!=1: raise Exception("Can't identify proper parameter for %s: %s"%(mech, ll))
   return ll[0]
 
-def mkdict (): 
+def mkcells (): 
+  ncorticalcells, nthalamiccells = 100, 100
   tD = {k: {'cel': [], 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
   for k in ['TC','RE']:
     for i in range(nthalamiccells): tD[k]['cel'].append(h.__getattribute__('s'+k)()
   for k in ['PY','IN']:
     for i in range(ncorticalcells): tD[k]['cel'].append(h.__getattribute__('s'+k)()
+  mksyns(tD)                                                
   #  for i,ce in enumerate(tyl['cel']):
   #    ncl = h.cvode.netconlist(ce,'','')
   #    if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
@@ -59,6 +61,12 @@ def mkdict ():
   for v in tD.itervalues(): v['gnabar'] = v['cel'][0].soma[0].gnabar_hh2
   return tD
 
+def mksyns (tD):
+  narrowdiam, widediam = 5, 10                                                        
+  for k in tD.keys(): tD[k]['diam'] = {k1:narrowdiam for k1 in tD.keys()}  # default narrowdiam
+  tD['PY']['diam']['RE']=tD['PY']['diam']['TC']=tD['TC']['diam']['PY']=tD['TC']['diam']['IN'] = widediam # the exceptions
+  
+                                                        
 def setup ():
   h.tstop=1e3
   for vals in thalDict.values():
@@ -114,7 +122,7 @@ def recv (thresh=-5):
       v['vrec'].append(ve)
       ve.record(ce.soma[0](0.5)._ref_v)
 
-thalDict = mkdict()
+thalDict = mknet()
 setup()
 recv()
 setchans() # used to be setparams()

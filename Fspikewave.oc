@@ -134,15 +134,6 @@ nstimsynapses = 1
 // global simulation variables
 //----------------------------------------------------------------------------
 
-objectvar PY[ncorticalcells]		// create PY cells
-objectvar PYVtrace[ncorticalcells]
-objectvar IN[ncorticalcells]		// create IN cells
-objectvar INVtrace[ncorticalcells]
-objectvar RE[nthalamiccells]		// create TC cells
-objectvar REVtrace[nthalamiccells]
-objectvar TC[nthalamiccells]		// create RE cells
-objectvar TCVtrace[nthalamiccells]
-
 //stuff for raster plot
 objref tobj, nil
 
@@ -178,74 +169,6 @@ randvolt.uniform(-80,-65)
 
 objref lstate 
 objref statefile
-
-//----------------------------------------------------------------------------
-// set up recording stuff
-//----------------------------------------------------------------------------
-
-    PYtimevec = new Vector()
-    PYidvec = new Vector()
-    INtimevec = new Vector()
-    INidvec = new Vector()
-    REtimevec = new Vector()
-    REidvec = new Vector()
-    TCtimevec = new Vector()
-    TCidvec = new Vector()
-
-for i=0,ncorticalcells-1 {  
-    PYVtrace[i] = new Vector()
-    PYVtrace[i].record(&PY[i].soma.v(0.5))
-    PY[i].soma tobj = new NetCon(&v(0.5), nil)
-    tobj.record(PYtimevec, PYidvec, i+1) // so all the spike rasters lie above the x axis
-    recncs.append(tobj)
-    INVtrace[i] = new Vector()
-    INVtrace[i].record(&IN[i].soma.v(0.5))
-    IN[i].soma tobj = new NetCon(&v(0.5), nil)
-    tobj.record(INtimevec, INidvec, i+1) // so all the spike rasters lie above the x axis
-    recncs.append(tobj)
-}
-
-
-for i=0,nthalamiccells-1 {
-    REVtrace[i] = new Vector()
-    REVtrace[i].record(&RE[i].soma.v(0.5))
-    RE[i].soma tobj = new NetCon(&v(0.5), nil)
-    tobj.record(REtimevec, REidvec, i+1) // so all the spike rasters lie above the x axis
-    recncs.append(tobj)
-    TCVtrace[i] = new Vector()
-    TCVtrace[i].record(&TC[i].soma.v(0.5))
-    TC[i].soma tobj = new NetCon(&v(0.5), nil)
-    tobj.record(TCtimevec, TCidvec, i+1) // so all the spike rasters lie above the x axis
-    recncs.append(tobj)
-
-}
-
-/*
-for i=0,ncorticalcells-1 {
-    PY[i].soma tobj = new NetCon(&v(0.5), nil)
-    tobj.record(PYtimevec, PYidvec, i+1) // so all the spike rasters lie above the x axis
-    recncs.append(tobj)
-}
- 
-for i=0,ncorticalcells-1 {
-    IN[i].soma tobj = new NetCon(&v(0.5), nil)
-    tobj.record(INtimevec, INidvec, i+1) // so all the spike rasters lie above the x axis
-    recncs.append(tobj)
-}
-
-for i=0,nthalamiccells-1 {
-    RE[i].soma tobj = new NetCon(&v(0.5), nil)
-    tobj.record(REtimevec, REidvec, i+1) // so all the spike rasters lie above the x axis
-    recncs.append(tobj)
-}
-
-for i=0,nthalamiccells-1 { 
-    TC[i].soma tobj = new NetCon(&v(0.5), nil)
-    tobj.record(TCtimevec, TCidvec, i+1) // so all the spike rasters lie above the x axis
-    recncs.append(tobj)
-}
-*/
-
 
 //----------------------------------------------------------------------------
 //  PROCEDURES FOR SYNAPTIC CONNECTIVITY IN 1-DIM
