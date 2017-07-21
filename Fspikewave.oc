@@ -185,7 +185,7 @@ objref statefile
 
 print "<<            CREATE CELLS          >>"
 
-load_file("Knox_Absence_model/TC.tem")		// read geometry file
+load_file("TC.tem")		// read geometry file
 
 for i=0,nthalamiccells-1 {
   TC[i] = new sTC()
@@ -200,7 +200,7 @@ for i=0,nthalamiccells-1 {
 //  create RE cells
 //----------------------------------------------------------------------------
 
-load_file("Knox_Absence_model/RE.tem")		// read geometry file
+load_file("RE.tem")		// read geometry file
 
 
 for i=0,nthalamiccells-1 {
@@ -216,7 +216,7 @@ for i=0,nthalamiccells-1 {
 //  create PY cells
 //----------------------------------------------------------------------------
 
-load_file("Knox_Absence_model/sPY.tem")		// read geometry file
+load_file("sPY.tem")		// read geometry file
 
 for i=0,ncorticalcells-1 {
   PY[i] = new sPY()
@@ -230,7 +230,7 @@ for i=0,ncorticalcells-1 {
 //  create IN cells
 //----------------------------------------------------------------------------
 
-load_file("Knox_Absence_model/sIN.tem")		// read geometry file
+load_file("sIN.tem")		// read geometry file
 
 
 for i=0,ncorticalcells-1 {
