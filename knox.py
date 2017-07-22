@@ -49,10 +49,12 @@ def mkcells ():
   ncorticalcells, nthalamiccells = 100, 100
   tD = {k: {'cel': [], 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
   for k in ['TC','RE']:
-    for i in range(nthalamiccells): tD[k]['cel'].append(h.__getattribute__('s'+k)()
+    for i in range(nthalamiccells): 
+      tD[k]['cel'].append(h.__getattribute__('s'+k)())
   for k in ['PY','IN']:
-    for i in range(ncorticalcells): tD[k]['cel'].append(h.__getattribute__('s'+k)()
-  mksyns(tD)                                                
+    for i in range(ncorticalcells): 
+      tD[k]['cel'].append(h.__getattribute__('s'+k)())
+  # mksyns(tD)                                                
   #  for i,ce in enumerate(tyl['cel']):
   #    ncl = h.cvode.netconlist(ce,'','')
   #    if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
@@ -63,10 +65,18 @@ def mkcells ():
 
 def mksyns (tD):
   narrowdiam, widediam = 5, 10                                                        
-  for k in tD.keys(): tD[k]['diam'] = {k1:narrowdiam for k1 in tD.keys()}  # default narrowdiam
-  tD['PY']['diam']['RE']=tD['PY']['diam']['TC']=tD['TC']['diam']['PY']=tD['TC']['diam']['IN'] = widediam # the exceptions
-  
-                                                        
+  for k in tD.keys(): tD[k]['lambda'] = {k1:narrowdiam for k1 in tD.keys()}  # default narrowdiam
+  tD['PY']['lambda']['RE']=tD['PY']['lambda']['TC']=tD['TC']['lambda']['PY']=tD['TC']['lambda']['IN'] = widediam # the exceptions
+  for k in tD.keys():
+    for k1 in tD.keys():
+      connect(k,k1,tD)
+
+def connect (kpr, kpo, tD):
+  lam = td[kpr]['diam'][kpo]
+  for npre,pre in enumerate(tD[kpr]['cel']):
+    for post in range(npre-1,npre):
+      print 5
+
 def setup ():
   h.tstop=1e3
   for vals in thalDict.values():
@@ -122,10 +132,12 @@ def recv (thresh=-5):
       v['vrec'].append(ve)
       ve.record(ce.soma[0](0.5)._ref_v)
 
-thalDict = mknet()
+'''
+thalDict = mkcells()
 setup()
 recv()
 setchans() # used to be setparams()
 setsyns()
 zeroselfs() # remove self connections
 setstims()
+'''
