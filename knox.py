@@ -28,6 +28,8 @@ synparams = OD({'synaptic weights J neurophys':                  (0.20,  0.02,  
 '0% RERE and RETC':                                              (0.00,  0.00,  0.04,  0.2,  0.6,  0.2,  0.1500,  0.03,  1.2,  0.01,  1.2,  0.4)})
 # gababapercent, gababpercent were both == 1
 
+axondelay, narrowdiam, widediam = 0, 5, 10
+
 def setsyns (k='orig IN->PY A weight'):
   '''Allow abbreviation of dict key for synparams'''
   k1 = [x for x in synparams.keys() if k in x][0]
@@ -47,11 +49,15 @@ def barname (mech='it'):
 
 def mkcells (): 
   ncorticalcells, nthalamiccells = 100, 100
-  tD = {k: {'cel': [], 'ncl': [], 'stims': []} for k in ['TC', 'RE', 'PY', 'IN']}
+  types = ['TC', 'RE', 'PY', 'IN']
+  tD = {k: {'cel': [], 'ncl': [], 'stims': [], 'pred': {}} for k in types}
+  for ty, ei in zip(types, ['E','I','E','I']): tD[ty]['ei'] = ei
   for k in ['TC','RE']:
+    tD[k]['num'] = nthalamiccells
     for i in range(nthalamiccells): 
       tD[k]['cel'].append(h.__getattribute__('s'+k)())
   for k in ['PY','IN']:
+    tD[k]['num'] = ncorticalcells
     for i in range(ncorticalcells): 
       tD[k]['cel'].append(h.__getattribute__('s'+k)())
   # mksyns(tD)                                                
@@ -64,18 +70,20 @@ def mkcells ():
   return tD
 
 def mksyns (tD):
-  narrowdiam, widediam = 5, 10                                                        
   for k in tD.keys(): tD[k]['lambda'] = {k1:narrowdiam for k1 in tD.keys()}  # default narrowdiam
   tD['PY']['lambda']['RE']=tD['PY']['lambda']['TC']=tD['TC']['lambda']['PY']=tD['TC']['lambda']['IN'] = widediam # the exceptions
-  for k in tD.keys():
+  '''for k in tD.keys():
     for k1 in tD.keys():
       connect(k,k1,tD)
 
 def connect (kpr, kpo, tD):
-  lam = td[kpr]['diam'][kpo]
-  for npre,pre in enumerate(tD[kpr]['cel']):
-    for post in range(npre-1,npre):
-      print 5
+  lam = tD[kpr]['lambda'][kpo]
+  for npost,post in enumerate(tD[kpo]['cel']):
+    try: tD[kpo]['pred'][pr]
+    except: tD[kpo]['pred'][pr] = []
+    for pre in range(npost-diam,npost+diam):
+      if pre >= 0 and pre < tD[post]['num']: # no wraparound
+        tD[post]['pred'][pr].append(h.NetCon(tD[kpr]['cel'][pre].soma._ref_v, tD[kpo]['cel'][post].__getattribute__(tD[kpo]['targ'][kpre]), 0, axondelay, 1, sec=tD[kpr]['ce'][pre]))
 
 def setup ():
   h.tstop=1e3
