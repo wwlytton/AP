@@ -52,7 +52,7 @@ def mkcells ():
   types = ['TC', 'RE', 'PY', 'IN']
   tD = {k: {'cel': [], 'ncl': [], 'stims': [], 'pred': {}} for k in types}
   for ty, ei in zip(types, ['ampapost','gabaapost','ampapost','gababapost']): tD[ty]['targ'] = ei
-  tD['PY']['targ']['PY'], tD['TC']['targ']['PY'] = ampapostPY, ampapostTC
+  tD['PY']['targ']['PY'], tD['TC']['targ']['PY'] = 'ampapostPY', 'ampapostTC'
   for k in ['TC','RE']:
     tD[k]['num'] = nthalamiccells
     for i in range(nthalamiccells): 
