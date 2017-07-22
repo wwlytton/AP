@@ -51,7 +51,10 @@ def mkcells ():
   ncorticalcells, nthalamiccells = 100, 100
   types = ['TC', 'RE', 'PY', 'IN']
   tD = {k: {'cel': [], 'ncl': [], 'stims': [], 'pred': {}} for k in types}
-  for ty, ei in zip(types, ['ampapost','gabaapost','ampapost','gababapost']): tD[ty]['targ'] = ei
+  for pre, ei in zip(types, ['ampapost','gabaapost','ampapost','gababapost']): 
+    tD[pre]['targ'] = {}
+    for post in types:
+      tD[pre]['targ'][post] = ei
   tD['PY']['targ']['PY'], tD['TC']['targ']['PY'] = 'ampapostPY', 'ampapostTC'
   for k in ['TC','RE']:
     tD[k]['num'] = nthalamiccells
@@ -75,7 +78,7 @@ def mksyns (tD):
   tD['PY']['lambda']['RE']=tD['PY']['lambda']['TC']=tD['TC']['lambda']['PY']=tD['TC']['lambda']['IN'] = widediam # the exceptions
   '''for k in tD.keys():
     for k1 in tD.keys():
-      connect(k,k1,tD)
+      connect(k,k1,tD)'''
 
 def connect (kpr, kpo, tD):
   lam = tD[kpr]['lambda'][kpo]
