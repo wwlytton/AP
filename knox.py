@@ -84,8 +84,7 @@ def mksyns (tD):
 def connect (kpr, kpo, tD):
   lam = tD[kpr]['lambda'][kpo]
   for npost,post in enumerate(tD[kpo]['cel']):
-    try: tD[kpo]['predi'][kpr]
-    except: tD[kpo]['predi'][kpr] = []
+    if not kpr in tD[kpo]['predi']: tD[kpo]['predi'][kpr] = [] # of can use get()
     for pre in range(npost-lam,npost+lam):
       if pre >= 0 and pre < tD[kpo]['num']: # no wraparound
         tD[kpo]['predi'][kpr].append(h.NetCon(tD[kpr]['cel'][pre].soma[0](0.5)._ref_v, 
