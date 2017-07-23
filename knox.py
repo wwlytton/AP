@@ -88,7 +88,9 @@ def connect (kpr, kpo, tD):
     except: tD[kpo]['predi'][kpr] = []
     for pre in range(npost-lam,npost+lam):
       if pre >= 0 and pre < tD[kpo]['num']: # no wraparound
-        tD[kpo]['predi'][kpr].append(h.NetCon(tD[kpr]['cel'][pre].soma[0]._ref_v, tD[kpo]['cel'][post].__getattribute__(tD[kpo]['targ'][kpr]), 0, axondelay, 1, sec=tD[kpr]['cel'][pre]))
+        tD[kpo]['predi'][kpr].append(h.NetCon(tD[kpr]['cel'][pre].soma[0](0.5)._ref_v, 
+                                              tD[kpo]['cel'][post].__getattribute__(tD[kpo]['targ'][kpr]), 
+                                              0, axondelay, 1, sec=tD[kpr]['cel'][pre]))
 
 def setup ():
   h.tstop=1e3
