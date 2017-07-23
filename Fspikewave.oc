@@ -294,6 +294,7 @@ proc assign_synapses() {	// procedure to assign syn conductances
 //assign_synapses(0,0,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4)		// 0% RERE and RETC
 //assign_focal_gabaa_synapses(0,0,45,55)
 
+/* 
 proc assign_focal_gabaa_synapses() {	// procedure to assign syn conductances 
 				// params: 1=GABAa in TC (RETC), 2=GABAa INPY
 				// 3 = lower limit id
@@ -307,7 +308,7 @@ proc assign_focal_gabaa_synapses() {	// procedure to assign syn conductances
     }
   }
 }
-
+*/
 
 objectvar rgh, rk1
 rgh = new Random()
@@ -319,7 +320,7 @@ rk1 = new Random()
 rgh.normal(17.5,0.0008)        //random number generator behaves weirdly for very small numbers, so multiply by 1e-6 below
 rk1.normal(40,0.003)
 
-// setup TC cells in resting mode (no spontaneous oscillation)
+/* setup TC cells in resting mode (no spontaneous oscillation)
 for i=0,nthalamiccells-1 { 
   TC[i].soma.ghbar_iar = rgh.repick() * 1e-6   //1.5e-5, 0.66e-3 for human
   TC[i].kl.gmax = rk1.repick() * 1e-4         //0.003
@@ -342,7 +343,7 @@ objectvar jitter
 jitter = new Random()
 
 jitter.uniform(-1,1)
-
+*/
 
 for ctr=0,nstimsynapses-1 {
    ampavec[ctr] = new Vector()
@@ -603,6 +604,7 @@ func gabab()  {local i, Ni, Re, x
    //return PY[0].gababpost.object(0).G
 }
 
+/*
 func gababTC()  {local i, Ni, Re, x   
 //$1 is Re, $2 is distance from nearest neuron, $3 is neuron to which probe is closest
 //assumes field comes from PY neurons, which are in a row spaced 20um apart
@@ -619,6 +621,7 @@ func gababTC()  {local i, Ni, Re, x
    }
    return total_field //* Re/4/PI
 }
+*/ 
 
 proc advance() {
    fadvance()

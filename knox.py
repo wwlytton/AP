@@ -12,8 +12,7 @@ import pylab as plt
 import pickle as pkl
 from collections import OrderedDict as OD
 datestr = os.popen('datestring').read()
-h.load_file('stdrun.hoc')
-h.load_file('Fspikewave.oc')
+for hoc in ['stdrun.hoc', 'TC.tem', 'RE.tem', 'sPY.tem', 'sIN.tem', 'Fspikewave.oc']: h.load_file(hoc)
 
 ncorticalcells, nthalamiccells = 100, 100
 axondelay, narrowdiam, widediam = 0, 5, 10
