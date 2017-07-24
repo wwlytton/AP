@@ -82,6 +82,15 @@ def mksyns (tD):
       if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
       else: print 'No netcons found for cell %s'%str(ce)
 
+def assignSyns (w, tD):
+  syid = ['RERE', 'RETCga', 'RETCgb', 'TCRE', 'PYPY', 'PYIN', 'INPYga', 'INPYgb', 'PYRE', 'PYTC', 'TCPY', 'TCIN']
+  ty = None
+  for sy, wt in zip(syid, w):
+    prty, poty = sy[:2], sy[2:4]
+    if len(sy)==6: syty=sy[-2:] # ga or gb (can also use later for am AMPA vs nm NMDA)
+    for nc in tD[poty]['predi'][prty]:
+      nc.weight[0]=wt/(2*tD[poty]['lambda'][prty] + 1) # denominator will be to big at the edges since no wraparound
+
 def connect (kpr, kpo, tD):
   lam = tD[kpr]['lambda'][kpo]
   for npost,cepost in enumerate(tD[kpo]['cel']):
