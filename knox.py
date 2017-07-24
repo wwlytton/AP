@@ -51,7 +51,7 @@ def barname (mech='it'):
 def mkcells (): 
   types = ['TC', 'RE', 'PY', 'IN']
   tD = {k: {'cel': [], 'ncl': [], 'stims': [], 'predi': {}} for k in types}
-  for pre, ei in zip(types, ['ampapost','gabaapost','ampapost','gababapost']): 
+  for pre, ei in zip(types, ['ampapost','gabaapost','ampapost','gabaapost']): 
     tD[pre]['targ'] = {}
     for post in types:
       tD[pre]['targ'][post] = ei
