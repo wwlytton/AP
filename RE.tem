@@ -35,11 +35,6 @@
 --------------------------------------------------------------*/
 
 
-print " "
-print " << defining template for one-compartment sRE cell >> "
-print " "
-
-
 begintemplate sRE		// create a new template object
 public soma, ampapost, gabaapost, PYlist, TClist, REgabaalist, proportion_custom
 

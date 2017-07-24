@@ -343,7 +343,6 @@ objectvar jitter
 jitter = new Random()
 
 jitter.uniform(-1,1)
-*/
 
 for ctr=0,nstimsynapses-1 {
    ampavec[ctr] = new Vector()
@@ -365,6 +364,7 @@ for ctr=0,nstimsynapses-1 {
 
    ampavec[ctr].play(&Vampa[ctr],ampatimevec[ctr])
 }
+*/
 
 objectvar pyampa[nstimsynapses]
 for i=0,nstimsynapses-1 {
