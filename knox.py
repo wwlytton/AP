@@ -70,8 +70,8 @@ def mkcells ():
 
 def mksyns (tD):
   for k in tD.keys(): tD[k]['lambda'] = {k1:narrowdiam for k1 in tD.keys()}  # default narrowdiam
-  INTC, INRE, TCTC, ININ, REPY, REIN = 0
-  tD['PY']['lambda']['RE']=tD['PY']['lambda']['TC']=tD['TC']['lambda']['PY']=tD['TC']['lambda']['IN'] = widediam # the exceptions
+  for zero in ['INTC', 'INRE', 'TCTC', 'ININ', 'REPY', 'REIN']: tD[zero[:2]]['lambda'][zero[2:]] = 0
+  for wide in ['PYRE', 'PYTC', 'TCPY', 'TCIN']:                 tD[wide[:2]]['lambda'][wide[2:]] = widediam
   for k in tD.keys():
     for k1 in tD.keys():
       connect(k,k1,tD)
