@@ -471,6 +471,7 @@ proc rasterplot() {
 // Write recorded membrane data to file
 //-----------------------------------------------------------------------------
 
+/*
 proc writedatafile()  {
 
   membranedatafile.wopen("membrane_data.txt")
@@ -495,6 +496,7 @@ proc writedatafile()  {
   
   membranedatafile.close()
 }
+*/
 
 //--------------------------------------------------------------------------
 // Save state
@@ -514,6 +516,7 @@ proc writestate()  {
 //  Code for dealing with field potentials
 ///////////////////////////////////////////////////////////////////////
 
+/*
 func xfield()  {local i, j, tmp, Ni, Re, x, cw   
 //$1 is Re, $2 is distance from nearest neuron, $3 is neuron to which probe is closest
 //assumes field comes from PY neurons, which are in a row spaced 20um apart
@@ -604,7 +607,6 @@ func gabab()  {local i, Ni, Re, x
    //return PY[0].gababpost.object(0).G
 }
 
-/*
 func gababTC()  {local i, Ni, Re, x   
 //$1 is Re, $2 is distance from nearest neuron, $3 is neuron to which probe is closest
 //assumes field comes from PY neurons, which are in a row spaced 20um apart
@@ -638,6 +640,7 @@ proc advance() {
 //  add text
 //----------------------------------------------------------------------------
 
+/*
 access TC[0].soma
 
 proc text() {
@@ -662,3 +665,4 @@ proc text() {
 //text()
 print "Use procedure text() to create a new window with actual parameters"
 print "Use procedure assign_synapses() to change synaptic conductances"
+*/

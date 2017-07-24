@@ -12,7 +12,7 @@ import pylab as plt
 import pickle as pkl
 from collections import OrderedDict as OD
 datestr = os.popen('datestring').read()
-for hoc in ['stdrun.hoc', 'TC.tem', 'RE.tem', 'sPY.tem', 'sIN.tem', 'Fspikewave.oc']: h.load_file(hoc)
+for hoc in ['stdrun.hoc', 'TC.tem', 'RE.tem', 'sPY.tem', 'sIN.tem']: h.load_file(hoc)
 
 ncorticalcells, nthalamiccells = 100, 100
 axondelay, narrowdiam, widediam = 0, 5, 10
@@ -71,9 +71,9 @@ def mkcells ():
 def mksyns (tD):
   for k in tD.keys(): tD[k]['lambda'] = {k1:narrowdiam for k1 in tD.keys()}  # default narrowdiam
   tD['PY']['lambda']['RE']=tD['PY']['lambda']['TC']=tD['TC']['lambda']['PY']=tD['TC']['lambda']['IN'] = widediam # the exceptions
-  '''for k in tD.keys():
+  for k in tD.keys():
     for k1 in tD.keys():
-      connect(k,k1,tD)'''
+      connect(k,k1,tD)
   for tyl in tD.values():
     for i,ce in enumerate(tyl['cel']):
       ncl = h.cvode.netconlist(ce,'','')
@@ -83,13 +83,13 @@ def mksyns (tD):
 def connect (kpr, kpo, tD):
   lam = tD[kpr]['lambda'][kpo]
   for npost,cepost in enumerate(tD[kpo]['cel']):
+    print kpr, cepost
     if not kpr in tD[kpo]['predi']: tD[kpo]['predi'][kpr] = [] # or can use get()
     for pre in range(npost-lam,npost+lam):
       if pre >= 0 and pre < tD[kpo]['num']: # no wraparound
         tD[kpo]['predi'][kpr].append(h.NetCon(tD[kpr]['cel'][pre].soma[0](0.5)._ref_v, 
                                               cepost.__getattribute__(tD[kpo]['targ'][kpr]), 
                                               0, axondelay, 1, sec=tD[kpr]['cel'][pre].soma[0]))
-
 def setup ():
   h.tstop=1e3
   for vals in thalDict.values():
