@@ -74,7 +74,8 @@ def mksyns (tD):
   for wide in ['PYRE', 'PYTC', 'TCPY', 'TCIN']:                 tD[wide[:2]]['lambda'][wide[2:]] = widediam
   for k in tD.keys():
     for k1 in tD.keys():
-      connect(k,k1,tD)
+      if tD[k]['lambda'][k1] > 0:
+        connect(k,k1,tD)
   for tyl in tD.values():
     for i,ce in enumerate(tyl['cel']):
       ncl = h.cvode.netconlist(ce,'','')
