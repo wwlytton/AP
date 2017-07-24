@@ -70,6 +70,7 @@ def mkcells ():
 
 def mksyns (tD):
   for k in tD.keys(): tD[k]['lambda'] = {k1:narrowdiam for k1 in tD.keys()}  # default narrowdiam
+  INTC, INRE, TCTC, ININ, REPY, REIN = 0
   tD['PY']['lambda']['RE']=tD['PY']['lambda']['TC']=tD['TC']['lambda']['PY']=tD['TC']['lambda']['IN'] = widediam # the exceptions
   for k in tD.keys():
     for k1 in tD.keys():
@@ -88,7 +89,7 @@ def connect (kpr, kpo, tD):
     for pre in range(npost-lam,npost+lam):
       if pre >= 0 and pre < tD[kpo]['num']: # no wraparound
         tD[kpo]['predi'][kpr].append(h.NetCon(tD[kpr]['cel'][pre].soma[0](0.5)._ref_v, 
-                                              cepost.__getattribute__(tD[kpo]['targ'][kpr]), 
+                                              cepost.__getattribute__(tD[kpr]['targ'][kpo]), 
                                               0, axondelay, 1, sec=tD[kpr]['cel'][pre].soma[0]))
 def setup ():
   h.tstop=1e3
