@@ -86,7 +86,7 @@ def connect (kpr, kpo, tD):
   for npost,cepost in enumerate(tD[kpo]['cel']):
     print kpr, cepost
     if not kpr in tD[kpo]['predi']: tD[kpo]['predi'][kpr] = [] # or can use get()
-    for pre in range(npost-lam,npost+lam):
+    for pre in range(npost-lam, npost+lam+1):
       if pre >= 0 and pre < tD[kpo]['num']: # no wraparound
         tD[kpo]['predi'][kpr].append(h.NetCon(tD[kpr]['cel'][pre].soma[0](0.5)._ref_v, 
                                               cepost.__getattribute__(tD[kpr]['targ'][kpo]), 
