@@ -64,11 +64,6 @@ def mkcells ():
     tD[k]['num'] = ncorticalcells
     for i in range(ncorticalcells): 
       tD[k]['cel'].append(h.__getattribute__('s'+k)())
-  mksyns(tD)                                                
-  for i,ce in enumerate(tyl['cel']):
-    ncl = h.cvode.netconlist(ce,'','')
-    if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
-    else: print 'No netcons found for cell %s'%str(ce)
   tD['RE']['T'], tD['TC']['T']={n:barname(n) for n in it2l}, {n:barname(n) for n in ['ittccustom', 'it']}
   for v in tD.itervalues(): v['gnabar'] = v['cel'][0].soma[0].gnabar_hh2
   return tD
@@ -79,6 +74,11 @@ def mksyns (tD):
   '''for k in tD.keys():
     for k1 in tD.keys():
       connect(k,k1,tD)'''
+  for tyl in tD.values():
+    for i,ce in enumerate(tyl['cel']):
+      ncl = h.cvode.netconlist(ce,'','')
+      if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
+      else: print 'No netcons found for cell %s'%str(ce)
 
 def connect (kpr, kpo, tD):
   lam = tD[kpr]['lambda'][kpo]
