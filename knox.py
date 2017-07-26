@@ -76,7 +76,7 @@ def mksyns (tD):
       if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
       else: print 'No netcons found for cell %s'%str(ce)
 
-def assignSyns ((k='orig IN->PY A weight'), tD):
+def assignSyns (k='orig IN->PY A weight', tD=thalDict):
   '''Assign weight strengthes for synapses'''
   w = synparams[[x for x in synparams.keys() if k in x][0]] # allow abbreviating these long titles
   print w
@@ -161,4 +161,19 @@ setchans() # used to be setparams()
 setsyns()
 zeroselfs() # remove self connections
 setstims()
+'''
+
+'''
+COMMENT: testing sequence when opened from interpreter
+import knox as kx
+reload(kx)
+td=tD=thalDict = kx.mkcells()
+kx.thalDict=td # set up the global
+kx.mksyns(td)
+kx.setup()
+kx.recv()
+kx.setchans() # used to be setparams()
+kx.setsyns()
+kx.zeroselfs() # remove self connections
+kx.setstims()
 '''
