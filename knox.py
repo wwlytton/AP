@@ -31,12 +31,6 @@ synparams = OD({'synaptic weights J neurophys':                  (0.20,  0.02,  
 '0% RERE and RETC':                                              (0.00,  0.00,  0.04,  0.2,  0.6,  0.2,  0.1500,  0.03,  1.2,  0.01,  1.2,  0.4)})
 # gababapercent, gababpercent were both == 1
 
-def setsyns (k='orig IN->PY A weight'):
-  '''Allow abbreviation of dict key for synparams'''
-  k1 = [x for x in synparams.keys() if k in x][0]
-  print k1
-  apply(h.assign_synapses, synparams[k])
-
 def barname (mech='it'):
   '''return the name of a gbar (max conductance) for a given mechanism name'''
   l = []
@@ -82,7 +76,10 @@ def mksyns (tD):
       if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
       else: print 'No netcons found for cell %s'%str(ce)
 
-def assignSyns (w, tD):
+def assignSyns ((k='orig IN->PY A weight'), tD):
+  '''Assign weight strengthes for synapses'''
+  w = synparams[[x for x in synparams.keys() if k in x][0]] # allow abbreviating these long titles
+  print w
   syid = ['RERE', 'RETCga', 'RETCgb', 'TCRE', 'PYPY', 'PYIN', 'INPYga', 'INPYgb', 'PYRE', 'PYTC', 'TCPY', 'TCIN']
   ty = None
   for sy, wt in zip(syid, w):
