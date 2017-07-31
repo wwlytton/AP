@@ -16,7 +16,6 @@ for hoc in ['stdrun.hoc', 'TC.tem', 'RE.tem', 'sPY.tem', 'sIN.tem']: h.load_file
 
 ncorticalcells, nthalamiccells = 100, 100
 axondelay, narrowdiam, widediam = 0, 5, 10
-thalDict = {}
 
 it2l = ['it2WT', 'it2C456S', 'it2R788C', 'it2', 'itrecustom'] # it2 is RE, it is TC channel
                                                                # RERE    RETCa  RETCb  TCRE  PYPY  PYIN  INPYa    INPYb  PYRE  PYTC   TCPY  TCIN  
@@ -77,8 +76,9 @@ def mksyns (tD):
       if len(ncl)>0: tyl['ncl'].append(ncl[0]) # just take one
       else: print 'No netcons found for cell %s'%str(ce)
 
-def assignSyns (k='orig IN->PY A weight', tD=thalDict):
+def assignSyns (k='orig IN->PY A weight', tD=None):
   '''Assign weight strengthes for synapses'''
+  if not tD: tD=thalDict
   w = synparams[[x for x in synparams.keys() if k in x][0]] # allow abbreviating these long titles
   print w
   syid = ['RERE', 'RETCga', 'RETCgb', 'TCRE', 'PYPY', 'PYIN', 'INPYga', 'INPYgb', 'PYRE', 'PYTC', 'TCPY', 'TCIN']
