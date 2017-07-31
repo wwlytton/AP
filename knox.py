@@ -157,7 +157,7 @@ def recv (thresh=-5):
 def allsetup ():
   global thalDict
   thalDict = mkcells() # creates dict used for cell lists and all other lists
-  mksyns(td)
+  mksyns(thalDict)
   insertchans() # special Na chan, Ca chans
   recv()  # record vol
   setchans() # type and density of channels
