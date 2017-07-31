@@ -99,7 +99,7 @@ def connect (kpr, kpo, tD):
         tD[kpo]['predi'][kpr].append(h.NetCon(tD[kpr]['cel'][pre].soma[0](0.5)._ref_v, 
                                               cepost.__getattribute__(tD[kpr]['targ'][kpo]), 
                                               0, axondelay, 1, sec=tD[kpr]['cel'][pre].soma[0]))
-def setup ():
+def insertchans ():
   h.tstop=1e3
   for vals in thalDict.values():
     for ce in vals['cel']:
@@ -154,15 +154,18 @@ def recv (thresh=-5):
       v['vrec'].append(ve)
       ve.record(ce.soma[0](0.5)._ref_v)
 
-'''
-thalDict = mkcells()
-setup()
-recv()
-setchans() # used to be setparams()
-assignSyns()
-zeroselfs() # remove self connections
-setstims()
-'''
+def allsetup ():
+  global thalDict
+  thalDict = mkcells() # creates dict used for cell lists and all other lists
+  mksyns(td)
+  insertchans() # special Na chan, Ca chans
+  recv()  # record vol
+  setchans() # type and density of channels
+  assignSyns() # sets weights
+  # zeroselfs() # remove self connections
+  setstims()
+
+allsetup()
 
 '''
 COMMENT: testing sequence when opened from interpreter
@@ -177,4 +180,7 @@ kx.setchans() # used to be setparams()
 kx.assignSyns()
 kx.zeroselfs() # remove self connections
 kx.setstims()
+import graph as g
+g.mkfig() # 1 time only
+g.TCraster(kx.thalDict)
 '''
