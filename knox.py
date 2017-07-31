@@ -16,6 +16,7 @@ for hoc in ['stdrun.hoc', 'TC.tem', 'RE.tem', 'sPY.tem', 'sIN.tem']: h.load_file
 
 ncorticalcells, nthalamiccells = 100, 100
 axondelay, narrowdiam, widediam = 0, 5, 10
+thalDict = {}
 
 it2l = ['it2WT', 'it2C456S', 'it2R788C', 'it2', 'itrecustom'] # it2 is RE, it is TC channel
                                                                # RERE    RETCa  RETCb  TCRE  PYPY  PYIN  INPYa    INPYb  PYRE  PYTC   TCPY  TCIN  
