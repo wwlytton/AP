@@ -159,7 +159,7 @@ thalDict = mkcells()
 setup()
 recv()
 setchans() # used to be setparams()
-setsyns()
+assignSyns()
 zeroselfs() # remove self connections
 setstims()
 '''
@@ -174,7 +174,7 @@ kx.mksyns(td)
 kx.setup()
 kx.recv()
 kx.setchans() # used to be setparams()
-kx.setsyns()
+kx.assignSyns()
 kx.zeroselfs() # remove self connections
 kx.setstims()
 '''
