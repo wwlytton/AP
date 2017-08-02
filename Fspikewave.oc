@@ -134,6 +134,15 @@ nstimsynapses = 1
 // global simulation variables
 //----------------------------------------------------------------------------
 
+objectvar PY[ncorticalcells]		// create PY cells
+objectvar PYVtrace[ncorticalcells]
+objectvar IN[ncorticalcells]		// create IN cells
+objectvar INVtrace[ncorticalcells]
+objectvar RE[nthalamiccells]		// create TC cells
+objectvar REVtrace[nthalamiccells]
+objectvar TC[nthalamiccells]		// create RE cells
+objectvar TCVtrace[nthalamiccells]
+
 //stuff for raster plot
 objref tobj, nil
 
@@ -169,6 +178,383 @@ randvolt.uniform(-80,-65)
 
 objref lstate 
 objref statefile
+
+//----------------------------------------------------------------------------
+//  create TC cells
+//----------------------------------------------------------------------------
+
+print "<<            CREATE CELLS          >>"
+
+load_file("TC.tem")		// read geometry file
+
+for i=0,nthalamiccells-1 {
+  TC[i] = new sTC()
+//  TCVtrace[i] = new Vector()
+//  TCVtrace[i].record(&TC[i].soma.v(0.5))
+}
+
+
+
+
+//----------------------------------------------------------------------------
+//  create RE cells
+//----------------------------------------------------------------------------
+
+load_file("RE.tem")		// read geometry file
+
+
+for i=0,nthalamiccells-1 {
+  RE[i] = new sRE()
+//  REVtrace[i] = new Vector()
+//  REVtrace[i].record(&RE[i].soma.v(0.5))
+}
+
+
+
+
+//----------------------------------------------------------------------------
+//  create PY cells
+//----------------------------------------------------------------------------
+
+load_file("sPY.tem")		// read geometry file
+
+for i=0,ncorticalcells-1 {
+  PY[i] = new sPY()
+//  PYVtrace[i] = new Vector()
+//  PYVtrace[i].record(&PY[i].soma.v(0.5))
+}
+
+
+
+//----------------------------------------------------------------------------
+//  create IN cells
+//----------------------------------------------------------------------------
+
+load_file("sIN.tem")		// read geometry file
+
+
+for i=0,ncorticalcells-1 {
+  IN[i] = new sIN()
+//  INVtrace[i] = new Vector()
+//  INVtrace[i].record(&IN[i].soma.v(0.5))
+}
+
+
+//----------------------------------------------------------------------------
+// set up recording stuff
+//----------------------------------------------------------------------------
+
+    PYtimevec = new Vector()
+    PYidvec = new Vector()
+    INtimevec = new Vector()
+    INidvec = new Vector()
+    REtimevec = new Vector()
+    REidvec = new Vector()
+    TCtimevec = new Vector()
+    TCidvec = new Vector()
+
+for i=0,ncorticalcells-1 {  
+    PYVtrace[i] = new Vector()
+    PYVtrace[i].record(&PY[i].soma.v(0.5))
+    PY[i].soma tobj = new NetCon(&v(0.5), nil)
+    tobj.record(PYtimevec, PYidvec, i+1) // so all the spike rasters lie above the x axis
+    recncs.append(tobj)
+    INVtrace[i] = new Vector()
+    INVtrace[i].record(&IN[i].soma.v(0.5))
+    IN[i].soma tobj = new NetCon(&v(0.5), nil)
+    tobj.record(INtimevec, INidvec, i+1) // so all the spike rasters lie above the x axis
+    recncs.append(tobj)
+}
+
+
+for i=0,nthalamiccells-1 {
+    REVtrace[i] = new Vector()
+    REVtrace[i].record(&RE[i].soma.v(0.5))
+    RE[i].soma tobj = new NetCon(&v(0.5), nil)
+    tobj.record(REtimevec, REidvec, i+1) // so all the spike rasters lie above the x axis
+    recncs.append(tobj)
+    TCVtrace[i] = new Vector()
+    TCVtrace[i].record(&TC[i].soma.v(0.5))
+    TC[i].soma tobj = new NetCon(&v(0.5), nil)
+    tobj.record(TCtimevec, TCidvec, i+1) // so all the spike rasters lie above the x axis
+    recncs.append(tobj)
+
+}
+
+/*
+for i=0,ncorticalcells-1 {
+    PY[i].soma tobj = new NetCon(&v(0.5), nil)
+    tobj.record(PYtimevec, PYidvec, i+1) // so all the spike rasters lie above the x axis
+    recncs.append(tobj)
+}
+ 
+for i=0,ncorticalcells-1 {
+    IN[i].soma tobj = new NetCon(&v(0.5), nil)
+    tobj.record(INtimevec, INidvec, i+1) // so all the spike rasters lie above the x axis
+    recncs.append(tobj)
+}
+
+for i=0,nthalamiccells-1 {
+    RE[i].soma tobj = new NetCon(&v(0.5), nil)
+    tobj.record(REtimevec, REidvec, i+1) // so all the spike rasters lie above the x axis
+    recncs.append(tobj)
+}
+
+for i=0,nthalamiccells-1 { 
+    TC[i].soma tobj = new NetCon(&v(0.5), nil)
+    tobj.record(TCtimevec, TCidvec, i+1) // so all the spike rasters lie above the x axis
+    recncs.append(tobj)
+}
+*/
+
+
+//----------------------------------------------------------------------------
+//  PROCEDURES FOR SYNAPTIC CONNECTIVITY IN 1-DIM
+//----------------------------------------------------------------------------
+print "<<     CREATE SYNAPTIC RECEPTORS    >>"
+
+func ncon() { local nc		// function to get the number of connections 
+				// argument: interaction diameter
+   nc = 2 * $1 + 1
+   if(nc>ncorticalcells) nc = ncoricalcells
+   return nc
+}
+
+//----------------------------------------------------------------------------
+//  Glutamate AMPA receptors in synapses from TC to RE
+//----------------------------------------------------------------------------
+
+diamTCRE = narrowdiam		// diameter of connectivity for TC->RE
+nTCRE = ncon(diamTCRE)	// nb of RE cells recampapost, PYlist, TClisteiving synapses from one TC cell
+
+for i=0,nthalamiccells-1 {
+   for j=i-diamTCRE,i+diamTCRE {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - 1
+	if (jbound > nthalamiccells-1) jbound = 2 * nthalamiccells - jbound - 1
+
+	// presynaptic is TC[i], postsynaptic is RE[j] 
+	TC[i].soma RE[jbound].TClist.append(new NetCon(&v(0.5), RE[jbound].ampapost, 0, axondelay, 1))
+   }
+}
+
+//----------------------------------------------------------------------------
+//  GABAa receptors in intra-RE synapses
+//----------------------------------------------------------------------------
+
+diamRERE = narrowdiam		// diameter of connectivity for RE->RE
+nRERE = ncon(diamRERE)	// nb of RE cells receiving synapses from one RE cell
+
+for i=0,nthalamiccells-1 {
+   for j=i-diamRERE,i+diamRERE {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - 1
+	if (jbound > nthalamiccells-1) jbound = 2 * nthalamiccells - jbound - 1
+
+	// presynaptic is RE[i], postsynaptic is RE[j] 
+	RE[i].soma RE[jbound].REgabaalist.append(new NetCon(&v(0.5), RE[jbound].gabaapost, 0, axondelay, 1))
+   }
+}
+	
+//----------------------------------------------------------------------------
+//  GABAa receptors in synapses from RE to TC cells
+//----------------------------------------------------------------------------
+
+diamRETC = narrowdiam		// diameter of connectivity from RE->TC
+nRETC = ncon(diamRETC)	// nb of RE cells receiving synapses from one TC cell
+
+for i=0,nthalamiccells-1 {
+   for j=i-diamRETC,i+diamRETC {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - 1
+	if (jbound > nthalamiccells-1) jbound = 2 * nthalamiccells - jbound - 1
+
+	// presynaptic is RE[i], postsynaptic is TC[j] 
+	RE[i].soma TC[jbound].REgabaalist.append(new NetCon(&v(0.5), TC[jbound].gabaapost, 0, axondelay, 1))
+   }
+}
+	
+//----------------------------------------------------------------------------
+//  GABAb receptors in synapses from RE to TC cells
+//----------------------------------------------------------------------------
+
+// use same diameters and connectivity as GABAa receptors (colocalized)
+objectvar gababsyn
+
+for i=0,nthalamiccells-1 {
+   for j=i-diamRETC,i+diamRETC {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - 1
+	if (jbound > nthalamiccells-1) jbound = 2 * nthalamiccells - jbound - 1
+
+	// presynaptic is RE[i], postsynaptic is TC[j]
+	gababsyn = new GABAb_S()
+ 	TC[jbound].soma gababsyn.loc(0.5)
+	TC[jbound].gababpost.append(gababsyn)
+	RE[i].soma TC[jbound].REgabablist.append(new NetCon(&v(0.5), gababsyn, 0, axondelay, 1))	
+   }
+}
+
+//----------------------------------------------------------------------------
+//  Glutamate AMPA receptors in synapses from PY to PY
+//----------------------------------------------------------------------------
+
+diamPYPY = narrowdiam		// diameter of connectivity for PY->PY
+nPYPY = ncon(diamTCRE)	// nb of PY cells receiving synapses from one PY cell
+
+for i=0,ncorticalcells-1 {
+   for j=i-diamPYPY,i+diamPYPY {
+	//synfile.printf("<< AMPA receptor from PY cell %d to PY cell %d >>\n",i,j)
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - 1
+	if (jbound > ncorticalcells-1) jbound = 2 * ncorticalcells - jbound - 1
+	
+	// presynaptic is PY[i], postsynaptic is PY[j] 
+	//if (i != jbound) PY[i].soma PY[jbound].PYlist.append(new NetCon(&v(0.5), PY[jbound].ampapostPY, 0, axondelay, 1))
+	PY[i].soma PY[jbound].PYlist.append(new NetCon(&v(0.5), PY[jbound].ampapostPY, 0, axondelay, 1))	
+   }
+}
+	
+//----------------------------------------------------------------------------
+//  Glutamate AMPA receptors in synapses from PY to IN
+//----------------------------------------------------------------------------
+
+diamPYIN = narrowdiam		// diameter of connectivity for PY->IN
+nPYIN = ncon(diamPYIN)	
+
+for i=0,ncorticalcells-1 {
+   for j=i-diamPYIN,i+diamPYIN {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - 1
+	if (jbound > ncorticalcells-1) jbound = 2 * ncorticalcells - jbound - 1
+
+	// presynaptic is PY[i], postsynaptic is IN[j] 
+	PY[i].soma IN[jbound].PYlist.append(new NetCon(&v(0.5), IN[jbound].ampapost, 0, axondelay, 1))	
+   }
+}
+
+//----------------------------------------------------------------------------
+//  GABAa receptors in synapses from IN to PY cells
+//----------------------------------------------------------------------------
+
+diamINPY = narrowdiam		// diameter of connectivity from IN->PY
+nINPY = ncon(diamINPY)	
+
+for i=0,ncorticalcells-1 {
+   for j=i-diamINPY,i+diamINPY {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - 1
+	if (jbound > ncorticalcells-1) jbound = 2 * ncorticalcells - jbound - 1
+
+	// presynaptic is IN[i], postsynaptic is PY[j] 
+	IN[i].soma PY[jbound].INgabaalist.append(new NetCon(&v(0.5), PY[jbound].gabaapost, 0, axondelay, 1))	
+   }
+}
+	
+//----------------------------------------------------------------------------
+//  GABAb receptors in synapses from IN to PY cells
+//----------------------------------------------------------------------------
+
+// use same diameters and connectivity as GABAa receptors (colocalized)
+
+for i=0,ncorticalcells-1 {
+   for j = i-diamINPY, i+diamINPY {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - 1
+	if (jbound > ncorticalcells-1) jbound = 2 * ncorticalcells - jbound - 1
+
+	// presynaptic is IN[i], postsynaptic is PY[j]
+	gababsyn = new GABAb_S()
+ 	PY[jbound].soma gababsyn.loc(0.5)
+	PY[jbound].gababpost.append(gababsyn) 
+	IN[i].soma PY[jbound].INgabablist.append(new NetCon(&v(0.5), gababsyn, 0, axondelay, 1))	
+   }
+}
+
+//----------------------------------------------------------------------------
+//  Glutamate AMPA receptors in synapses from PY to RE
+//----------------------------------------------------------------------------
+
+diamPYRE = widediam		
+nPYRE = ncon(diamPYRE)	
+divergence = ncorticalcells / nthalamiccells
+
+for (i=0;i<=ncorticalcells-1;i+=divergence) {
+   for j=i/divergence-diamPYRE,i/divergence+diamPYRE {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - 1
+	if (jbound > nthalamiccells-1) jbound = 2 * nthalamiccells - jbound - 1
+
+	// presynaptic is PY[i], postsynaptic is RE[j] 
+//	if (i < 100) print "PY->RE ", i, jbound
+//	if (i > 200 && i < 800)	{
+//		PY[i+divergence/2+1].soma RE[jbound].PYlist.append(new NetCon(&v(0.5), RE[jbound].ampapost, 0, axondelay, 1))
+//		print "extra:",i+divergence/2+1,jbound
+//	}
+	PY[i+divergence/2].soma RE[jbound].PYlist.append(new NetCon(&v(0.5), RE[jbound].ampapost, 0, axondelay, 1))	
+   }
+}
+
+//----------------------------------------------------------------------------
+//  Glutamate AMPA receptors in synapses from PY to TC
+//----------------------------------------------------------------------------
+
+diamPYTC = widediam	
+nPYTC = ncon(diamPYTC)	
+
+for (i=0;i<=ncorticalcells-1;i+=divergence) {
+   for j=i/divergence-diamPYTC,i/divergence+diamPYTC {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - 1
+	if (jbound > nthalamiccells-1) jbound = 2 * nthalamiccells - jbound - 1
+
+	// presynaptic is PY[i], postsynaptic is RE[j] 
+//	if (i > 200 && i < 800) {
+//		PY[i+divergence/2+1].soma TC[jbound].PYlist.append(new NetCon(&v(0.5), TC[jbound].ampapost, 0, axondelay, 1))
+//		print "extra:",i+divergence/2+1,jbound
+//	}
+	PY[i+divergence/2].soma TC[jbound].PYlist.append(new NetCon(&v(0.5), TC[jbound].ampapost, 0, axondelay, 1))	
+   }
+}
+	
+//----------------------------------------------------------------------------
+//  Glutamate AMPA receptors in synapses from TC to PY
+//----------------------------------------------------------------------------
+
+diamTCPY = widediam		
+nTCPY = ncon(diamTCPY)	
+
+for i=0,nthalamiccells-1 {
+   for (j=divergence*(i-diamTCPY);j<=divergence*(i+diamTCPY);j+=divergence) {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - divergence
+	if (jbound > ncorticalcells-1) jbound = 2 * ncorticalcells - jbound - divergence
+
+	// presynaptic is TC[i], postsynaptic is PY[j] 
+	TC[i].soma PY[jbound+divergence/2].TClist.append(new NetCon(&v(0.5), PY[jbound+divergence/2].ampapostTC, 0, axondelay, 1))
+//	if (jbound > 200 && jbound < 800)	TC[i].soma PY[jbound+divergence/2+1].TClist.append(new NetCon(&v(0.5), PY[jbound+divergence/2+1].ampapostTC, 0, axondelay, 1))
+   }
+}
+
+//----------------------------------------------------------------------------
+//  Glutamate AMPA receptors in synapses from TC to IN
+//----------------------------------------------------------------------------
+
+diamTCIN = widediam		// diameter of connectivity for TC->IN
+nTCIN = ncon(diamTCIN)	
+
+for i=0,nthalamiccells-1 {
+   for (j=divergence*(i-diamTCIN);j<=divergence*(i+diamTCIN);j+=divergence) {
+	jbound = j
+	if (jbound < 0) jbound = abs(j) - divergence
+	if (jbound > ncorticalcells-1) jbound = 2 * ncorticalcells - jbound - divergence
+
+	// presynaptic is TC[i], postsynaptic is IN[j] 
+	//if (i < 10) print "TC->IN ", i, jbound
+	TC[i].soma IN[jbound+divergence/2].TClist.append(new NetCon(&v(0.5), IN[jbound+divergence/2].ampapost, 0, axondelay, 1))
+//	if (jbound > 200 && jbound < 800)	TC[i].soma IN[jbound+divergence/2+1].TClist.append(new NetCon(&v(0.5), IN[jbound+divergence/2+1].ampapost, 0, axondelay, 1))
+   }
+}
 
 //Synapse parameters
 	Alpha_AMPA_S = 0.94		// kinetics from simplex with short pulses
@@ -226,7 +612,6 @@ Cdur_AMPA_S = 0.3
 Erev_AMPA_S = 0
 
 
-/*
 proc assign_synapses() {	// procedure to assign syn conductances 
 				// params: 1=intraRE (RERE), 2=GABAa in TC (RETC),
 				// 3=GABAb in TC, 4=AMPA in RE (TCRE)
@@ -279,7 +664,6 @@ proc assign_synapses() {	// procedure to assign syn conductances
     }
   }
 }
-*/
 
 // params: RERE, RETCa,RETCb,TCRE, PYPY, PYIN, INPYa, INPYb, PYRE, PYTC, TCPY, TCIN
 //assign_synapses(0.2,0.02,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4)		// synaptic weights J neurophys
@@ -294,7 +678,6 @@ proc assign_synapses() {	// procedure to assign syn conductances
 //assign_synapses(0,0,0.04,0.2,0.6,0.2,0.15,0.03,1.2,0.01,1.2,0.4)		// 0% RERE and RETC
 //assign_focal_gabaa_synapses(0,0,45,55)
 
-/* 
 proc assign_focal_gabaa_synapses() {	// procedure to assign syn conductances 
 				// params: 1=GABAa in TC (RETC), 2=GABAa INPY
 				// 3 = lower limit id
@@ -308,7 +691,7 @@ proc assign_focal_gabaa_synapses() {	// procedure to assign syn conductances
     }
   }
 }
-*/
+
 
 objectvar rgh, rk1
 rgh = new Random()
@@ -320,7 +703,7 @@ rk1 = new Random()
 rgh.normal(17.5,0.0008)        //random number generator behaves weirdly for very small numbers, so multiply by 1e-6 below
 rk1.normal(40,0.003)
 
-/* setup TC cells in resting mode (no spontaneous oscillation)
+// setup TC cells in resting mode (no spontaneous oscillation)
 for i=0,nthalamiccells-1 { 
   TC[i].soma.ghbar_iar = rgh.repick() * 1e-6   //1.5e-5, 0.66e-3 for human
   TC[i].kl.gmax = rk1.repick() * 1e-4         //0.003
@@ -344,6 +727,7 @@ jitter = new Random()
 
 jitter.uniform(-1,1)
 
+
 for ctr=0,nstimsynapses-1 {
    ampavec[ctr] = new Vector()
    ampatimevec[ctr] = new Vector()
@@ -364,9 +748,10 @@ for ctr=0,nstimsynapses-1 {
 
    ampavec[ctr].play(&Vampa[ctr],ampatimevec[ctr])
 }
-*/
 
 objectvar pyampa[nstimsynapses]
+objref netcon
+
 for i=0,nstimsynapses-1 {
  
 
@@ -471,7 +856,6 @@ proc rasterplot() {
 // Write recorded membrane data to file
 //-----------------------------------------------------------------------------
 
-/*
 proc writedatafile()  {
 
   membranedatafile.wopen("membrane_data.txt")
@@ -496,7 +880,6 @@ proc writedatafile()  {
   
   membranedatafile.close()
 }
-*/
 
 //--------------------------------------------------------------------------
 // Save state
@@ -516,7 +899,6 @@ proc writestate()  {
 //  Code for dealing with field potentials
 ///////////////////////////////////////////////////////////////////////
 
-/*
 func xfield()  {local i, j, tmp, Ni, Re, x, cw   
 //$1 is Re, $2 is distance from nearest neuron, $3 is neuron to which probe is closest
 //assumes field comes from PY neurons, which are in a row spaced 20um apart
@@ -623,7 +1005,6 @@ func gababTC()  {local i, Ni, Re, x
    }
    return total_field //* Re/4/PI
 }
-*/ 
 
 proc advance() {
    fadvance()
@@ -640,7 +1021,6 @@ proc advance() {
 //  add text
 //----------------------------------------------------------------------------
 
-/*
 access TC[0].soma
 
 proc text() {
@@ -665,4 +1045,3 @@ proc text() {
 //text()
 print "Use procedure text() to create a new window with actual parameters"
 print "Use procedure assign_synapses() to change synaptic conductances"
-*/

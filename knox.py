@@ -63,6 +63,8 @@ def mkcells ():
   return tD
 
 def mksyns (tD):
+  global dbl
+  dbl=[]
   for k in tD.keys(): tD[k]['lambda'] = {k1:narrowdiam for k1 in tD.keys()}  # default narrowdiam
   for zero in ['INTC', 'INRE', 'TCTC', 'ININ', 'REPY', 'REIN']: tD[zero[:2]]['lambda'][zero[2:]] = 0
   for wide in ['PYRE', 'PYTC', 'TCPY', 'TCIN']:                 tD[wide[:2]]['lambda'][wide[2:]] = widediam
@@ -90,12 +92,13 @@ def assignSyns (k='orig IN->PY A weight', tD=None):
       nc.weight[0]=wt/(2*tD[poty]['lambda'][prty] + 1) # denominator will be to big at the edges since no wraparound
 
 def connect (kpr, kpo, tD):
+  global dbl
   lam = tD[kpr]['lambda'][kpo]
   for npost,cepost in enumerate(tD[kpo]['cel']):
-    print kpr, cepost
     if not kpr in tD[kpo]['predi']: tD[kpo]['predi'][kpr] = [] # or can use get()
     for pre in range(npost-lam, npost+lam+1):
       if pre >= 0 and pre < tD[kpo]['num']: # no wraparound
+        if kpr=='RE' and pre==50: dbl.append(cepost)
         tD[kpo]['predi'][kpr].append(h.NetCon(tD[kpr]['cel'][pre].soma[0](0.5)._ref_v, 
                                               cepost.__getattribute__(tD[kpr]['targ'][kpo]), 
                                               0, axondelay, 1, sec=tD[kpr]['cel'][pre].soma[0]))
