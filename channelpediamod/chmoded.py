@@ -5,7 +5,7 @@ import re
 chanlist,cdi,nadi,kdi = pkl.load(open('channels.pkl')) # read back in with load()
 
 for k,v in cdi.iteritems():
-  for mf in v: 
+  for mf in v[1]: 
     fi = '%s.mod'%mf
     gr = subp.check_output(['grep', '-n', 'SUFFIX', fi]).split()
     if (len(gr)!=3): raise(Exception('grep SUFFIX on %s returned %s'%(fi,gr)))
@@ -13,4 +13,5 @@ for k,v in cdi.iteritems():
     fpi, fpo = map(open, [fi, '%s%s.mod'%(suff,mf)], ['r','w'])
     li=fpi.readlines()
     li[lnum] = re.sub('SUFFIX (.+_.+)','SUFFIX \\1_%s'%mf,li[lnum])
+    fpo.writelines(li)
     fpi.close(); fpo.close()
