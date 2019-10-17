@@ -1,5 +1,6 @@
 from netpyne import sim
 
 cfg, netParams = sim.readCmdLineArgs()	
-simConfig = cfg
-sim.createSimulateAnalyze(simConfig = cfg, netParams = netParams)
+sim.create(simConfig = cfg, netParams = netParams)
+sim.simulate()
+sim.analyze()

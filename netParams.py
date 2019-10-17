@@ -3,8 +3,7 @@ from netpyne.specs import Dict, ODict
 from cfg import cfg
 
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
-axr=netParams.importCellParams(label='axA', conds={'cellType': 'axA'}, fileName='axonA.py', cellName='AxonA', 
-                               cellArgs={'percnajr':cfg.percnajr, 'rall':cfg.rall, 'gnabar':cfg.gnabar})
+axr=netParams.importCellParams(label='axA', conds={'cellType': 'axA'}, fileName='axonA.py', cellName='AxonA', cellArgs={'percnajr':cfg.percnajr, 'rall':cfg.rall, 'gnabar':cfg.gnabar})
 netParams.popParams.axA = Dict({'cellType': 'axA', 'numCells': 1})
 
 ic = cfg.stim

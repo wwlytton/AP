@@ -6,7 +6,7 @@ import numpy as np
 
 def createBatch(params):
 	b = Batch()
-	for k,v in params.iteritems():
+	for k,v in params.items():
 		b.params.append({'label': k, 'values': v})
 	return b
 
@@ -14,7 +14,7 @@ def runBatch(b, label):
 	b.batchLabel = label
 	b.saveFolder = 'data/'+b.batchLabel
 	b.method = 'grid'
-	b.runCfg = {'type': 'mpi', 'script': 'init.py', 'skip': True}
+	b.runCfg = {'type': 'mpi_direct', 'mpiCommand':'mpiexec', 'script': 'init.py', 'skip': True}
 	b.run() # run batch
 
 def batchaxA():
@@ -26,4 +26,5 @@ def batchaxA():
 
 # Main code
 if __name__ == '__main__':
+#       pass
 	batchaxA() 

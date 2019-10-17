@@ -35,7 +35,7 @@ cfg.analysis.plotTraces = Dict({'include': ['axA'], 'oneFigPer': 'cell', 'saveFi
                              'showFig': False, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
 
 # Parameters
-cfg.percnajr, cfg.rall, cfg.gnabar = 90.0, 100, 0.5
+cfg.percnajr, cfg.rall, cfg.gnabar = 90.0, 101, 0.5
 
 # Current inputs 
 cfg.addstim = 1
