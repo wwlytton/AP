@@ -12,7 +12,7 @@ class AxonA ():
   "Simplest axon"
   def __init__(self,x=0,y=0,z=0,ID=0,gnabar=0.12,percnajr=0,rall=35.4,nseg=99): # proportion j.r. na channel
     self.x,self.y,self.z,self.ID=x,y,z,ID
-    self.gnabar,self.percnajr,self.rall,self.nseg=gnabar,percnajr,rall,nseg
+    self.gnabar,self.percnajr, self.rall, self.nseg=gnabar,percnajr, rall, nseg
     self.all_sec = []
     self.set_morphology()
     self.insert_conductances()

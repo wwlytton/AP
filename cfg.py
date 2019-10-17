@@ -4,7 +4,7 @@ from netpyne.specs import Dict, ODict
 cfg = specs.SimConfig()  
 
 # Run parameters
-cfg.duration = 1.0*1e3 
+cfg.duration = 10
 # cfg.dt = 0.05
 # cfg.seeds = {'conn': 4321, 'stim': 1234, 'loc': 4321} 
 cfg.hParams = {'celsius': 6.3}
@@ -35,7 +35,7 @@ cfg.analysis.plotTraces = Dict({'include': ['axA'], 'oneFigPer': 'cell', 'saveFi
                              'showFig': False, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
 
 # Parameters
-cfg.percnajr, cfg.rall, cfg.gnabar = 0.0, 35.5, 0.5
+cfg.percnajr, cfg.rall, cfg.gnabar = 90.0, 100, 0.5
 
 # Current inputs 
 cfg.addstim = 1
