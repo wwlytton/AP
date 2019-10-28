@@ -28,7 +28,7 @@ PARAMETER {
 	v       (mV)
 }
 
-STATE {	m }
+STATE {	m h }
 
 ASSIGNED {
 	ina	(mA/cm2)
