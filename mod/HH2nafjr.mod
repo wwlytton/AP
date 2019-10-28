@@ -7,8 +7,9 @@ INDEPENDENT {t FROM 0 TO 1 WITH 1 (ms)}
 NEURON {
 	SUFFIX hh2nafjr
 	USEION na READ ena WRITE ina
-	RANGE gnabar, vtraub
+	RANGE gnabar 
 	RANGE m_inf, tau_m
+        GLOBAL vtraub, emut, perc
 }
 
 
@@ -20,6 +21,8 @@ UNITS {
 PARAMETER {
 	gnabar	= .003 	(mho/cm2)
 	vtraub	= -63	(mV)
+        emut = 40 (mV)
+        perc = 0.0 : % current flowing thru mutated channel
 	ena	(mV)
 	celsius (degC)
 	v       (mV)
@@ -37,7 +40,7 @@ ASSIGNED {
 
 BREAKPOINT {
 	SOLVE states
-	ina = gnabar * m*m*m*h * (v - ena)
+	ina = gnabar * m*m*m*h * ((1-perc)*(v - ena) + perc*(v-emut))
 }
 
 
