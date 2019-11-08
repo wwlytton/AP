@@ -1,3 +1,5 @@
+DEFAULT ina2005
+DEFAULT ik2005
 DEFAULT vecst
 DEFAULT stats
 DEFAULT misc
@@ -6,14 +8,13 @@ DEFAULT samnutils
 
 : from ../zippedModels/Cav32_WT
 DEFAULT HH2nafjr  # my naf version
-DEFAULT HH2
+DEFAULT HH2k
 DEFAULT capump
 DEFAULT IT_Cav32_C456S
 DEFAULT IT_Cav32_R788C
 DEFAULT IT_Cav32_WT
 
 : from ../Knox_Absence_model
-: DEFAULT HH2 -- from above
 DEFAULT ampa
 DEFAULT cadecay
 DEFAULT gabaa
