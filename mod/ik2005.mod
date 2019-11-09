@@ -1,9 +1,4 @@
-:  ichanWT2005.mod 
-:   Alan Goldin Lab, University of California, Irvine; Jay Lickfett - Last Modified: 6 July 2005
-:  This file is the Nav1.1 wild-type channel model described in:
-:		Barela et al. An Epilepsy Mutation in the Sodium Channel SCN1A That Decreases Channel Excitability.  J. Neurosci. 26(10): p. 2714-2723 
-: Spampanato et al. 2004 Increased Neuronal Firing in Computer Simulations of Sodium Channel Mutations that Cause Generalized Epilepsy with Febrile Seizures Plus. J Neurophys 91:2040-2050
-: Spampanato et al. 2004 A Novel Epilepsy Mutation in the Sodium Channel SCN1A Identifies a Cytoplasmic Domain for Beta Subunit Interaction. J. Neurosci. 24:10022-10034
+: originally form knoxmodel inak2005.mod
 
 NEURON { 
     SUFFIX ik2005
