@@ -1,12 +1,10 @@
 from netpyne import specs
-try:
-	from __main__ import cfg  # import SimConfig object with params from parent module
-except:
-	from cfg import cfg
+from cfg import cfg
 	
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
-cellRule=netParams.importCellParams(label='axA', conds={'cellType': 'axA'}, fileName='axonA.py', cellName='AxonA', 
-                               cellArgs={'percnajr':0.5, 'rall':34.5, 'gnabar':0.12})
+netParams.cellParams['PYRrule'] = {'conds': {'cellType': 'axA'}, 'secs': {'axon': {'geom': {'diam': 18.8, 'L': 18.8, 'Ra': 123.0}, 
+                                                                                   'mechs': {'hh': {'gnabar': 0.12, 'gkbar':0.036, 'gl': 0.003, 'el': -70}}}}}
+# cellRule=netParams.importCellParams(label='axA', conds={'cellType': 'axA'}, fileName='axonA.py', cellName='AxonA', cellArgs={'percnajr':0.5, 'rall':34.5, 'gnabar':0.12})
 netParams.popParams.axA = {'cellType': 'axA', cellModel: 'HH', 'numCells': 1}
 
 axr.secs.axon.ions.na.e = cfg.percnajr
