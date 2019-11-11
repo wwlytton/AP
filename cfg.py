@@ -1,7 +1,7 @@
-""" cfg.py """
 from netpyne import specs
 from netpyne.specs import Dict, ODict
-cfg = specs.SimConfig()  
+
+simConfig = specs.SimConfig()  
 
 # Run parameters
 cfg.duration = 10
