@@ -1,7 +1,7 @@
 from netpyne import specs
 from netpyne.specs import Dict, ODict
 
-simConfig = specs.SimConfig()  
+simConfig = cfg = specs.SimConfig()  
 
 # Run parameters
 cfg.duration = 10
@@ -10,7 +10,7 @@ cfg.duration = 10
 cfg.hParams = {'celsius': 6.3}
 cfg.verbose = 1
 cfg.cvode_active = False
-cfg.printRunTime = 0.1
+cfg.printRunTime = 1
 # cfg.printPopAvgRates = True
 
 # Recording 
@@ -29,10 +29,6 @@ cfg.saveFolder = 'data'
 cfg.savePickle = False
 cfg.saveJson = True
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
-
-# Analysis and plotting 
-cfg.analysis.plotTraces = Dict({'include': ['axA'], 'oneFigPer': 'cell', 'saveFig': False, 
-                             'showFig': False, 'figSize': (10,8), 'timeRange': [0,cfg.duration]})
 
 # Parameters
 cfg.percnajr, cfg.rall, cfg.gnabar = 90.0, 101, 0.5
