@@ -1,4 +1,5 @@
 # execfile('test.py')
+from neuron import h
 
 import sys
 sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne')
@@ -32,8 +33,8 @@ def loadall (filename = 'data/baxA/baxA_allData.json'):
   global params, data, pdi
   with open(filename, 'r') as fileObj: dataLoad = json.load(fileObj, object_pairs_hook=specs.OrderedDict)
   params, data = dataLoad['params'], dataLoad['data']
-  pdi={k:str(d['paramValues'])[1:-1].replace(',','')  for k,d in data.iteritems()} # pdi gives the values in a list for each of those codes
-  for k in data.keys(): data[str(pdi[k])] = data.pop(k)
+  pdi={k:str(d['paramValues'])[1:-1].replace(',','')  for k,d in data.items()} # pdi gives the values in a list for each of those codes
+  for k in list(data.keys()): data[str(pdi[k])] = data.pop(k)
 
 def loadpd (filename = 'data/baxA/df4.pd'):
   "need precise_float=True to get the correct numbers"
@@ -57,7 +58,7 @@ def plotone (key='perc0'):
   tv1=dca[key]['tvec']; vl=h.Vector(tv1.size()); vl.fill(-35.0)
   tv=h.Vector(dca[key]['v0'].size()); tv.indgen(h.dt)
   plt.scatter(tv1,vl)
-  for k,v in dca[key].iteritems(): 
+  for k,v in dca[key].items(): 
     if k.startswith('v'):
       plt.plot(tv,v)
 
@@ -79,9 +80,9 @@ def runfew ():
 def showvels ():
   vels={}
   L = 1.0  # ax.axon.L = 2mm but only looking at first 1mm
-  pts = dca[dca.keys()[0]]['tvec'].size()  # num of points recorded from on axon
+  pts = dca[list(dca.keys())[0]]['tvec'].size()  # num of points recorded from on axon
   vec=h.Vector(pts) # of spots being recorded
-  for k,v in dca.iteritems():
+  for k,v in dca.items():
     if v['tvec'].size()>2:
       vec.resize(v['tvec'].size())
       vec.fill(L/(pts-1)) # spots are 125 mu apart
@@ -111,17 +112,17 @@ def mkqstr (l):
 
 def supfigs (y='V0max'):
   axi.clear()
-  for i,tup in enumerate([zip(labs,x) for x in itr.product(*[v for x,v in vals.iteritems()])]):
+  for i,tup in enumerate([list(zip(labs,x)) for x in itr.product(*[v for x,v in vals.items()])]):
     st,sr=mkqstr(tup)
     res=df4.query(st)
-    if (len(res)<2): print st
+    if (len(res)<2): print(st)
     res.plot('percnajr',y,label=sr,ax=axi,linewidth=10-i)
 
 def mkdf4 ():
-  spkdi={key: max(d['simData']['V_axon_0.0']['cell_0']) for key, d in data.iteritems()}
-  spks={key: max for key, max in spkdi.iteritems() if max>-30}
-  pdi1={ str(d['paramValues'])[1:-1].replace(',',''): d['paramValues'] for k,d in data.iteritems()}
-  numdi={key: len(d['simData']['spkt']) for key, d in data.iteritems()}
+  spkdi={key: max(d['simData']['V_axon_0.0']['cell_0']) for key, d in data.items()}
+  spks={key: max for key, max in spkdi.items() if max>-30}
+  pdi1={ str(d['paramValues'])[1:-1].replace(',',''): d['paramValues'] for k,d in data.items()}
+  numdi={key: len(d['simData']['spkt']) for key, d in data.items()}
   df1 = pd.DataFrame.from_dict(spkdi, orient='index') 
   df2 = pd.DataFrame.from_dict(pdi1, orient='index') 
   df3 = pd.merge(df1,df2,left_index=True,right_index=True)
