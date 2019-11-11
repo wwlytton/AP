@@ -2,14 +2,14 @@
 
 NEURON { 
     SUFFIX ik2005
-    USEION kf READ ekf WRITE ikf  CHARGE 1
+    USEION k READ ek WRITE ik CHARGE 1
     RANGE gkf, gkfbar, nfinf, nftau
     GLOBAL q10
 }
 
 PARAMETER {
     celsius
-    ekf  (mV)
+    ek  (mV)
     gkfbar (mho/cm2)
 }
 
@@ -17,7 +17,7 @@ ASSIGNED {
     v (mV) 
     q10
     gkf (mho/cm2)
-    ikf (mA/cm2)
+    ik (mA/cm2)
     nfinf nftau
 } 
 
@@ -26,7 +26,7 @@ STATE { nf }
 BREAKPOINT {
     SOLVE states METHOD cnexp
     gkf = gkfbar*nf*nf*nf*nf
-    ikf = gkf*(v-ekf)
+    ik = gkf*(v-ek)
 }
 
 INITIAL {
