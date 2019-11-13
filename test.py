@@ -1,5 +1,12 @@
 # execfile('test.py')
-from neuron import h
+# %reset -f
+
+from cfg import cfg
+simConfig=cfg
+from netParams import netParams
+sim.create()
+run() # sim.runSim()
+sim.analyze() # data/sim1.json
 
 import sys
 sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne')
