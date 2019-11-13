@@ -7,6 +7,7 @@ from netParams import netParams
 sim.create()
 run() # sim.runSim()
 sim.analyze() # data/sim1.json
+def plot (): [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]
 
 import sys
 sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne')
