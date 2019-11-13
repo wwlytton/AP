@@ -7,13 +7,14 @@ simConfig = cfg = specs.SimConfig()
 cfg.duration = 10
 # cfg.dt = 0.05
 # cfg.seeds = {'conn': 4321, 'stim': 1234, 'loc': 4321} 
-cfg.hParams = {'celsius': 6.3}
+cfg.hParams = {'celsius': 37}
 cfg.verbose = 1
 cfg.cvode_active = False
 cfg.printRunTime = 1
 # cfg.printPopAvgRates = True
 
 # Recording 
+cfg.recordCells = [0]
 cfg.recordTraces = {'V_axon_0.0': {'sec': 'axon', 'loc': 0.0, 'var': 'v'},
                     'V_axon_0.2': {'sec': 'axon', 'loc': 0.2, 'var': 'v'},
                     'V_axon_0.4': {'sec': 'axon', 'loc': 0.4, 'var': 'v'},
