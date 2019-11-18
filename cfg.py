@@ -36,4 +36,4 @@ cfg.percnajr, cfg.rall, cfg.gnabar = 90.0, 101, 0.5
 
 # Current inputs 
 cfg.addstim = 1
-cfg.stim = Dict({'popu': 'axA', 'sec': 'axon', 'loc': 0.0, 'start': 0, 'dur': 5, 'amp': 2.0}) # avoid word pop since that's a builtin method
+cfg.stim = Dict({'popu': 'axA', 'sec': 'axon', 'loc': 0.0, 'start': 0, 'dur': 2, 'amp': 0.2}) # avoid word pop since that's a builtin method
