@@ -1,7 +1,7 @@
 from netpyne import specs
 from netpyne.specs import Dict, ODict
 
-simConfig = cfg = specs.SimConfig()  
+cfg = specs.SimConfig()  
 
 # Run parameters
 cfg.duration = 10
@@ -31,9 +31,3 @@ cfg.savePickle = False
 cfg.saveJson = True
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
-# Parameters
-cfg.percnajr, cfg.rall, cfg.gnabar = 90.0, 101, 0.5
-
-# Current inputs 
-cfg.addstim = 1
-cfg.stim = Dict({'popu': 'axA', 'sec': 'axon', 'loc': 0.0, 'start': 0, 'dur': 2, 'amp': 0.2}) # avoid word pop since that's a builtin method
