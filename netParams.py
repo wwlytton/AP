@@ -12,5 +12,5 @@ npar.cellParams['PYRrule'] = {'conds':{'cellType': 'axA', 'cellModel': 'ax'},
 # axr.secs.axon.mechs.hh.gnabar = cfg.gnabar
 
 # cfg.stim = Dict({'popu': 'axA', 'sec': 'axon', 'loc': 0.0, 'start': 0, 'dur': 2, 'amp': 0.2}) # avoid word pop since that's a builtin method
-npar.stimSourceParams.stim = {'type': 'IClamp', 'delay': 0, 'dur': 2, 'amp': 0.25}
+npar.stimSourceParams.stim = {'type': 'IClamp', 'delay': 0, 'dur': 0.5, 'amp': 0.2}
 npar.stimTargetParams.stimaxon = {'source': 'stim', 'conds': {'popLabel': 'axA'}, 'sec': 'axon', 'loc': 0.0}
