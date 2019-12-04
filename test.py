@@ -4,6 +4,7 @@ exe('simConfig.py') # reload for cfg
 exe('netParams.py') # new npar
 
 sim.create(npar, cfg)
+ax = sim.net.cells[0].secs.axon.hObj
 sim.runSim()
 sim.analyze() # data/sim1.json
 

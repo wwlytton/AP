@@ -3,7 +3,7 @@ from netpyne import specs
 npar = specs.NetParams()   # object of class NetParams to store the network parameters
 npar.popParams.axA = {'cellType': 'axA', 'cellModel': 'ax', 'numCells': 1}
 npar.cellParams['PYRrule'] = {'conds':{'cellType': 'axA', 'cellModel': 'ax'},
-   'secs': {'axon': {'geom': {'diam': 1, 'L': 2000, 'Ra': 123.0, 'nseg': 1000}, 
+   'secs': {'axon': {'geom': {'diam': 1, 'L': 5000, 'Ra': 123.0, 'nseg': 1000}, 
                      'ions': {'k': {'e': -77.0}, 'na': {'e': 50.0}},
                      'mechs':{'ina2005': {'gnatbar': 0.3}, 'ik2005': {'gkfbar': 0.3}, 'pas': {'g': 0.0001, 'e': -70.0}}}}}
 
