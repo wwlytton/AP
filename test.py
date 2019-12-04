@@ -1,10 +1,11 @@
 # execfile('test.py')
 # %reset -f
+# import os
+# exec(open('/u/billl/adm/pythonrc').read()) # after a reset
+exe('simConfig.py') # reload for cfg
+exe('netParams.py') # new npar
 
-from cfg import cfg
-simConfig=cfg
-from netParams import netParams
-sim.create()
+sim.create(npar, cfg)
 run() # sim.runSim()
 sim.analyze() # data/sim1.json
 def plot (): [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]

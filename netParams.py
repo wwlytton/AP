@@ -1,5 +1,4 @@
 from netpyne import specs
-from cfg import simConfig
 	
 npar = specs.NetParams()   # object of class NetParams to store the network parameters
 npar.popParams.axA = {'cellType': 'axA', 'cellModel': 'ax', 'numCells': 1}
@@ -14,4 +13,4 @@ npar.cellParams['PYRrule'] = {'conds':{'cellType': 'axA', 'cellModel': 'ax'},
 
 # cfg.stim = Dict({'popu': 'axA', 'sec': 'axon', 'loc': 0.0, 'start': 0, 'dur': 2, 'amp': 0.2}) # avoid word pop since that's a builtin method
 npar.stimSourceParams.stim = {'type': 'IClamp', 'delay': 0, 'dur': 2, 'amp': 0.25}
-npar.stimTargetParams.stimaxon = {'source': 'stim', 'conds': {'popLabel': 'axA'}, 'sec': 'axon', 'loc': }
+npar.stimTargetParams.stimaxon = {'source': 'stim', 'conds': {'popLabel': 'axA'}, 'sec': 'axon', 'loc': 0.0}
