@@ -5,7 +5,7 @@ cfg = specs.SimConfig()
 
 # Run parameters
 cfg.duration = 10
-cfg.dt = 0.025
+cfg.dt = 0.01
 # cfg.seeds = {'conn': 4321, 'stim': 1234, 'loc': 4321} 
 cfg.hParams = {'celsius': 37}
 cfg.verbose = 1
@@ -16,9 +16,9 @@ cfg.printRunTime = 1
 # Recording 
 cfg.recordCells = [0]
 nlocs=20
-cfg.recordTraces = {'V_axon_%.1f'%x : {'sec': 'axon', 'loc': x, 'var': 'v'} for x in np.linspace(0,1,nlocs+1)}
-cfg.recordStims = False  
-cfg.recordStep = 0.05 
+cfg.recordTraces = {'V_axon_%.2f'%x : {'sec': 'axon', 'loc': x, 'var': 'v'} for x in np.linspace(0, 1, nlocs+1)}
+cfg.recordStims = False
+cfg.recordStep = cfg.dt
 
 # Saving
 cfg.simLabel = 'sim1'
