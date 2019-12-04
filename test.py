@@ -10,28 +10,13 @@ run() # sim.runSim()
 sim.analyze() # data/sim1.json
 def plot (): [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]
 
-import sys
-sys.path.insert(1,'/usr/site/nrniv/local/python/netpyne')
-import itertools as itr
-import pandas as pd
-import numpy as np
-import pylab as plt
-import json
-fig, ax, params, data, pdi = None, None, None, None, None
-from netpyne import specs, sim
-from collections import OrderedDict
+def restim (amp, dur):
+  "go directly down to NEURON level to change stim params"
+  stim=h.IClamp[0]
+  stim.amp, stim.dur = amp, dur
 
-import axonA
-ax=axonA.AxonA()
-h.dt=0.00025
-h.tstop=10
-stim=h.IClamp(0.0,sec=ax.axon)
-stim.amp, stim.dur = 2, 5
-
-c0='cell_0' # convenient since only the 1 cell
+# Batch section?
 dca = {}
-
-# reading data section
 def read ():
     global params, data
     sys.path.append('/usr/site/nrniv/local/python/netpyne/examples/batchCell')
