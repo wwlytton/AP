@@ -1,16 +1,17 @@
-# execfile('test.py')
 # %reset -f
-# import os
 # exec(open('/u/billl/adm/pythonrc').read()) # after a reset
 exe('simConfig.py') # reload for cfg
 exe('netParams.py') # new npar
 
 sim.create(npar, cfg)
-run() # sim.runSim()
+sim.runSim()
 sim.analyze() # data/sim1.json
 
-da, tt = sim.simData, np.array(da['t'])
-def plot (): [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]
+def plot (): 
+  global da, tt
+  da=sim.simData; tt=np.array(da['t'])
+  [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]
+
 plot()
 
 def restim (amp, dur):

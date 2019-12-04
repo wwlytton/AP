@@ -5,7 +5,7 @@ cfg = specs.SimConfig()
 
 # Run parameters
 cfg.duration = 10
-cfg.dt = 0.05
+cfg.dt = 0.025
 # cfg.seeds = {'conn': 4321, 'stim': 1234, 'loc': 4321} 
 cfg.hParams = {'celsius': 37}
 cfg.verbose = 1
@@ -30,4 +30,3 @@ cfg.saveFolder = 'data'
 cfg.savePickle = False
 cfg.saveJson = True
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
-
