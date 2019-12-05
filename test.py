@@ -10,6 +10,7 @@ sim.analyze() # data/sim1.json
 
 def plot (): 
   global da, tt
+  plt.clf()
   da=sim.simData; tt=np.array(da['t'])
   [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]
 

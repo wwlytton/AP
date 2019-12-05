@@ -51,7 +51,7 @@ STATE { m h s }
 BREAKPOINT {
     SOLVE states METHOD cnexp
     gnat = gnatbar*gnablock*m*m*m*h*s  
-    ina = gnat*(v - ena)
+    ina = gnat*( ( 1 - perc) * (v - ena) + (perc) * (v - emut) )
 }
 
 INITIAL {
