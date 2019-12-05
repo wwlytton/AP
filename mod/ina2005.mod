@@ -12,7 +12,7 @@ NEURON {
     RANGE gnatbar, gnablock
     RANGE minf, mtau, hshift, sshift, mvhalf, mk, hvhalf, hk, svhalf, sk, mtaubase, htauk, htauvhalf, htauk, stauvhalf, stauk, hinf, htau, sinf, stau, inat
     RANGE m, h, s, htaubase, staubase
-    GLOBAL q10
+    GLOBAL q10, perc, emut
 }
 
 PARAMETER {
@@ -35,6 +35,8 @@ PARAMETER {
     staubase = 140400
     stauvhalf = 71.3 (mV)
     stauk = 30.9
+    perc = 0
+    emut = -40
 }
 
 ASSIGNED {
