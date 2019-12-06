@@ -1,5 +1,8 @@
-exe('simConfig.py')
-exe('netParams.py')
+import wlutils as wl
+import numpy as np
+from netpyne import sim
+from simConfig import cfg
+from netParams import npar
 sim.create(npar, cfg)
 ax = sim.net.cells[0].secs.axon.hObj
 for perc in np.linspace(0, 0.8, 0.1):

@@ -1,6 +1,6 @@
+import numpy as np
 from netpyne import specs
 from netpyne.specs import Dict, ODict
-
 cfg = specs.SimConfig()  
 
 # Run parameters
