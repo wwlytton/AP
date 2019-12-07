@@ -9,14 +9,14 @@ def plot (clf=True):
 def plot1 (ke, clf=True, dat=None): 
   ''' plot from dat1 loaded up from loadall() '''
   global da, tt
-  if not dat: data=dat1
+  if not dat: dat=dat1
   if clf: plt.clf()
   da=dat[ke]; tt=np.array(da['t'])
   [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]
 
 def plotlast (dat=None): 
   ''' plot last spk from each'''
-  if not dat: data=dat1
+  if not dat: dat=dat1
   plt.clf()
   for k,v in dat.items():
     da=v['V_axon_1.00']['cell_0']
