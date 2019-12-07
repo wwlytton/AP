@@ -11,6 +11,7 @@ def lp ():
     for perc in np.linspace(0, 0.8, 9):
         h.perc_ina2005 = perc
         sim.runSim()
-        sim.analyze()
+        sim.gatherData()
         sim.saveData(include = ['simData'], filename = 'data/19dec06_%d'%(100*perc))
 
+lp()

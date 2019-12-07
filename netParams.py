@@ -9,3 +9,4 @@ npar.cellParams['PYRrule'] = {'conds':{'cellType': 'axA', 'cellModel': 'ax'},
 
 npar.stimSourceParams.stim = {'type': 'IClamp', 'delay': 0, 'dur': 0.5, 'amp': 0.2}
 npar.stimTargetParams.stimaxon = {'source': 'stim', 'conds': {'popLabel': 'axA'}, 'sec': 'axon', 'loc': 0.0}
+
