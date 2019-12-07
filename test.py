@@ -1,5 +1,11 @@
 # elpy doesn't want to load a def that's right at top of file
 
+def plot (): 
+  global da, tt
+  plt.clf()
+  da=sim.simData; tt=np.array(da['t'])
+  [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]
+
 def plot1 (ke): 
   ''' plot from dat1 loaded up from loadall() '''
   global da, tt
