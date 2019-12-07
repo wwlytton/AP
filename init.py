@@ -8,10 +8,10 @@ from netParams import npar
 sim.create(npar, cfg)
 ax = sim.net.cells[0].secs.axon.hObj
 def lp ():
-    for perc in np.linspace(0, 0.8, 9):
-        h.perc_ina2005 = perc
+    for perc in np.linspace(0.0, 0.8, 9): # now is percent block
+        ax.gnablock_ina2005 = 1-perc
         sim.runSim()
         sim.gatherData()
-        sim.saveData(include = ['simData'], filename = 'data/19dec06_%d'%(100*perc))
+        sim.saveData(include = ['simData'], filename = 'data/19dec06blk_%02d'%(100*perc))
 
 lp()
