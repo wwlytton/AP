@@ -1,22 +1,22 @@
 # elpy doesn't want to load a def that's right at top of file
 
-def plot (): 
+def plot (clf=True): 
   global da, tt
-  plt.clf()
+  if clf: plt.clf()
   da=sim.simData; tt=np.array(da['t'])
   [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]
 
-def plot1 (ke): 
+def plot1 (ke, clf=True, dat=dat1): 
   ''' plot from dat1 loaded up from loadall() '''
   global da, tt
   plt.clf()
-  da=dat1[ke]; tt=np.array(da['t'])
+  da=dat[ke]; tt=np.array(da['t'])
   [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]
 
-def plotlast (): 
+def plotlast (dat=dat1): 
   ''' plot last spk from each'''
   plt.clf()
-  for k,v in dat1.items():
+  for k,v in dat.items():
     da=v['V_axon_1.00']['cell_0']
     if max(da) > -20: plt.plot(tt,v['V_axon_1.00']['cell_0'])
 
