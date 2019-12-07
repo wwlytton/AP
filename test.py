@@ -1,20 +1,8 @@
-# %reset -f
-# exec(open('/u/billl/adm/pythonrc').read()) # after a reset
-exe('simConfig.py') # reload for cfg
-exe('netParams.py') # new npar
-
-sim.create(npar, cfg)
-ax = sim.net.cells[0].secs.axon.hObj
-sim.runSim()
-sim.analyze() # data/sim1.json
-
 def plot (): 
   global da, tt
   plt.clf()
   da=sim.simData; tt=np.array(da['t'])
   [plt.plot(tt,v['cell_0']) for k,v in da.items() if 'V_axon' in k]
-
-plot()
 
 def restim (amp, dur):
   "go directly down to NEURON level to change stim params"
